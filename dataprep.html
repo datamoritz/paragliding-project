@@ -38,13 +38,26 @@
     </div>
   </nav>
 
-  <div class="container mt-5">
-    <h1 class="fw-bold">Data Preparation & Exploratory Data Analysis</h1>
-    <p>Data sources: paragliding GPS tracks (KML/IGC) and historical weather APIs/datasets.</p>
-    <p>Raw vs. cleaned dataset snapshots, with links to raw files and processing scripts.</p>
-    <p>Initial EDA: distributions, missing values, basic summaries, and key visuals (≥10 figures planned).</p>
-    <p>Notes on normalization, discretization, and feature engineering as needed.</p>
-  </div>
+  <section class="container mt-4" style="max-width: 900px;">
+    <h2 class="fw-bold mb-3">Gathering of Paragliding Flight Data</h2>
+  
+    <p>
+      Paragliding flight data were obtained from the
+      <a href="https://www.paraglidingforum.com/leonardo/" target="_blank" rel="noopener">
+        Paragliding Forum Leonardo XC server
+      </a>,
+      which hosts one of the largest public repositories of GPS flight tracks worldwide. Each record includes a
+      downloadable <code>.kml</code> file with the full GPS trajectory, as well as metadata such as glider type,
+      takeoff location, flight date, distance, and duration.
+    </p>
+  
+    <p>
+      Access was automated with a Python script that logged into the platform using session cookies. The script iterated
+      through Austrian flights only, downloading both the GPS track (<code>.kml</code>) and metadata from the flight
+      tables. The data were stored in two formats: (1) a folder of raw <code>.kml</code> files (one per flight) and
+      (2) a single <code>metadata.csv</code> file containing structured attributes.
+    </p>
+  </section>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
