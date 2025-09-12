@@ -40,10 +40,44 @@
 
   <div class="container mt-5">
     <h1 class="fw-bold">Introduction</h1>
-    <p>Background and motivation for studying thermal conditions in paragliding.</p>
-    <p>Why this topic matters for safety, performance, and decision-making.</p>
-    <p>High-level, non-technical overview of the domain (no models or jargon here).</p>
-    <p>Images and references will be added to illustrate the topic context.</p>
+  
+    <!-- Wide Image -->
+    <img src="image.png" alt="Paragliding" class="img-fluid rounded shadow my-4" style="width: 100%; max-height: 400px; object-fit: cover;">
+  
+    <p>
+      Paragliding is a thrilling sport that combines adventure with a deep connection to nature. Thousands of pilots around the world do it to explore landscapes from above, enjoy a quick descend from a mountain and to experience both freedom and physical challenge. The most exciting aspect of paragliding is the possibility of staying aloft for hours by finding rising air currents called thermals. These thermals make long-distance flights and record-breaking journeys across mountains possible. However, thermals are invisible, which makes detecting them a constant challenge for pilots. For beginners, missing thermals can mean short and disappointing flights, while for advanced pilots it can mean the difference between an ordinary flight day and a personal advancement. Understanding when and where thermals form is therefore critical for both safety and performance. Beginners and pro athletes alike, they all depend on good information about thermal conditions to maximize enjoyment and also reduce risk.
+    </p>
+  
+    <p>
+      Traditionally, pilots have relied on personal experience, weather forecasts, and visual cues in the landscape to locate thermals. Decision where to catch a thermal must be made quick and deliberate as without rising air a glider is in constant sink. Popular apps and online tools such as
+      <a href="https://burnair.ch" target="_blank" rel="noopener noreferrer">burnair.ch</a>
+      or
+      <a href="https://www.paraglidingmap.com" target="_blank" rel="noopener noreferrer">paraglidingmap.com</a>
+      have made it easier to plan flights by showing forecasts of thermal activity. These tools, however, only depend on large-scale weather models and often fail to capture local effects that are harder to predict. Correct in theory, they omit actual flight patterns and thus can fail to make successful real-world recommendations.
+    </p>
+  
+    <p>
+      Recent innovations, such as
+      <a href="https://paraglidable.com" target="_blank" rel="noopener noreferrer">paraglidable.com</a>,
+      combine global weather models with GPS flight data to create deep learning based predictions of flying conditions. This shows the growing recognition that real-world flight logs are a valuable source of information about how the atmosphere behaves. Yet, this existing work treats the problem as a black box, providing predictions using hundreds of weather parameters without offering concrete, actionable insights about why and what conditions are favorable. There is a gap for projects that connect pilot experiences, GPS trajectories, and weather data in a transparent, interpretable way.
+    </p>
+  
+    <p>
+      This project builds on prior work, but aims to explore the quest for thermals with a clearer scientific, educational and regional focus. For this, Alpine regions in Austria are analyzed. They provide an excellent testbed, since they have a rich flying culture and therefore many flight logs available. Also, the weather has a high variability which makes it ideal to correlate and form predictions about thermal activity. Questions to be answered by this project include:
+    </p>
+  
+    <ol>
+      <li>Where was historically lift strongest (spatial clusters on map)?</li>
+      <li>At what height above ground was lift strongest?</li>
+      <li>When was lift strongest (time-of-day, seasonality)?</li>
+      <li>Can clustering reveal thermal “types” (ridge, booming mid-day, convergence)?</li>
+      <li>How consistent/reliable are thermal hotspots over time?</li>
+      <li>What is the best takeoff time for strong, consistent thermals?</li>
+      <li>Do advanced gliders outperform in thermals vs. EN-A/B (climb, distance, duration)?</li>
+      <li>Which weather features predict good thermal activity (temp, wind, cloud base, lapse rate)?</li>
+      <li>Given today’s weather, can we predict best site, expected climbs, and long-flight likelihood?</li>
+      <li>How do wind profile and shear impact thermal strength and usability?</li>
+    </ol>
   </div>
 
   <!-- Bootstrap JS -->
