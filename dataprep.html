@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Data Preparation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Preparation - Paragliding Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <h1>Data Preparation & EDA</h1>
-  <p>This page will describe how flight GPS and weather data were cleaned, merged, and analyzed.</p>
-  <a href="index.html">Back to Home</a>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding Project</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link active" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item"><a class="nav-link" href="clustering.html">Clustering</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container mt-4">
+    <h1>Data Preparation & EDA</h1>
+    <p>
+      Flight data was scraped from online paragliding platforms and stored as KML/IGC files. 
+      Weather records were retrieved from reanalysis datasets. After cleaning and preprocessing, 
+      GPS trajectories were merged with weather variables such as wind speed, temperature, 
+      and pressure.
+    </p>
+    <ul>
+      <li>Data cleaning: removing incomplete flights</li>
+      <li>Coordinate transformation & altitude correction</li>
+      <li>Feature engineering: climb rates, distances, time of day</li>
+      <li>Exploratory Data Analysis: distributions, correlations, visualization</li>
+    </ul>
+  </div>
 </body>
 </html>
