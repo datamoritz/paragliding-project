@@ -3,38 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clustering - Paragliding Project</title>
+  <title>Clustering</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Navbar reused -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">Paragliding Project</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
           <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
-          <li class="nav-item"><a class="nav-link active" href="clustering.html">Clustering</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">ML Models</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item active" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
+              <li><a class="dropdown-item" href="regression.html">Regression</a></li>
+              <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Content -->
   <div class="container mt-4">
-    <h1>Clustering & Analysis</h1>
-    <p>
-      To identify patterns in flying conditions, unsupervised learning methods were applied. 
-      Clustering helps group flights by similarity in features such as duration, maximum altitude, 
-      or climb rate. This allows us to discover typical “flight profiles” and associate them 
-      with specific weather conditions.
-    </p>
-    <ul>
-      <li>K-Means clustering on flight performance metrics</li>
-      <li>DBSCAN to detect unusual or extreme flights</li>
-      <li>Correlation of clusters with weather predictors</li>
-    </ul>
+    <h1>Clustering</h1>
+    <p>This section will present clustering results (K-Means, Hierarchical) applied to flight and weather features to discover hidden groupings in the data.</p>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
