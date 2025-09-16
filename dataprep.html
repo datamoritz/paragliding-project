@@ -100,9 +100,7 @@
     </a>, allowing fair comparison of flights across conditions and pilots.
   </p>
 
-  The distributions of flight duration, open distance, total distance, and XC score exhibit the expected right-skewness of paragliding data, with most flights being relatively short and only a few achieving long durations and distances. After log-transformation, the variables approximate unimodal distributions, improving comparability and reducing the impact of extreme values. The boxplots reveal outliers for open distance and XC score, however these are also to be expected (exceptional long-distance or competition flights). 
 
-    
     <figure class="text-center">
       <img src="Metadata distributions.png" 
            alt="Metadata distributions" 
@@ -112,10 +110,44 @@
         Log-transformed distributions and boxplots of cleaned flight metadata. The plots confirm overall data plausibility while highlighting expected skewness and a few potential outliers.
       </figcaption>
     </figure>
+    
+  The distributions of flight duration, open distance, total distance, and XC score exhibit the expected right-skewness of paragliding data, with most flights being relatively short and only a few achieving long durations and distances. After log-transformation, the variables approximate unimodal distributions, improving comparability and reducing the impact of extreme values. The boxplots reveal outliers for open distance and XC score, however these are also to be expected (exceptional long-distance or competition flights). 
+
+
 
 
   <h3 class="fw-bold mt-4 mb-3">1.2 Flight GPS data</h3>
-    
+
+  <p>
+    🔗 <a href="link_to_code" target="_blank">Link to code</a><br>
+    🔗 <a href="link_to_kmz_directory" target="_blank">Link to raw .kmz directory</a><br>
+    🔗 <a href="link_to_igc_directory" target="_blank">Link to extracted .igc directory</a>
+  </p>
+
+    <figure class="text-center">
+      <img src="IGC data snippet.png" 
+           alt="IGC data snippet.png" 
+           class="img-fluid rounded shadow mb-2"
+           style="width: 100%; height: auto;">
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Raw IGC data excerpt with time-stamped coordinates and altitude. Terrain elevation from SRTM was added to compute altitude above ground level (AGL).
+      </figcaption>
+    </figure>
+
+  <p>
+    GPS trajectory files were processed to first extract GPS data files (<code>.igc</code>) from the compressed 
+    <code>.kmz</code> archives. Longitude, latitude, and altitude values at 1 Hz resolution were extracted. 
+    To enrich the dataset with environmental context, terrain elevation was added from the 
+    <a href="https://www2.jpl.nasa.gov/srtm/" target="_blank" rel="noopener">Shuttle Radar Topography Mission (SRTM)</a>, 
+    allowing computation of altitude above ground level (AGL).
+  </p>
+
+  <p>
+    The data transformation is visualized below using a typical summer flight at Zell am See, Austria. The figure shows 
+    both a 2D trajectory map, with flight paths plotted over OpenStreetMap basemaps and annotated start/finish points, 
+    and a 3D trajectory map, which represents the full spatial trajectory including the altitude dimension.
+  </p>
+
 
     <figure class="text-center">
       <img src="3D flight plot.png" 
@@ -128,16 +160,7 @@
 
     
 
-      <figure class="text-center">
-      <img src="IGC data snippet.png" 
-           alt="IGC data snippet.png" 
-           class="img-fluid rounded shadow mb-2"
-           style="width: 100%; height: auto;">
-      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
-        Raw IGC data excerpt with time-stamped coordinates and altitude. Terrain elevation from SRTM was added to compute altitude above ground level (AGL).
-      </figcaption>
-    </figure>
-
+    Using the added terrain and altitude data, the figure below highlights the altitude above mean sea level (AMSL) as well as above ground (AGL) over time. The profiles demonstrate sustained thermalling phases with significant height gains, consistent terrain clearance, and a typical descent pattern toward landing.
 
     
     <figure class="text-center">
