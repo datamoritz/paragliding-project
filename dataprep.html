@@ -60,6 +60,11 @@
   </p>
 
   <h3 class="fw-bold mt-4 mb-3">1.1 Flight Metadata</h3>
+    
+  <p>
+    🔗 <a href="link_to_code" target="_blank">Link to code</a><br>
+    🔗 <a href="metadata.csv" target="_blank">Link to metadata.csv</a>
+  </p>
 
   <p>
     The JSON file was then further processed and parsed using <code>BeautifulSoup</code> to extract structured metadata fields 
@@ -74,8 +79,18 @@
     for later analysis.
   </p>
 
+    <figure class="text-center">
+      <img src="Flight data processing.png" 
+           alt="Flight data processing" 
+           class="img-fluid rounded shadow mb-2"
+           style="width: 100%; height: auto;">
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Data was fetched in HTML format using a custom built API. It was then processed and cleaned into a structured dataframe and saved as (<code>.csv</code>) for further processing. Short-duration flights and implausible records have been removed during preprocessing.
+      </figcaption>
+    </figure>
+    
   <p>
-    Below are snapshots of the raw flight metadata and its structured representation after transformation. Each record 
+    Dispayed is a snapshot of exemplar raw flight metadata and its structured representation after transformation. Each record 
     corresponds to an individual paragliding flight and contains attributes such as the date, takeoff location, duration, 
     open distance (straight-line), total distance (flown path), and the cross-country (XC) score, along with glider 
     specifications. The XC score is a standardized performance metric calculated from the optimized flown distance 
@@ -85,32 +100,7 @@
     </a>, allowing fair comparison of flights across conditions and pilots.
   </p>
 
-  <p>
-    🔗 <a href="link_to_code" target="_blank">Link to code</a><br>
-    🔗 <a href="metadata.csv" target="_blank">Link to metadata.csv</a>
-  </p>
-
-
-    <!-- Figures inside section -->
-    <figure class="text-center">
-      <img src="Flight data processing.png" 
-           alt="Flight data processing" 
-           class="img-fluid rounded shadow mb-2"
-           style="width: 100%; height: auto;">
-      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
-        Data was fetched in HTML format using a custom built API. It was then processed and cleaned into a structured dataframe and saved as (<code>.csv</code>) for further processing.
-      </figcaption>
-    </figure>
-
-    <figure class="text-center">
-      <img src="Data_snippet_flight_metadata.png" 
-           alt="Data snippet flight metadata" 
-           class="img-fluid rounded shadow mb-2"
-           style="width: 100%; height: auto;">
-      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
-        Excerpt of the cleaned flight metadata, including temporal, spatial, and performance attributes. Short-duration flights and implausible records have been removed during preprocessing.
-      </figcaption>
-    </figure>
+  The distributions of flight duration, open distance, total distance, and XC score exhibit the expected right-skewness of paragliding data, with most flights being relatively short and only a few achieving long durations and distances. After log-transformation, the variables approximate unimodal distributions, improving comparability and reducing the impact of extreme values. The boxplots reveal outliers for open distance and XC score, however these are also to be expected (exceptional long-distance or competition flights). 
 
     
     <figure class="text-center">
