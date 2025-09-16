@@ -39,24 +39,57 @@
   </nav>
 
   <section class="container mt-4" style="max-width: 900px;">
-    <h2 class="fw-bold mb-3">1. Paragliding Flight Data</h2>
-  
-    <p>
-      Paragliding flight data were obtained from the
-      <a href="https://www.paraglidingforum.com/leonardo/" target="_blank" rel="noopener">
-        Paragliding Forum Leonardo XC server
-      </a>,
-      which hosts one of the largest public repositories of GPS flight tracks worldwide. Each record includes a
-      downloadable <code>.kmz</code> file with the full GPS trajectory isnide, as well as metadata such as glider type,
-      takeoff location, flight date, distance, and duration.
-    </p>
-  
-    <p>
-      Access was automated with a Python script that logged into the platform using session cookies. The script iterated
-      through Austrian flights of year 2024 only, first downloading the metadata from the flight
-      tables. The metadata was processed and stored in a <code>.csv</code> file for further analysis. This file was used to fetch the 
-      corresponding <code>.kmz</code> files in a second scraping step. 
-    </p>
+  <h2 class="fw-bold mb-3">1. Paragliding Flight Data</h2>
+
+  <p>
+    Paragliding flight data was obtained from the 
+    <a href="https://www.paraglidingforum.com/leonardo/" target="_blank" rel="noopener">
+      Paragliding Forum Leonardo XC server
+    </a>, 
+    which provides one of the largest public repositories of GPS flight tracks worldwide. Each record includes a 
+    downloadable <code>.kmz</code> file with the full GPS trajectory, as well as separate metadata such as glider type, 
+    takeoff location, flight date, distance, and duration.
+  </p>
+
+  <p>
+    Access was automated with a Python script that logged into the platform using session cookies. The script iterated 
+    through Austrian flights of 2024 only, downloading both the GPS track (<code>.kmz</code>) and metadata from the flight 
+    tables. Thus the data were stored in two formats: (1) a folder of raw <code>.kmz</code> files (one per flight) and 
+    (2) a single <code>raw_rows.json</code> file containing the raw HTML content for each flight. The <code>.kmz</code> files 
+    were downloaded by iterating through the cleaned <code>metadata.csv</code> file, i.e. duplicate and faulty flights were ignored.
+  </p>
+
+  <h3 class="fw-bold mt-4 mb-3">1.1 Flight Metadata</h3>
+
+  <p>
+    The JSON file was then further processed and parsed using <code>BeautifulSoup</code> to extract structured metadata fields 
+    such as flight ID, pilot, takeoff site, glider model, flight date, duration, distances, and XC score. This structured 
+    data was assembled into a <code>pandas</code> DataFrame for cleaning and analysis. During preprocessing, dates were 
+    converted into a consistent date format, durations were transformed into minutes, distances were cleaned and converted 
+    into numeric values, and XC scores were stored as floating-point numbers. The pilot column was dropped to ensure data 
+    privacy (for this analysis names are irrelevant, also if a pilot made one or numerous flights). Erroneous text encoding 
+    was repaired. Duplicate flight entries, based on metadata, were removed. Flights shorter than 3 minutes, less than 
+    3 km in total distance or less than 1 km in open distance were also removed (even though they may not be erroneous, 
+    their short contribution to the dataset as a whole is negligible). The DataFrame was stored as a <code>.csv</code> file 
+    for later analysis.
+  </p>
+
+  <p>
+    Below are snapshots of the raw flight metadata and its structured representation after transformation. Each record 
+    corresponds to an individual paragliding flight and contains attributes such as the date, takeoff location, duration, 
+    open distance (straight-line), total distance (flown path), and the cross-country (XC) score, along with glider 
+    specifications. The XC score is a standardized performance metric calculated from the optimized flown distance 
+    (e.g., free distance, triangles) following 
+    <a href="https://www.onlinecontest.org/olc-3.0/leagueRules.html" target="_blank" rel="noopener">
+      OLC rules
+    </a>, allowing fair comparison of flights across conditions and pilots.
+  </p>
+
+  <p>
+    🔗 <a href="link_to_code" target="_blank">Link to code</a><br>
+    🔗 <a href="metadata.csv" target="_blank">Link to metadata.csv</a>
+  </p>
+
 
     <!-- Figures inside section -->
     <figure class="text-center">
@@ -91,6 +124,9 @@
     </figure>
 
 
+  <h3 class="fw-bold mt-4 mb-3">1.2 Flight GPS data</h3>
+    
+
     <figure class="text-center">
       <img src="3D flight plot.png" 
            alt="3D flight plot" 
@@ -112,6 +148,8 @@
       </figcaption>
     </figure>
 
+
+    
     <figure class="text-center">
       <img src="Altitude profile.png" 
            alt="Altitude profile" 
