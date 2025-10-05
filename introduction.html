@@ -42,6 +42,7 @@
     <div class="col-lg-8 mx-auto"> <!-- narrower column, centered -->
   
       <h1 class="fw-bold mb-4">Introduction</h1>
+      <hr>
   
       <!-- Wide Image inside column -->
 
@@ -89,7 +90,61 @@
         <li><strong>Given today’s weather, can we predict best thermal site, expected climb rates, and long-flight likelihood?</strong></li>
         <li><strong>How do wind profile and shear impact thermal strength and usability?</strong></li>
       </ol>
-  
+            
+      <p>
+      To answer these questions, this project combines two main data sources: historical <strong>paragliding flight logs</strong> and corresponding <strong>weather data</strong> from the 
+      <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener noreferrer">Open-Meteo archive</a>. 
+      The flight data provides real trajectories and climb rates that reveal where thermals were actually encountered. The weather data adds variables such as temperature, wind, and cloud cover to the exact locations and timepoints where these thermals occured. 
+      The extensive and detailed data preparation process included scraping from different APIs, cleaning, feature selection, and combining the different datasets into a unified analytical thermals framework ready for further analysis.
+      </p>
+      
+      <p>
+      Subsequent sections of this project explore the data through <strong>exploratory analysis (EDA)</strong> and <strong>dimensionality reduction</strong> using 
+      <strong>Principal Component Analysis (PCA)</strong> to better understand feature relationships in the weather data. 
+      Different <strong>machine learning methods</strong> such as clustering, Naïve Bayes, Decision Trees, and Support Vector Machines are then applied to uncover patterns, classify thermal conditions, and evaluate predictive performance.
+      </p>
+
+      <!-- Thermals Figures -->
+      <div class="d-flex justify-content-center align-items-start mt-4 gap-3">
+        <figure class="text-center" style="width: 48%;">
+          <img src="Thermals_1.jpg"
+               alt="Paragliders soaring in thermal lift"
+               class="img-fluid rounded shadow-sm"
+               style="height: 320px; object-fit: cover; width: 100%;">
+          <figcaption class="mt-2 text-muted small">
+            Dozens of paragliders circling together in a shared thermal lift during a competition flight. Mountains and hills act as natural triggers for thermals.
+            <sup><a href="#ref3">[1]</a></sup>
+          </figcaption>
+        </figure>
+      
+        <figure class="text-center" style="width: 48%;">
+          <img src="Thermals_2.jpg"
+               alt="Thermal centering diagram"
+               class="img-fluid rounded shadow-sm"
+               style="height: 320px; object-fit: cover; width: 100%;">
+          <figcaption class="mt-2 text-muted small">
+            Top-down view schematic of thermal centering. The thermal band can be narrow and closer to the center, the climb rate is higher, thus pilots typically fly in circles.
+            <sup><a href="#ref4">[2]</a></sup>
+          </figcaption>
+        </figure>
+      </div>
+      
+      <hr>
+      
+      <!-- References -->
+      <ol class="small" style="line-height: 1.8;">
+        <li id="ref3">
+          <a href="https://www.passionparagliding.com/how-to-thermal-better" target="_blank">
+            Passion Paragliding – How to Thermal Better
+          </a> (accessed October 2025)
+        </li>
+        <li id="ref4">
+          <a href="https://www.youtube.com/watch?v=B-Nzjjw5BTo" target="_blank">
+            Abgeflogen – Thermal Centering Tutorial (YouTube)
+          </a> (accessed October 2025)
+        </li>
+      </ol>
+      
     </div>
   </div>
 
