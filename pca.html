@@ -174,6 +174,12 @@
           </figcaption>
       </figure>
 
+
+
+
+
+
+
       
       <h3 id="code">Code</h3>
       <p>Link to GitHub repository and code examples.</p>
@@ -183,7 +189,17 @@
       
 
       <h3 id="results">Results</h3>
-      <p>Summarize PCA results and visualizations here.</p>
+
+      <p>
+        After standardizing the weather-related variables, PCA was performed to compress the somewhat correlated weather variables and identify dominant atmospheric patterns.
+
+        The scree plot shows that the first five principal components explain approximately 75% of the total variance, so these components capture most of the relevant information in the dataset. The decrease in explained variance after the fifth component is only gradual, suggesting that further components add little additional explanatory power.
+      </p>
+    
+      <p>
+        The biplot visualizes how the original weather variables contribute to the first two principal components. PC1 represents a gradient between temperature, dew point, and shortwave radiation versus cloud cover, separating clear, thermally active conditions from more humid and cloudy ones. PC2 captures additional structure related to wind and boundary-layer height, providing a secondary axis of atmospheric differentiation.
+      </p>
+  
 
       <!-- PCA Figures -->
       <div class="d-flex flex-column align-items-center gap-4">
