@@ -59,7 +59,7 @@
       <h1 class="fw-bold mb-4">PCA (Principal Component Analysis)</h1>
       <hr>
 
-      <h3>Overview</h3>
+      <h3>1. Overview</h3>
       <p>
         For every thermal, i.e. row in the thermal dataset, there is a large amount of weather variables (wind, temperature, cloud base, etc.). This can slow machine learning algorithms down and is difficult to visualize. The goal of this section is to introduce a method to significantly reduce the dimensions of our thermals dataset. 
         Principal Component Analysis (PCA) is a powerful dimensionality reduction technique that reduces the number of features while retaining most of the information. This is achieved by finding correlations between variables and transforming them into new, uncorrelated variables (principal components).
@@ -102,23 +102,25 @@
       <!-- Two images side by side -->
       <div class="d-flex justify-content-center align-items-start mt-4 gap-3">
         <figure class="text-center" style="width: 48%;">
-          <img src="https://www.machinelearningplus.com/wp-content/uploads/2019/11/PCA_Projections.gif"
-               alt="PCA projection 2D" class="img-fluid rounded shadow-sm">
+          <img src="PCA_1.gif"
+               alt="PCA projection 2D" 
+               class="img-fluid rounded shadow-sm">
           <figcaption class="mt-2 text-muted small">
             Projection of 2D data (x, y) onto first principal component (black line); red lines show orthogonal projections capturing maximum variance.
           </figcaption>
         </figure>
-
+      
         <figure class="text-center" style="width: 48%;">
-          <img src="https://i0.wp.com/statisticsbyjim.com/wp-content/uploads/2023/01/PCA_original.png?w=596&ssl=1"
-               alt="PCA components in 2D" class="img-fluid rounded shadow-sm">
+          <img src="PCA_2.png"
+               alt="PCA components in 2D" 
+               class="img-fluid rounded shadow-sm">
           <figcaption class="mt-2 text-muted small">
             Principal components in 2D: V1 captures maximum variance along the data spread; V2 is orthogonal and captures remaining variance.
           </figcaption>
         </figure>
       </div>
 
-      <h3 class="mt-5">Data</h3>
+      <h3 class="mt-5">2. Data</h3>
       <p>
         PCA requires numerical, continuous data where each column represents a variable and each row represents an observation. 
         Data must be standardized, since PCA is sensitive to differences in scale. 
