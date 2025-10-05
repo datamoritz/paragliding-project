@@ -147,17 +147,68 @@
 
 
       <h3 id="data">Data</h3>
-      <p>
+      
         PCA requires numerical, continuous data where each column represents a variable and each row represents an observation. 
         Data must be standardized, since PCA is sensitive to differences in scale. 
         Categorical or text variables must be numerically encoded (e.g. one-hot). 
         PCA assumes roughly linear relationships between variables for meaningful variance capture.
       </p>
+<p>
+      The dataset combines multiple weather variables for each detected thermal, including temperature, 
+            dew point, wind speed and direction, cloud cover at different altitudes, shortwave radiation, 
+            and boundary layer height. These variables vary in scale and units, making standardization essential 
+            before applying PCA to identify dominant weather patterns.
+</p>
+      
+      <!-- Weather Data Before PCA -->
+
+        
+        <figure class="d-flex flex-column align-items-center">
+          <img src="PCA_5.png" 
+               alt="Weather data before PCA transformation" 
+               class="img-fluid rounded shadow-sm"
+               style="max-width: 100%; height: auto;">
+      
+          <figcaption class="mt-3 text-muted" style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+            Original weather data per each of the 7883 thermals (data snapshot and statistical summary) before, and after standardization (bottom) including boxplots for each variable.
+          </figcaption>
+        </figure>
+
+      
       <h3 id="code">Code</h3>
       <p>Link to GitHub repository and code examples.</p>
 
+
+
+      
+
       <h3 id="results">Results</h3>
       <p>Summarize PCA results and visualizations here.</p>
+
+      <!-- PCA Figures -->
+      <div class="d-flex flex-column align-items-center gap-4">
+      
+        <!-- Scree Plot -->
+        <figure class="text-center" style="width: 85%;">
+          <img src="PCA_3.png" alt="Scree plot showing explained variance per principal component" 
+               class="img-fluid rounded shadow-sm" style="max-height: 480px; object-fit: contain;">
+          <figcaption class="mt-2 text-muted small">
+            Scree plot displaying the variance explained by each principal component. The first three components together 
+            explain approximately 53% of the total variance, capturing the most relevant structure in the weather data.
+          </figcaption>
+        </figure>
+      
+        <!-- PCA Biplot -->
+        <figure class="text-center" style="width: 85%;">
+          <img src="PCA_4.png" alt="PCA biplot of weather variables" 
+               class="img-fluid rounded shadow-sm" style="max-height: 560px; object-fit: contain;">
+          <figcaption class="mt-2 text-muted small">
+            PCA biplot illustrating how weather variables (arrows) contribute to the first two principal components. 
+            Variables like <em>temperature</em> and <em>dewpoint</em> are aligned, indicating correlation, 
+            while <em>cloud cover</em> and <em>shortwave radiation</em> oppose them, reflecting contrasting conditions.
+          </figcaption>
+        </figure>
+      </div>
       
       <h3 id="conclusions">Conclusions</h3>
       <p>Wrap up key insights and interpretations from PCA.</p>    
