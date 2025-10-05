@@ -88,45 +88,12 @@
 
       <h3 id="overview">Overview</h3>
       <p>
-        For every thermal, i.e. row in the thermal dataset, there is a large amount of weather variables (wind, temperature, cloud base, etc.). This can slow machine learning algorithms down and is difficult to visualize. The goal of this section is to introduce a method to significantly reduce the dimensions of our thermals dataset. 
-        Principal Component Analysis (PCA) is a powerful dimensionality reduction technique that reduces the number of features while retaining most of the information. This is achieved by finding correlations between variables and transforming them into new, uncorrelated variables (principal components).
+      For every thermal collected, there is a large amount of weather variables (wind, temperature, cloud base, etc.). This can slow any machine learning algorithm down and is difficult to visualize. The goal of this section is to introduce a method to significantly reduce the dimensions of our thermals dataset.
+      </p><p>
+      Principle Component Analysis (PCA) is a powerful dimensionality reduction technique to reduce the number of features in a dataset while retaining most of the information. This is achieved by looking at their correlation, i.e. if they are highly similar. However, instead of just removing a column, PCA works in a more sophisticated which is described in the following.
       </p>
 
-      <h4>Curse of Dimensionality</h4>
-      <p>
-        High-dimensional data presents several challenges known as the curse of dimensionality:
-        <ul>
-          <li>Sparsity: data points become spread out, making patterns harder to detect</li>
-          <li>Computational cost: algorithms become exponentially slower</li>
-          <li>Distance distortion: distances between points lose meaning</li>
-          <li>Overfitting risk: models may learn noise instead of structure</li>
-        </ul>
-        PCA mitigates these issues by compressing data into fewer, more informative dimensions—making it denser, faster to process, and easier to visualize.
-      </p>
-
-      <h4>Eigenvectors and Eigenvalues</h4>
-      <p>
-        PCA identifies combinations of features that explain the most variance. Each principal component is a linear combination of the original variables. 
-        <ul>
-          <li><strong>Eigenvectors</strong> represent directions of maximum variance (axes of new space).</li>
-          <li><strong>Eigenvalues</strong> indicate the magnitude of variance along each direction.</li>
-        </ul>
-        Larger eigenvalues capture more structure in the dataset. PCA selects the top few eigenvectors (principal components) that retain most of the information.
-      </p>
-
-      <h4>Dimensionality Reduction</h4>
-      <p>
-        Dimensionality reduction decreases the number of input features while preserving as much relevant information as possible. 
-        <ul>
-          <li><strong>Simplifies analysis:</strong> fewer variables = easier interpretation</li>
-          <li><strong>Improves visualization:</strong> enables 2D or 3D plotting</li>
-          <li><strong>Reduces noise:</strong> filters out uninformative variation</li>
-          <li><strong>Prevents overfitting:</strong> fewer redundant features improve generalization</li>
-        </ul>
-        However, principal components no longer correspond directly to original variables—reducing interpretability.
-      </p>
-
-      <!-- Two images side by side -->
+            <!-- Two images side by side -->
       <div class="d-flex justify-content-center align-items-start mt-4 gap-3">
         <figure class="text-center" style="width: 48%;">
           <img src="PCA_1.gif"
@@ -146,6 +113,35 @@
           </figcaption>
         </figure>
       </div>
+      
+
+      <h4>Curse of Dimensionality</h4>
+      <p>
+        High-dimensional data presents several challenges known as the curse of dimensionality:
+        <ul>
+          <li>Sparsity: data points become spread out, making patterns harder to detect</li>
+          <li>Computational cost: algorithms become exponentially slower</li>
+          <li>Distance distortion: distances between points lose meaning</li>
+          <li>Overfitting risk: models may learn noise instead of structure</li>
+        </ul>
+        PCA mitigates these issues by compressing data into fewer, more informative dimensions—making it denser, faster to process, and easier to visualize.
+      </p>
+
+      <h4>Eigenvectors and Eigenvalues</h4>
+      <p>
+        PCA identifies combinations of features that explain the most variance. Each principal component is a linear combination of the original variables. <strong>Eigenvectors</strong>  represent directions of maximum variance (axes of new space).</li>
+          <strong>Eigenvalues</strong> indicate the magnitude of variance along each direction. Larger eigenvalues capture more structure in the dataset. PCA selects the top few eigenvectors (principal components) that retain most of the information.
+      </p>
+
+      <h4>Dimensionality Reduction</h4>
+      <p>
+      Dimensionality reduction decreases the number of input features while preserving as much relevant information as possible. 
+      It offers several advantages: it simplifies analysis because fewer variables make interpretation easier; it improves visualization by enabling 2D or 3D plotting; 
+      it reduces noise by filtering out uninformative variation; and it prevents overfitting by removing redundant features and improving generalization. 
+      However, principal components no longer correspond directly to the original variables, which reduces interpretability.
+      </p>
+
+
 
       <h3 id="data">Data</h3>
       <p>
