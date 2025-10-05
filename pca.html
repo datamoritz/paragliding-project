@@ -6,8 +6,22 @@
   <title>PCA - Paragliding ML Project</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    p { text-align: justify; }
+    h4 {
+      font-size: 1.05rem;       /* smaller than Bootstrap default (~1.5rem) */
+      font-weight: 600;         /* semi-bold */
+      margin-top: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    figcaption { font-size: 0.82rem; }
+  </style>
 </head>
 <body>
+
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -24,7 +38,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
-              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item active" href="pca.html">PCA</a></li>
               <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
               <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
               <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
@@ -38,79 +52,84 @@
     </div>
   </nav>
 
+  <!-- Content -->
   <div class="container mt-5">
-    <h1 class="fw-bold">PCA (Principal Component Analysis)</h1>
-    <hr>
-    <h3>Overview</h3>
-    <p>
+    <div class="col-lg-8 mx-auto">
 
-      For every thermal, i.e. row in the thermal datafile, there is a large amount of weather variables (wind, temperature, cloud base, etc.). This can slow any machine learning algorithm down and is difficult to visualize. The goal of this section is to introduce a method to significantly reduce the dimensions of our thermals dataset.
-Principle Component Analysis (PCA) is a powerful dimensionality reduction technique to reduce the number of features in a dataset while retaining most of the information. This is achieved by looking at their correlation, i.e. if they are highly similar. However, instead of just removing a column, PCA works in a more sophisticated which is described in the following.
-    
-    
-    </p>
+      <h1 class="fw-bold mb-4">PCA (Principal Component Analysis)</h1>
+      <hr>
 
+      <h3>Overview</h3>
+      <p>
+        For every thermal, i.e. row in the thermal dataset, there is a large amount of weather variables (wind, temperature, cloud base, etc.). This can slow machine learning algorithms down and is difficult to visualize. The goal of this section is to introduce a method to significantly reduce the dimensions of our thermals dataset. 
+        Principal Component Analysis (PCA) is a powerful dimensionality reduction technique that reduces the number of features while retaining most of the information. This is achieved by finding correlations between variables and transforming them into new, uncorrelated variables (principal components).
+      </p>
 
-    <h4>Curse of Dimensionality</h4>
-    <p>
-    High-dimensional data presents several challenges known as the curse of dimensionality:
-•	Sparsity: As dimensions grow, data points become more spread out, making patterns harder to detect
-•	Computational cost: Algorithms become exponentially slower and more memory-intensive
-•	Distance distortion: In high dimensions, distances between points become less meaningful as everything appears equally far apart
-•	Overfitting risk: Models may learn noise rather than structure
-PCA helps mitigate these issues by compressing the dataset into fewer, more informative dimensions. The resulting data is denser, faster to process, and easier to visualize or feed into machine learning models.
+      <h4>Curse of Dimensionality</h4>
+      <p>
+        High-dimensional data presents several challenges known as the curse of dimensionality:
+        <ul>
+          <li>Sparsity: data points become spread out, making patterns harder to detect</li>
+          <li>Computational cost: algorithms become exponentially slower</li>
+          <li>Distance distortion: distances between points lose meaning</li>
+          <li>Overfitting risk: models may learn noise instead of structure</li>
+        </ul>
+        PCA mitigates these issues by compressing data into fewer, more informative dimensions—making it denser, faster to process, and easier to visualize.
+      </p>
 
-      
-    </p>
-    <h4>Eigenvectors and -values</h4>
-    <p>
-PCA identifies combinations of features that explain the most variance in the dataset. Each principal component is a weighted linear combination of the original variables, chosen so that it captures as much of the underlying structure as possible. At the heart of PCA are eigenvalues and eigenvectors, which describe the directions and strengths of variation in the data.
-•	An eigenvector represents the direction of maximum variance — it defines one of the new axes (principal components) along which the data is spread.
-•	The corresponding eigenvalue measures the amount of variance captured along that direction.
-Larger eigenvalues indicate directions that explain more of the dataset’s structure. By ranking eigenvalues from largest to smallest, PCA selects the top few eigenvectors (principal components) that retain the majority of the data’s information.
+      <h4>Eigenvectors and Eigenvalues</h4>
+      <p>
+        PCA identifies combinations of features that explain the most variance. Each principal component is a linear combination of the original variables. 
+        <ul>
+          <li><strong>Eigenvectors</strong> represent directions of maximum variance (axes of new space).</li>
+          <li><strong>Eigenvalues</strong> indicate the magnitude of variance along each direction.</li>
+        </ul>
+        Larger eigenvalues capture more structure in the dataset. PCA selects the top few eigenvectors (principal components) that retain most of the information.
+      </p>
 
-      
-    </p>
+      <h4>Dimensionality Reduction</h4>
+      <p>
+        Dimensionality reduction decreases the number of input features while preserving as much relevant information as possible. 
+        <ul>
+          <li><strong>Simplifies analysis:</strong> fewer variables = easier interpretation</li>
+          <li><strong>Improves visualization:</strong> enables 2D or 3D plotting</li>
+          <li><strong>Reduces noise:</strong> filters out uninformative variation</li>
+          <li><strong>Prevents overfitting:</strong> fewer redundant features improve generalization</li>
+        </ul>
+        However, principal components no longer correspond directly to original variables—reducing interpretability.
+      </p>
 
-    <div class="d-flex justify-content-center align-items-start mt-4 gap-3">
-  <figure class="text-center" style="width: 48%;">
-    <img src="https://www.machinelearningplus.com/wp-content/uploads/2019/11/PCA_Projections.gif"
-         alt="PCA projection 2D" class="img-fluid rounded shadow-sm">
-    <figcaption class="mt-2 text-muted small">
-      Projection of 2D data (x, y) onto first principal component (black line); red lines show orthogonal projections capturing maximum variance.
-    </figcaption>
-  </figure>
+      <!-- Two images side by side -->
+      <div class="d-flex justify-content-center align-items-start mt-4 gap-3">
+        <figure class="text-center" style="width: 48%;">
+          <img src="https://www.machinelearningplus.com/wp-content/uploads/2019/11/PCA_Projections.gif"
+               alt="PCA projection 2D" class="img-fluid rounded shadow-sm">
+          <figcaption class="mt-2 text-muted small">
+            Projection of 2D data (x, y) onto first principal component (black line); red lines show orthogonal projections capturing maximum variance.
+          </figcaption>
+        </figure>
 
-  <figure class="text-center" style="width: 48%;">
-    <img src="https://i0.wp.com/statisticsbyjim.com/wp-content/uploads/2023/01/PCA_original.png?w=596&ssl=1"
-         alt="PCA components in 2D" class="img-fluid rounded shadow-sm">
-    <figcaption class="mt-2 text-muted small">
-      Principal components in 2D: V1 captures maximum variance along the data spread; V2 is orthogonal and captures remaining variance.
-    </figcaption>
-  </figure>
-</div>
+        <figure class="text-center" style="width: 48%;">
+          <img src="https://i0.wp.com/statisticsbyjim.com/wp-content/uploads/2023/01/PCA_original.png?w=596&ssl=1"
+               alt="PCA components in 2D" class="img-fluid rounded shadow-sm">
+          <figcaption class="mt-2 text-muted small">
+            Principal components in 2D: V1 captures maximum variance along the data spread; V2 is orthogonal and captures remaining variance.
+          </figcaption>
+        </figure>
+      </div>
 
-    <h4>Dimensionality Reduction</h4>
-    <p>
-Dimensionality reduction is the process of decreasing the number of input features in a dataset while keeping as much relevant information as possible.For example, of 50 somewhat correlated variables, PCA might reduce them to 3–5 principal components that summarize the original structure effectively. 
-Reducing dimensionality is crucial for:
-•	Simplifying analysis: fewer variables make statistical models easier to interpret.
-•	Improving visualization: data in 2D or 3D can be plotted, revealing clusters or trends.
-•	Reducing noise: small, uninformative variations are filtered out.
-•	Preventing overfitting: fewer redundant features mean models generalize better.
-However, a downside of PCA is that the resulting principal components no longer correspond directly to the original variables. This sacrifices interpretability. Also, the underlying relationships are nonlinear, PCA can still run, but it will not capture nonlinear structure effectively.
+      <h3 class="mt-5">Data</h3>
+      <p>
+        PCA requires numerical, continuous data where each column represents a variable and each row represents an observation. 
+        Data must be standardized, since PCA is sensitive to differences in scale. 
+        Categorical or text variables must be numerically encoded (e.g. one-hot). 
+        PCA assumes roughly linear relationships between variables for meaningful variance capture.
+      </p>
 
-      
-    </p>
-
-    
-    
-    <h3>Data</h3>
-    <p>PCA requires numerical, continuous data where each column represents a variable (feature) and each row represents an observation (sample). Data must be standardized or normalized, since PCA is sensitive to scale differences. Categorical or text variables need to be encoded numerically (e.g., one-hot encoding) if they shall be included. Moreover, the dataset should have linear relationships between variables for meaningful variance capture.</p>
-
-    <h3>Code</h3>
-    <p>Link to the code repository or notebook. Note the programming language and core packages used. (Do not paste the code here.)</p>
-
-    <h3>Results</h3>
-    <p>Discussion with figures: parameters tried, visualizations, and interpretation of results with respect to the project questions.</p>
+    </div>
   </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
