@@ -63,20 +63,36 @@
       </div>
     </div>
   </nav>
-
-  <!-- Main Content -->
+  
+  <!-- Content -->
   <div class="container mt-5">
     <div class="col-lg-8 mx-auto">
 
       <h1 class="fw-bold mb-3">Clustering</h1>
+      
+      <!-- Left-aligned inline navigation -->
+      <div class="mb-2">
+        <a href="#overview" class="me-3 text-primary fw-semibold text-decoration-none">Overview</a>
+        <a href="#data" class="me-3 text-primary fw-semibold text-decoration-none">Data</a>
+        <a href="#code" class="me-3 text-primary fw-semibold text-decoration-none">Code</a>
+        <a href="#results" class="me-3 text-primary fw-semibold text-decoration-none">Results</a>
+        <a href="#conclusions" class="text-primary fw-semibold text-decoration-none">Conclusions</a>
+      </div>
+      
+      <hr>
+
+      <h3 id="overview">Overview</h3>
       <p>
+
         Clustering was applied to identify natural groups of thermals based on flight and environmental parameters. 
         By analyzing relationships among features such as <em>average climb rate</em>, <em>altitude gain</em>, 
         <em>thermal duration</em>, <em>climb variability</em>, and <em>entry altitude</em>, 
         the model uncovered distinct thermal types that correspond to physical phases of a thermal's lifecycle.
       </p>
 
-      <h4>Methods</h4>
+
+      
+      <h3 id="data">Data</h3>
       <p>
         After cleaning and scaling the flight dataset, <strong>K-Means clustering</strong> was used to group thermals 
         into five distinct clusters. The optimal number of clusters was determined through a combination of the 
@@ -84,12 +100,129 @@
         optionally reduced via <em>PCA</em> for visualization. 
       </p>
 
-      <figure class="my-4">
-        <img src="images/elbow_silhouette.png" alt="Elbow and Silhouette Plots" class="img-fluid rounded shadow">
-        <figcaption>Elbow and Silhouette plots indicating the optimal K ≈ 5.</figcaption>
+
+
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/final_data_table_placeholder.png" 
+               alt="Cleaned and standardized thermal dataset preview" 
+               class="img-fluid rounded shadow-sm"
+               style="max-width: 100%; height: auto;">
+        
+          <figcaption class="mt-3 text-muted" 
+                      style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+            <em>Placeholder — finalized dataset snapshot.</em>  
+            Example rows from the cleaned and standardized thermal dataset after all preprocessing steps 
+            (missing value treatment, outlier removal using <strong>|z| &gt; 5</strong>, 
+            and feature scaling). 
+            This finalized table served as the input for the subsequent PCA and K-Means clustering analyses, 
+            containing only physically meaningful and well-behaved variables such as 
+            <em>avg_climb</em>, <em>alt_gain</em>, <em>duration_s</em>, <em>entry_alt</em>, and <em>climb_std</em>.
+          </figcaption>
+        </figure>
+            
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/boxplots_scaled.png" 
+             alt="Boxplots of standardized thermal data" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Boxplots of the main thermal features after standardization into <strong>Z-score space</strong>. 
+          Values beyond <strong>|z| &gt; 5</strong> were identified as statistical outliers and removed to 
+          ensure robust clustering performance. 
+          The standardized scale highlights that all four features (<em>avg_climb</em>, <em>alt_gain</em>, 
+          <em>duration_s</em>, and <em>entry_alt</em>) vary within comparable numeric ranges, preventing 
+          dominance of any single variable during distance-based clustering.
+        </figcaption>
+      </figure>
+      
+
+
+
+      <h3 id="code">Code</h3>
+      <p>Link to GitHub repository and code examples.</p>
+
+      <h3 id="results">Results</h3>
+
+
+
+
+
+
+
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/dendrogram_ward.png" 
+             alt="Hierarchical clustering dendrogram using Ward linkage" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Hierarchical clustering dendrogram using the <em>Ward linkage</em> method, applied before the K-Means analysis 
+          to estimate the natural number of thermal groups. Each branch represents the merging distance between thermals 
+          based on feature similarity. The clear vertical jumps in linkage distance around four to five clusters 
+          supported the choice of <strong>K = 5</strong> for subsequent K-Means clustering. 
+        </figcaption>
       </figure>
 
-      <h4>Results and Interpretation</h4>
+
+
+      
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/elbow_silhouette.png" 
+             alt="Elbow and Silhouette plots for K-Means cluster selection" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          The <strong>Elbow Method</strong> (top) and <strong>Silhouette Score</strong> (bottom) were evaluated 
+          to determine the optimal number of clusters for thermal grouping. 
+          While the Elbow curve shows a gradual decrease in inertia without a sharp kink, 
+          the Silhouette analysis reveals a local maximum near <strong>K = 5</strong>, 
+          suggesting this value best balances cohesion and separation between clusters. 
+          This conclusion, supported by the hierarchical dendrogram, guided the choice of 
+          <strong>five clusters</strong> for the K-Means analysis.
+        </figcaption>
+      </figure>
+
+
+      
+
+
+      
+      
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/kmeans.png" 
+             alt="K-Means clustering of thermal features" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Pairplot visualization of the five key thermal features used in K-Means clustering 
+          (<em>avg_climb</em>, <em>alt_gain</em>, <em>duration_s</em>, <em>entry_alt</em>, and <em>climb_std</em>).
+          Each color represents a distinct thermal cluster. The separation reveals a clear hierarchy: 
+          weaker short-lived thermals (purple, cluster 4) form near lower altitudes, while 
+          stronger, sustained thermals (red, cluster 3) achieve greater altitude gain and duration. 
+          These data-driven clusters correspond closely to physical phases of thermal evolution.
+        </figcaption>
+      </figure>
+
+
+
+
+
+
+
+      
+      <h3 id="conclusions">Conclusions</h3>
+    
       <p>
         The clustering revealed a clear thermal hierarchy: weak short-lived thermals near the surface evolve into 
         strong, long-lived thermals that sustain significant altitude gain. 
@@ -114,16 +247,35 @@
         <figcaption>Feature relationships colored by cluster assignment.</figcaption>
       </figure>
 
-      <h4>Next Steps</h4>
+
       <p>
         Future models will integrate <strong>weather reanalysis data</strong> (e.g., temperature gradients, CAPE, wind shear) 
         to predict the likelihood of forming strong thermals (Clusters 2–3). 
         Techniques such as <em>Random Forests</em> or <em>XGBoost</em> can then highlight which meteorological variables 
         most influence the development of optimal lift conditions.
       </p>
+          <hr>
+      <h6 class="fw-semibold mt-4">References</h6>
+      <ol class="small text-muted" style="line-height: 1.8;">
+        <li id="ref1">
+          <a href="https://www.machinelearningplus.com/machine-learning/principal-components-analysis-pca-better-explained/"
+             target="_blank" class="text-decoration-none text-primary">
+            Machine Learning Plus. “Principal Component Analysis (PCA) – Better Explained.”
+          </a>
+          Accessed September 2025.
+        </li>
+        <li id="ref2">
+          <a href="https://statisticsbyjim.com/basics/principal-component-analysis/"
+             target="_blank" class="text-decoration-none text-primary">
+            Statistics by Jim. “Principal Component Analysis Explained.”
+          </a>
+          Accessed September 2025.
+        </li>
+      </ol>
     </div>
   </div>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
