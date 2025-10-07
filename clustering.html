@@ -94,10 +94,21 @@
       
       <h3 id="data">Data</h3>
       <p>
-        After cleaning and scaling the flight dataset, <strong>K-Means clustering</strong> was used to group thermals 
-        into five distinct clusters. The optimal number of clusters was determined through a combination of the 
-        <em>Elbow Method</em> and <em>Silhouette Analysis</em>. The model was applied to standardized features, 
-        optionally reduced via <em>PCA</em> for visualization. 
+        From the <code>thermals_master.csv</code> only the 13 features related to thermal properties were selected (all numeric). 
+        As they showed high inter-correlation, the dataset was standardized using Z-score normalization, and key features were identified using variance ranking, PCA loadings, and Random Forest feature importance (not shown).
+      </p>
+      
+      <p>
+        The four key variables retained for clustering were 
+        <code>entry_alt</code> (entry altitude), 
+        <code>duration_s</code> (duration), 
+        <code>alt_gain</code> (altitude gain), and 
+        <code>avg_climb</code> (average climb rate).
+      </p>
+      
+      <p>
+        The variable <code>avg_turn</code> (average turn rate) shows high variance but primarily reflects pilot behavior, 
+        so it was excluded from thermal clustering and used later for interpreting cluster dynamics.
       </p>
 
       <figure class="d-flex flex-column align-items-center my-4">
@@ -117,76 +128,97 @@
         </figcaption>
       </figure>
 
+      <p>
+        Extreme values with a <em>z-score</em> above the threshold of 5 standard deviations were removed 
+        and imputed with the respective feature mean (58 rows affected, 0.7%). 
+        The threshold was chosen on the higher end, as rare but strong thermals do occur. 
+        The resulting data structure used for clustering is depicted below, comprising 
+        7,868 thermals after preprocessing.
+        <br>
+        <a href="data_sample.html" target="_blank">🔗 Link to sample data</a>
+      </p>
 
-
-      <figure class="d-flex flex-column align-items-center my-4">
-        <img src="images/final_data_table_placeholder.png" 
-               alt="Cleaned and standardized thermal dataset preview" 
-               class="img-fluid rounded shadow-sm"
-               style="max-width: 100%; height: auto;">
-        
-          <figcaption class="mt-3 text-muted" 
-                      style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
-            <em>Placeholder — finalized dataset snapshot.</em>  
-            Example rows from the cleaned and standardized thermal dataset after all preprocessing steps 
-            (missing value treatment, outlier removal using <strong>|z| &gt; 5</strong>, 
-            and feature scaling). 
-            This finalized table served as the input for the subsequent PCA and K-Means clustering analyses, 
-            containing only physically meaningful and well-behaved variables such as 
-            <em>avg_climb</em>, <em>alt_gain</em>, <em>duration_s</em>, <em>entry_alt</em>, and <em>climb_std</em>.
-          </figcaption>
-      </figure>
-            
+      
 
       <figure class="d-flex flex-column align-items-center my-4">
-        <img src="images/boxplots_scaled.png" 
-             alt="Boxplots of standardized thermal data" 
+        <img src="images/clustering_data_snippet.png" 
+             alt="Cleaned and standardized thermal dataset preview" 
              class="img-fluid rounded shadow-sm"
              style="max-width: 100%; height: auto;">
       
         <figcaption class="mt-3 text-muted" 
                     style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
-          Boxplots of the main thermal features after standardization into <strong>Z-score space</strong>. 
-          Values beyond <strong>|z| &gt; 5</strong> were identified as statistical outliers and removed to 
-          ensure robust clustering performance. 
-          The standardized scale highlights that all four features (<em>avg_climb</em>, <em>alt_gain</em>, 
-          <em>duration_s</em>, and <em>entry_alt</em>) vary within comparable numeric ranges, preventing 
-          dominance of any single variable during distance-based clustering.
+          Finalized dataset sample and feature distributions after preprocessing 
+          (missing value imputation, outlier removal for |z| &gt; 5, and Z-score standardization). 
+          The standardized scale ensures the selected features contribute equally to distance-based clustering.
         </figcaption>
       </figure>
-      
+
+
+
 
 
 
       <h3 id="code">Code</h3>
-      <p>Link to GitHub repository and code examples.</p>
+      <p>
+        🔗 <a href="https://github.com/yourusername/your-repo" target="_blank">
+          Link to code
+        </a>
+      </p>
 
       <h3 id="results">Results</h3>
 
+      <h4 id="results">Hierarchical Clustering</h4>
+      
+      <p>
+        Hierarchical clustering was performed using two approaches: 
+        (1) <strong>Ward linkage</strong> based on Euclidean distance, and 
+        (2) <strong>Average linkage</strong> based on Cosine distance.
+      </p>
+      
+      <p>
+        The Ward linkage method minimizes within-cluster variance, producing compact and well-separated groups. 
+        Its dendrogram revealed a few distinct merges near the top of the hierarchy, suggesting the presence of approximately 
+        four to five major clusters—consistent with the results obtained from K-Means clustering. 
+        This approach captures similarities in absolute magnitude, grouping thermals with comparable strength 
+        and altitude characteristics.
+      </p>
 
 
-
-
+      
+      <p>
+        Average linkage with Cosine distance focusses on directional similarity rather than magnitude. 
+        Thermals that exhibit similar patterns of behavior are clustered together 
+        (e.g., relative climb or duration profiles) even if their absolute values differ. 
+        The resulting dendrogram confirmed a coherent hierarchical structure, albeit with smoother transitions between groups. 
+        A cut at approximately <strong>0.9</strong> reveals four coherent clusters.
+      </p>
 
 
 
       <figure class="d-flex flex-column align-items-center my-4">
-        <img src="images/dendrogram_ward.png" 
-             alt="Hierarchical clustering dendrogram using Ward linkage" 
+        <img src="images/dendrogram.png" 
+             alt="Hierarchical clustering dendrograms using Ward (Euclidean) and Average (Cosine) linkage" 
              class="img-fluid rounded shadow-sm"
              style="max-width: 100%; height: auto;">
       
         <figcaption class="mt-3 text-muted" 
                     style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
-          Hierarchical clustering dendrogram using the <em>Ward linkage</em> method, applied before the K-Means analysis 
-          to estimate the natural number of thermal groups. Each branch represents the merging distance between thermals 
-          based on feature similarity. The clear vertical jumps in linkage distance around four to five clusters 
-          supported the choice of <strong>K = 5</strong> for subsequent K-Means clustering. 
+          Hierarchical clustering dendrograms using two linkage methods: 
+          <em>Ward linkage</em> (top, Euclidean distance) and 
+          <em>Average linkage</em> (bottom, Cosine distance). 
+          The Ward method emphasizes compact clusters with minimal internal variance, 
+          revealing clear separation between approximately four to five major groups. 
+          In contrast, the cosine-based approach focuses on directional similarity, 
+          grouping thermals with similar behavioral patterns even if their absolute magnitudes differ. 
+          Both analyses consistently suggested a natural structure of around 
+          <strong>4–5 clusters</strong>, supporting the choice of <strong>K = 5</strong> 
+          for the subsequent K-Means analysis.
         </figcaption>
       </figure>
 
 
-
+      <h4 id="results">K-Means Clustering</h4>
       
 
       <figure class="d-flex flex-column align-items-center my-4">
