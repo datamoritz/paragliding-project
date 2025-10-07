@@ -100,6 +100,38 @@
         </figcaption>
       </figure>
 
+      <h4>Partitional vs. Hierarchical Clustering</h4>
+      
+      <p>
+        Two primary clustering approaches are used in data exploration:
+      </p>
+      
+      <ul>
+        <li>
+          <strong>Partitional Clustering (e.g., K-Means, DBSCAN):</strong><br>
+          Divides the data into a predefined number of clusters (for K-Means) or discovers them adaptively 
+          (for DBSCAN) based on similarity measures. This study focuses on the former. 
+          In K-Means, each point is assigned to exactly one cluster, which aims to minimize the 
+          within-cluster sum of squares (WCSS) of the data points it contains (also called <em>inertia</em>). 
+          K-Means typically uses random centroid initialization or the improved 
+          <em>K-Means++</em> technique, which spreads initial centers to accelerate convergence 
+          and avoid reaching local minima in WCSS. 
+          The number of clusters must be defined before running the algorithm; however, different 
+          methods exist to optimize this process (such as the Elbow method, Silhouette analysis, and Gap Statistic).
+        </li>
+      
+        <li class="mt-3">
+          <strong>Hierarchical Clustering (e.g., Agglomerative, Divisive):</strong><br>
+          Builds a tree-like structure (<em>dendrogram</em>) to represent nested groupings of data points. 
+          This method doesn’t require specifying the number of clusters in advance; instead, clusters 
+          are formed progressively by either merging smaller clusters (agglomerative) or splitting larger ones (divisive). 
+          The resulting dendrogram allows for flexible visual interpretation. 
+          This study uses agglomerative clustering, repeatedly merging the two closest data points or clusters 
+          until all points are grouped into a single cluster. “Closeness” can be defined in several ways, such as 
+          single linkage (minimum distance), complete linkage (maximum distance), average linkage (mean pairwise distance), 
+          or Ward’s method (minimizing within-cluster variance).
+        </li>
+      </ul>
 
       
       <h4>Distance Metrics</h4>
