@@ -219,7 +219,19 @@
 
 
       <h4 id="results">K-Means Clustering</h4>
-      
+      <p class="text-justify" style="max-width: 800px; line-height: 1.7; font-size: 0.95rem;">
+        The optimal number of clusters (K) was determined using both the 
+        <em>Elbow Method</em> (inertia) and <em>Silhouette Score</em> analysis. 
+        The Elbow curve shows a clear reduction in within-cluster sum of squares (WCSS) up to 
+        K = 4 or K = 5, after which the rate of improvement noticeably flattens. 
+        Although the Silhouette scores peak at K = 2 
+        (indicating the statistically clearest separation), they remain relatively stable between 
+        K = 3–5, with a local maximum at K = 5. 
+        <br><br>
+        Combining these observations with the earlier hierarchical clustering results, 
+        K = 5 was selected as the most balanced and interpretable solution 
+        for subsequent K-Means clustering.
+      </p>
 
       <figure class="d-flex flex-column align-items-center my-4">
         <img src="images/elbow_silhouette.png" 
@@ -250,12 +262,7 @@
       
         <figcaption class="mt-3 text-muted" 
                     style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
-          Pairplot visualization of the five key thermal features used in K-Means clustering 
-          (<em>avg_climb</em>, <em>alt_gain</em>, <em>duration_s</em>, <em>entry_alt</em>, and <em>climb_std</em>).
-          Each color represents a distinct thermal cluster. The separation reveals a clear hierarchy: 
-          weaker short-lived thermals (purple, cluster 4) form near lower altitudes, while 
-          stronger, sustained thermals (red, cluster 3) achieve greater altitude gain and duration. 
-          These data-driven clusters correspond closely to physical phases of thermal evolution.
+          Pairplot showing the relationships among the four key thermal variables — average climb rate, altitude gain, duration, and entry altitude — colored by cluster (1–5). Each cluster represents a distinct thermal regime, ranging from weak, short-lived low-altitude thermals (Cluster 5) to strong, long-duration, high-altitude thermals (Cluster 4).
         </figcaption>
       </figure>
 
