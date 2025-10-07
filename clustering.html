@@ -292,27 +292,27 @@
           </thead>
           <tbody>
             <tr>
-              <td>Cluster 0</td>
+              <td>Cluster 1</td>
               <td>Weak climb (1.3 m/s), very small gain (~80 m), short (60 s), high entry altitude (~2400 m)</td>
               <td>High-altitude weak lift — likely “dying” thermals or residual lift higher up. Large count suggests they are common weak traces.</td>
             </tr>
             <tr>
-              <td>Cluster 1</td>
+              <td>Cluster 2</td>
               <td>Strongest climb (2.6 m/s), moderate gain (~280 m), short-to-medium duration (107 s), mid-high entry (~2280 m), highest climb_std (0.9)</td>
               <td>Energetic short bursts — sharp, punchy thermals that start mid-altitude, climb fast, but don’t last long (possibly cores or gust fronts).</td>
             </tr>
             <tr>
-              <td>Cluster 2</td>
+              <td>Cluster 3</td>
               <td>Moderate climb (1.5 m/s), moderate gain (~315 m), long duration (200 s), slightly lower entry (~1930 m)</td>
               <td>Typical sustained thermals — steady, long-lasting lift; perhaps your “average working” thermals.</td>
             </tr>
             <tr>
-              <td>Cluster 3</td>
+              <td>Cluster 4</td>
               <td>Decent climb (1.9 m/s), large gain (~650 m), long duration (336 s), lower entry (~1830 m)</td>
               <td>Strong sustained thermals — long-lived climbs starting low and reaching high; the best XC thermals.</td>
             </tr>
             <tr>
-              <td>Cluster 4</td>
+              <td>Cluster 5</td>
               <td>Weakest climb (1.1 m/s), tiny gain (~60 m), short (50 s), lowest entry altitude (~1700 m)</td>
               <td>Near-ground or broken lift — weak/turbulent starts or partial climbs close to terrain.</td>
             </tr>
@@ -323,31 +323,28 @@
 
       
 
-      <figure class="my-4">
-        <img src="images/cluster_table.png" alt="Cluster Summary Table" class="img-fluid rounded shadow">
-        <figcaption>Median characteristics of each thermal cluster.</figcaption>
-      </figure>
-
       <p>
-        Clusters 3 and 2 represent <strong>sustained, efficient thermals</strong> with high climb rates and long durations, 
-        while Clusters 4 and 0 capture the <strong>formation and decay phases</strong>. 
-        Cluster 1 identifies <strong>short, energetic bursts</strong> of strong lift. 
+        Clusters 4 and 3 represent <strong>sustained, efficient thermals</strong> with high climb rates and long durations, 
+        while Clusters 5 and 1 capture the <strong>formation and decay phases</strong>. 
+        Cluster 2 identifies <strong>short, energetic bursts</strong> of strong lift. 
         These distinctions align with real-world paragliding experience: thermals form low, strengthen mid-flight, 
         and weaken at altitude.
       </p>
 
-      <figure class="my-4">
-        <img src="images/pairplot_clusters.png" alt="Pairplot of clustered thermals" class="img-fluid rounded shadow">
-        <figcaption>Feature relationships colored by cluster assignment.</figcaption>
-      </figure>
-
 
       <p>
         Future models will integrate <strong>weather reanalysis data</strong> (e.g., temperature gradients, CAPE, wind shear) 
-        to predict the likelihood of forming strong thermals (Clusters 2–3). 
+        to predict the likelihood of forming strong thermals (Clusters 3–4). 
         Techniques such as <em>Random Forests</em> or <em>XGBoost</em> can then highlight which meteorological variables 
         most influence the development of optimal lift conditions.
       </p>
+
+
+
+
+
+
+      
           <hr>
       <h6 class="fw-semibold mt-4">References</h6>
       <ol class="small text-muted" style="line-height: 1.8;">
