@@ -79,9 +79,9 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
 <h5>GINI Impurity</h5>
 
 <p class="text-center">
-  \\[
+  \[
     G = 1 - \sum_i p_i^2
-  \\]
+  \]
 </p>
 
 <p>Gini measures class mixture and is relatively simple to compute.</p>
@@ -89,9 +89,9 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
 <h5>Entropy</h5>
 
 <p class="text-center">
-  \\[
+  \[
     H(p) = -\sum_i p_i \log_2(p_i)
-  \\]
+  \]
 </p>
 
 <ul>
@@ -102,9 +102,9 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
 <h5>Information Gain</h5>
 
 <p class="text-center">
-  \\[
+  \[
     IG = H(\text{parent}) - \sum_j \frac{N_j}{N} H(\text{child}_j)
-  \\]
+  \]
 </p>
 
 <p>
@@ -118,15 +118,15 @@ In the example in the figure above the root node contains 30 samples. 16 blue an
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   P(\text{blue}) = \frac{16}{30} = 0.53
-  \\]
+  \]
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   P(\text{orange}) = \frac{14}{30} = 0.47
-  \\]
+  \]
 </p>
 
 <p>
@@ -134,9 +134,9 @@ And the entropy of the root node is:
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   H_{\text{parent}} \approx -0.53\log_2(0.53) - 0.47\log_2(0.47) \approx 0.996
-  \\]
+  \]
 </p>
 
 <p>
@@ -144,15 +144,15 @@ The split is performed using the feature balance. After the split the left child
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   P(\text{blue}) = 12/13 = 0.92,\quad P(\text{orange}) = 1/13 = 0.08
-  \\]
+  \]
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   H_L \approx -0.92\log_2(0.92) - 0.08\log_2(0.08) \approx 0.39
-  \\]
+  \]
 </p>
 
 <p>
@@ -160,15 +160,15 @@ The right child has 17 samples (4 blue and 13 orange).
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   P(\text{blue}) = 4/17 = 0.24, \quad P(\text{orange}) = 13/17 = 0.76
-  \\]
+  \]
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   H_R \approx -0.24\log_2(0.24) - 0.76\log_2(0.76) \approx 0.78
-  \\]
+  \]
 </p>
 
 <p>
@@ -176,16 +176,16 @@ Using these value we can calculate the weighted entropy after the split, and wit
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   H_{\text{after}} = \frac{13}{30}H_L + \frac{17}{30}H_R 
   = \frac{13}{30}(0.39) + \frac{17}{30}(0.78) \approx 0.615
-  \\]
+  \]
 </p>
 
 <p class="text-center">
-  \\[
+  \[
   IG = H_{\text{parent}} - H_{\text{after}} = 0.996 - 0.615 = 0.381
-  \\]
+  \]
 </p>
 
 <p>
