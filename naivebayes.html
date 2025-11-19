@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Naive Bayes - Paragliding ML Project</title>
@@ -72,7 +76,11 @@
         features are under that class, multiplied by how common that class is.
     </p>
 
-    <pre><code>P(Y | X) = (P(X | Y) · P(Y)) / P(X)</code></pre>
+    <p align="center">
+      \[
+      P(Y \mid X) = \frac{P(X \mid Y)\, P(Y)}{P(X)}
+      \]
+    </p>
 
     <p>
         Here P(Y) is the prior probability (how frequent each class appears in the dataset) and P(X|Y) is the likelihood 
@@ -121,7 +129,6 @@
         Instead of counts or binaries, it fits a mean and variance for each feature per class and evaluates likelihood accordingly. 
         It is commonly applied to sensor readings, physical measurements, and other real-valued data.
     </p>
-    </div>
     
         
         <h3>Data</h3>
@@ -143,6 +150,28 @@
             Below is a small sample of the dataset used (weather features, and the cluster label):
         </p>
 
+      <figure class="d-flex flex-column align-items-center my-4">
+
+        <img src="images/NB2.png"
+             alt="Example of weather features and corresponding thermal cluster labels before model training"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 90%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Example of the prepared dataset used for Naïve Bayes: nine weather features 
+          (e.g., temperature, dewpoint, wind speed, cloud cover, shortwave radiation, 
+          boundary-layer height) combined with the target label 
+          <code>cluster</code> (1–5).  
+          The image illustrates the transformation from raw weather data into the 
+          final supervised learning format used for classification.
+        </figcaption>
+      
+      </figure>
+
+
+      
+
       <h3 id="code">Code</h3>
       <p>
         🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/code/4_Clustering_v1.ipynb">
@@ -151,7 +180,27 @@
       </p>
 
     <h3>Results</h3>
-
+      
+    <figure class="d-flex flex-column align-items-center my-4">
+    
+      <img src="images/NB4"
+           alt="Naïve Bayes confusion matrix and per-class performance metrics"
+           class="img-fluid rounded shadow-sm"
+           style="max-width: 90%; height: auto;">
+    
+      <figcaption class="mt-3 text-muted"
+                  style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+        Naïve Bayes evaluation results.  
+        Left: Confusion matrix showing how often each thermal cluster (1–5) is 
+        correctly or incorrectly predicted.  
+        Right: Per-class precision, recall, and F1-scores illustrating how well 
+        the model identifies each thermal quality class.  
+        These results highlight that Classes 1 and 5 are recognized more reliably, 
+        while Classes 2–4 show significant overlap in feature space.
+      </figcaption>
+    
+    </figure>
+      
     <p>
         The model achieved an accuracy of ~39%, which is well above random guessing (20% for 5 classes). However it indicates limited predictive power. 
         The confusion matrix visualizes how often each class is predicted correctly (diagonal) versus incorrectly (off-diagonal). 
