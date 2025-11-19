@@ -183,7 +183,7 @@
       
     <figure class="d-flex flex-column align-items-center my-4">
     
-      <img src="images/NB4"
+      <img src="images/NB3"
            alt="Naïve Bayes confusion matrix and per-class performance metrics"
            class="img-fluid rounded shadow-sm"
            style="max-width: 90%; height: auto;">
@@ -222,5 +222,23 @@
         multi-modality or extreme spikes (such as cloud cover near 0). This explains why for several features, a Gaussian fit is unrealistic is unrealistic 
         and Naïve Bayes will struggle.
     </p>
+
+      <figure class="d-flex flex-column align-items-center my-4">
+    
+        <img src="images/NB4.png"
+             alt="Class-conditional KDE distributions for all weather features"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 95%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Class-conditional KDE plots for all weather features used in the Naïve Bayes model.
+          Each curve represents one thermal cluster (1–5).  
+          The plots reveal strong overlap between classes across most features and clear deviations 
+          from Gaussian shapes (skewness, spikes at zero cloud cover, and multimodal wind directions), 
+          explaining why Gaussian Naïve Bayes struggles to distinguish Classes 2–4 reliably.
+        </figcaption>
+      
+      </figure>
 
   </div>
