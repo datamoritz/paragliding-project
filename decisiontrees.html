@@ -76,6 +76,8 @@ one class. Pure can be defined using entropy (measure of disorder) or the GINI i
 produce similar trees. Synonymous for minimizing impurity is maximizing the information gain (IG) with each split.
 </p>
 
+<ul>
+<li>
 <h5>GINI Impurity</h5>
 
 <p class="text-center">
@@ -85,7 +87,9 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
 </p>
 
 <p>Gini measures class mixture and is relatively simple to compute.</p>
+</li>
 
+<li>
 <h5>Entropy</h5>
 
 <p class="text-center">
@@ -98,7 +102,8 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
   <li>Entropy = 0 → perfectly pure</li>
   <li>Entropy = high → mixed classes</li>
 </ul>
-
+</li>
+  
 <h5>Information Gain</h5>
 
 <p class="text-center">
@@ -110,7 +115,8 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
 <p>
 The best split is the one with maximum information gain.
 </p>
-
+  
+<li>
 <h5>Example:</h5>
 
 <p>
@@ -142,6 +148,7 @@ And the entropy of the root node is:
 <p>
 The split is performed using the feature balance. After the split the left child has 13 samples (12 blue, 1 orange)
 </p>
+  
 
 <p class="text-center">
   \[
@@ -192,6 +199,9 @@ Using these value we can calculate the weighted entropy after the split, and wit
 A positive (and relatively large) information gain means the split greatly increases purity and is therefore chosen by 
 the Decision Tree.
 </p>
+
+</li>
+</ul>
 
 <p>
 Decision trees can grow indefinitely, because continuous features allow infinitely many split points. They can keep splitting 
