@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Decision Trees - Paragliding ML Project</title>
@@ -40,10 +44,172 @@
 
   <div class="container mt-5">
     <h1 class="fw-bold">Decision Trees</h1>
-    <hr>
-    <h3>Overview</h3>
-    <p>Brief explanation of the Decision Trees technique, how it works, and what will be analyzed in relation to paragliding conditions.</p>
+      <!-- Left-aligned inline navigation -->
+    
+      <div class="mb-2">
+        <a href="#overview" class="me-3 text-primary fw-semibold text-decoration-none">Overview</a>
+        <a href="#data" class="me-3 text-primary fw-semibold text-decoration-none">Data</a>
+        <a href="#code" class="me-3 text-primary fw-semibold text-decoration-none">Code</a>
+        <a href="#results" class="me-3 text-primary fw-semibold text-decoration-none">Results</a>
+        <a href="#conclusions" class="text-primary fw-semibold text-decoration-none">Conclusions</a>
+      </div>
+      
+      <hr>
+<p>
+Decision Trees (DTs) are supervised learning methods that can be used for classification and regression. 
+They split data using simple decision rules to classify examples or make predictions. They work by repeatedly 
+dividing the dataset into smaller, more homogenous groups based on feature values. The visual representation 
+of a decision tree consists of:
+</p>
 
+<ul>
+  <li>Root Node: Starting point representing the whole dataset.</li>
+  <li>Branches: Lines connecting nodes showing the flow from one decision to another.</li>
+  <li>Internal Nodes: Points where decisions are made based on data features.</li>
+  <li>Leaf Nodes: End points of the tree where the final decision or prediction is made (class label is assigned).</li>
+</ul>
+
+<p>
+Decision Trees choose splits by measuring how pure the resulting groups become. A pure node contains mostly (or entirely) 
+one class. Pure can be defined using entropy (measure of disorder) or the GINI impurity. In practice, Gini and Entropy often 
+produce similar trees. Synonymous for minimizing impurity is maximizing the information gain (IG) with each split.
+</p>
+
+<h5>GINI Impurity</h5>
+
+<p class="text-center">
+  \\[
+    G = 1 - \sum_i p_i^2
+  \\]
+</p>
+
+<p>Gini measures class mixture and is relatively simple to compute.</p>
+
+<h5>Entropy</h5>
+
+<p class="text-center">
+  \\[
+    H(p) = -\sum_i p_i \log_2(p_i)
+  \\]
+</p>
+
+<ul>
+  <li>Entropy = 0 → perfectly pure</li>
+  <li>Entropy = high → mixed classes</li>
+</ul>
+
+<h5>Information Gain</h5>
+
+<p class="text-center">
+  \\[
+    IG = H(\text{parent}) - \sum_j \frac{N_j}{N} H(\text{child}_j)
+  \\]
+</p>
+
+<p>
+The best split is the one with maximum information gain.
+</p>
+
+<h5>Example:</h5>
+
+<p>
+In the example in the figure above the root node contains 30 samples. 16 blue and 14 orange. The class probabilities are:
+</p>
+
+<p class="text-center">
+  \\[
+  P(\text{blue}) = \frac{16}{30} = 0.53
+  \\]
+</p>
+
+<p class="text-center">
+  \\[
+  P(\text{orange}) = \frac{14}{30} = 0.47
+  \\]
+</p>
+
+<p>
+And the entropy of the root node is:
+</p>
+
+<p class="text-center">
+  \\[
+  H_{\text{parent}} \approx -0.53\log_2(0.53) - 0.47\log_2(0.47) \approx 0.996
+  \\]
+</p>
+
+<p>
+The split is performed using the feature balance. After the split the left child has 13 samples (12 blue, 1 orange)
+</p>
+
+<p class="text-center">
+  \\[
+  P(\text{blue}) = 12/13 = 0.92,\quad P(\text{orange}) = 1/13 = 0.08
+  \\]
+</p>
+
+<p class="text-center">
+  \\[
+  H_L \approx -0.92\log_2(0.92) - 0.08\log_2(0.08) \approx 0.39
+  \\]
+</p>
+
+<p>
+The right child has 17 samples (4 blue and 13 orange).
+</p>
+
+<p class="text-center">
+  \\[
+  P(\text{blue}) = 4/17 = 0.24, \quad P(\text{orange}) = 13/17 = 0.76
+  \\]
+</p>
+
+<p class="text-center">
+  \\[
+  H_R \approx -0.24\log_2(0.24) - 0.76\log_2(0.76) \approx 0.78
+  \\]
+</p>
+
+<p>
+Using these value we can calculate the weighted entropy after the split, and with that obtain a value for the information gain:
+</p>
+
+<p class="text-center">
+  \\[
+  H_{\text{after}} = \frac{13}{30}H_L + \frac{17}{30}H_R 
+  = \frac{13}{30}(0.39) + \frac{17}{30}(0.78) \approx 0.615
+  \\]
+</p>
+
+<p class="text-center">
+  \\[
+  IG = H_{\text{parent}} - H_{\text{after}} = 0.996 - 0.615 = 0.381
+  \\]
+</p>
+
+<p>
+A positive (and relatively large) information gain means the split greatly increases purity and is therefore chosen by 
+the Decision Tree.
+</p>
+
+<p>
+Decision trees can grow indefinitely, because continuous features allow infinitely many split points. They can keep splitting 
+until every sample is isolated (the tree is oerfectly tuned to the training data which causes overfitting). To prevent this 
+hyperparameters are used, e.g. max_depth.
+</p>
+
+<h5>Random Forest</h5>
+
+<p>
+Random Forests are a widely used ensemble learning method that builds many independent decision trees and combines their 
+predictions. This enhances accuracy and predictive power. Each tree is trained on a bootstrap sample (random subset) of the 
+training data, and at each split only a random subset of features is considered. This injected randomness ensures that the 
+trees learn different patterns rather than all overfitting to the same structure. Predictions are made through majority voting 
+(for classification) or averaging (for regression). 
+Because Random Forests aggregate the outputs of many weak learners, they typically achieve higher accuracy, greater robustness 
+against noise, and better generalization than a single Decision Tree. They also provide feature importance scores, making it 
+possible to interpret which variables contribute most to the model’s decisions.
+</p>
     <h3>Data</h3>
     <p>Small image or table snippet of the prepared dataset for this model. Include links to raw and cleaned datasets used in this section.</p>
 
