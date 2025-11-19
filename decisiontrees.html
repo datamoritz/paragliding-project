@@ -56,6 +56,27 @@
       </div>
       
       <hr>
+
+<figure class="d-flex flex-column align-items-center my-4">
+
+  <img src="images/DT1.png"
+       alt="Illustration of Decision Tree classification concept"
+       class="img-fluid rounded shadow-sm"
+       style="max-width: 60%; height: auto;">
+
+  <figcaption class="mt-3 text-muted"
+              style="max-width: 500px; line-height: 1.6; font-size: 0.9rem;">
+    Illustration of the Naïve Bayes principle: features (shapes) influence 
+    the probability of belonging to different classes using Bayes’ theorem.  
+    Image inspired by an explanation from 
+    <a href="#ref1"><sup>[1]</sup></a>.
+  </figcaption>
+
+</figure>
+
+
+
+    
 <p>
 Decision Trees (DTs) are supervised learning methods that can be used for classification and regression. 
 They split data using simple decision rules to classify examples or make predictions. They work by repeatedly 
@@ -116,7 +137,29 @@ produce similar trees. Synonymous for minimizing impurity is maximizing the info
 The best split is the one with maximum information gain.
 </p>
   
-<li>
+</li>
+</ul>
+
+
+  
+<figure class="d-flex flex-column align-items-center my-4">
+
+  <img src="images/DT2.png"
+       alt="Illustration of Decision Tree classification concept"
+       class="img-fluid rounded shadow-sm"
+       style="max-width: 80%; height: auto;">
+
+  <figcaption class="mt-3 text-muted"
+              style="max-width: 500px; line-height: 1.6; font-size: 0.9rem;">
+    Illustration of the Naïve Bayes principle: features (shapes) influence 
+    the probability of belonging to different classes using Bayes’ theorem.  
+    Image inspired by an explanation from 
+    <a href="#ref1"><sup>[1]</sup></a>.
+  </figcaption>
+
+</figure>
+  
+  
 <h5>Example:</h5>
 
 <p>
@@ -200,8 +243,7 @@ A positive (and relatively large) information gain means the split greatly incre
 the Decision Tree.
 </p>
 
-</li>
-</ul>
+
 
 <p>
 Decision trees can grow indefinitely, because continuous features allow infinitely many split points. They can keep splitting 
@@ -221,12 +263,128 @@ Because Random Forests aggregate the outputs of many weak learners, they typical
 against noise, and better generalization than a single Decision Tree. They also provide feature importance scores, making it 
 possible to interpret which variables contribute most to the model’s decisions.
 </p>
-    <h3>Data</h3>
-    <p>Small image or table snippet of the prepared dataset for this model. Include links to raw and cleaned datasets used in this section.</p>
 
-    <h3>Code</h3>
-    <p>Link to the code repository or notebook. Note the programming language and core packages used. (Do not paste the code here.)</p>
+  <h3>Data</h3>
+        <p>
+          🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/data/sample_thermal_dataset.csv"
+             target="_blank" class="text-decoration-none text-primary">
+            Download sample dataset
+          </a>
+        </p>
+    
+        <p>
+            Supervised machine learning requires labeled data. Each record must belong to a known category. 
+            In this project, the labels are the thermal cluster classes (1–5) derived from K-Means in the clustering tab. 
+            Next, the data must be split into two disjoint sets:
+        </p>
+    
+        <ul>
+            <li>Training Set: used to learn the model</li>
+            <li>Testing Set: used to evaluate performance on unseen data</li>
+        </ul>
+    
+        <p>
+            Keeping them separate (disjoint) prevents overfitting and allows to realistic test and evaluate the accurary 
+            of the model on unseen data. In this project stratification was used to preserve the relative class proportions. 
+            Below is a small sample of the dataset used (weather features, and the cluster label):
+        </p>
 
+      <figure class="d-flex flex-column align-items-center my-4">
+
+        <img src="images/DT3.png"
+             alt="Example of weather features and corresponding thermal cluster labels before model training"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Example of the prepared dataset used for Naïve Bayes: nine weather features 
+          (e.g., temperature, dewpoint, wind speed, cloud cover, shortwave radiation, 
+          boundary-layer height) combined with the target label 
+          <code>cluster</code> (1–5).  
+          The image illustrates the transformation from raw weather data into the 
+          final supervised learning format used for classification.
+        </figcaption>
+      
+      </figure>
+
+
+      
+
+      <h3 id="code">Code</h3>
+      <p>
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/code/4_Clustering_v1.ipynb">
+          Link to code
+        </a>
+      </p>
+
+
+    
     <h3>Results</h3>
-    <p>Discussion with figures: parameters tried, visualizations, and interpretation of results with respect to the project questions.</p>
-  </div>
+
+     <figure class="d-flex flex-column align-items-center my-4">
+    
+      <img src="images/DT4.png"
+           alt="Naïve Bayes confusion matrix and per-class performance metrics"
+           class="img-fluid rounded shadow-sm"
+           style="max-width: 100%; height: auto;">
+    
+      <figcaption class="mt-3 text-muted"
+                  style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+        Naïve Bayes evaluation results.  
+        Left: Confusion matrix showing how often each thermal cluster (1–5) is 
+        correctly or incorrectly predicted.  
+        Right: Per-class precision, recall, and F1-scores illustrating how well 
+        the model identifies each thermal quality class.  
+        These results highlight that Classes 1 and 5 are recognized more reliably, 
+        while Classes 2–4 show significant overlap in feature space.
+      </figcaption>
+    
+    </figure>
+
+
+      <figure class="d-flex flex-column align-items-center my-4">
+    
+      <img src="images/DT5.png"
+           alt="Naïve Bayes confusion matrix and per-class performance metrics"
+           class="img-fluid rounded shadow-sm"
+           style="max-width: 100%; height: auto;">
+    
+      <figcaption class="mt-3 text-muted"
+                  style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+        Naïve Bayes evaluation results.  
+        Left: Confusion matrix showing how often each thermal cluster (1–5) is 
+        correctly or incorrectly predicted.  
+        Right: Per-class precision, recall, and F1-scores illustrating how well 
+        the model identifies each thermal quality class.  
+        These results highlight that Classes 1 and 5 are recognized more reliably, 
+        while Classes 2–4 show significant overlap in feature space.
+      </figcaption>
+    
+    </figure>
+
+
+    
+      <hr>
+      <h6 class="fw-semibold mt-4">References</h6>
+      <ol class="small text-muted" style="line-height: 1.8;">
+
+      <li id="ref1">
+        <a href="https://databasecamp.de/en/ml/naive-bayes-algorithm#:~:text=The%20Naive%20Bayes%20Algorithm%20is%20a%20classification,occurrence%20of%20another%20feature%20within%20the%20class."
+           target="_blank"
+           class="text-decoration-none text-primary">
+           “Naive Bayes Algorithm.” DatabaseCamp.de
+        </a>
+        — Accessed October 2025.
+      </li>
+        
+        <li id="ref2">
+          <a href="https://miro.medium.com/v2/resize:fit:1576/1*vAtQZbROuTdp36aQQ8cqBA.png"
+             target="_blank" class="text-decoration-none text-primary">
+             “Comparison of Euclidean, Manhattan, and Cosine Similarity Metrics.” <em>Medium</em>.
+          </a>
+          Accessed October 2025.
+        </li>
+
+      </ol>
+    </div>
