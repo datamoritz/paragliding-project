@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clustering - Paragliding ML Project</title>
+
+  <!-- Smooth Scroll and Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+    .nav-pills .nav-link {
+      color: #555;
+      border-radius: 20px;
+      margin: 3px;
+    }
+    .nav-pills .nav-link.active {
+      background-color: #0d6efd;
+    }
+    p { text-align: justify; }
+    h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    figcaption { font-size: 0.82rem; text-align: center; color: #666; }
+  </style>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item active" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
+              <li><a class="dropdown-item" href="regression.html">Regression</a></li>
+              <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Content -->
+  <div class="container mt-5">
+    <div class="col-lg-8 mx-auto">
+
+      <h1 class="fw-bold mb-3">Clustering</h1>
+      
+      <!-- Left-aligned inline navigation -->
+      <div class="mb-2">
+        <a href="#overview" class="me-3 text-primary fw-semibold text-decoration-none">Overview</a>
+        <a href="#data" class="me-3 text-primary fw-semibold text-decoration-none">Data</a>
+        <a href="#code" class="me-3 text-primary fw-semibold text-decoration-none">Code</a>
+        <a href="#results" class="me-3 text-primary fw-semibold text-decoration-none">Results</a>
+        <a href="#conclusions" class="text-primary fw-semibold text-decoration-none">Conclusions</a>
+      </div>
+      
+      <hr>
+
+      <h3 id="overview">Overview</h3>
+      <p>
+        Clustering is an unsupervised machine learning technique that groups similar data points based on their characteristics. Unlike classification, clustering does not rely on predefined labels; instead, it helps reveal natural structures or hidden patterns within complex datasets, such as thermal patterns in paragliding
+      </p>
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/clustering.png" 
+             alt="Illustration of original and clustered data points" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 70%; height: auto;">
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Basic concept of the clustering process in 2D:
+          unlabeled data points (left) are grouped into distinct clusters (right) 
+          based on feature similarity, minimizing the in-cluster variance and maximizing inter-cluster separation.
+          <a href="#ref1"><sup>[1]</sup></a>.
+        </figcaption>
+      </figure>
+
+      <h4>Partitional vs. Hierarchical Clustering</h4>
+      
+      <p>
+        Two primary clustering approaches are used in data exploration:
+      </p>
+      
+      <ul>
+        <li>
+          <strong>Partitional Clustering (e.g., K-Means, DBSCAN):</strong><br>
+          Divides the data into a predefined number of clusters (for K-Means) or discovers them adaptively 
+          (for DBSCAN) based on similarity measures. This study focuses on the former. 
+          In K-Means, each point is assigned to exactly one cluster, which aims to minimize the 
+          within-cluster sum of squares (WCSS) of the data points it contains (also called <em>inertia</em>). 
+          K-Means typically uses random centroid initialization or the improved 
+          <em>K-Means++</em> technique, which spreads initial centers to accelerate convergence 
+          and avoid reaching local minima in WCSS. 
+          The number of clusters must be defined before running the algorithm; however, different 
+          methods exist to optimize this process (such as the Elbow method, Silhouette analysis, and Gap Statistic).
+        </li>
+      
+        <li class="mt-3">
+          <strong>Hierarchical Clustering (e.g., Agglomerative, Divisive):</strong><br>
+          Builds a tree-like structure (<em>dendrogram</em>) to represent nested groupings of data points. 
+          This method doesn’t require specifying the number of clusters in advance; instead, clusters 
+          are formed progressively by either merging smaller clusters (agglomerative) or splitting larger ones (divisive). 
+          The resulting dendrogram allows for flexible visual interpretation. 
+          This study uses agglomerative clustering, repeatedly merging the two closest data points or clusters 
+          until all points are grouped into a single cluster. “Closeness” can be defined in several ways, such as 
+          single linkage (minimum distance), complete linkage (maximum distance), average linkage (mean pairwise distance), 
+          or Ward’s method (minimizing within-cluster variance).
+          In this study both the Ward’s method, as well as cosine distance with average linkage is used. The former provides a balanced representation between compactness and chaining effects. Single linkage was avoided due to its tendency to form long chains, while complete linkage can produce overly fragmented clusters.
+        </li>
+      </ul>
+
+      
+      <h4>Distance Metrics</h4>
+      <p>
+        The definition of “similarity” depends on the distance metric used. The most common choices are:
+      </p>
+      <ul>
+        <li>
+          <strong>Euclidean distance:</strong> the straight-line distance between points; used for continuous numeric data such as altitude, speed, or distance. 
+        </li>
+        <li>
+          <strong>Manhattan distance:</strong> measures the differences along each axis independently; used for, e.g., grid-based movement, stepwise processes, readings along fixed axes.
+        </li>
+        <li>
+          <strong>Cosine similarity:</strong> compares the direction rather than the magnitude of vectors; often used when relative patterns or proportional changes are more important than absolute values (e.g., in text mining, behavioral pattern analysis, or when analyzing shape similarities in time-series data).
+        </li>
+      </ul>
+      
+      <p>
+        Choosing the right distance metric depends on the dataset analyzed, as it directly affects how clusters form and how well they reflect real-world behaviors. 
+        For environmental data such as thermals in paragliding, Euclidean distance is preferred for its intuitive interpretation of spatial and physical quantities (such as altitude gain or climb rate). 
+        Cosine similarity can help analyze shape similarities independent of feature scales (e.g. finding patterns in both small and large thermals independent of size).
+      </p>
+
+
+
+      
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/distance_measures.png" 
+             alt="Visual comparison of Euclidean, Manhattan, and Cosine distance metrics" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 70%; height: auto;">
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Comparison of common distance metrics used in clustering. 
+          <em>Euclidean</em> measures straight-line distance, 
+          <em>Manhattan</em> sums absolute differences along each axis, 
+          and <em>Cosine similarity</em> evaluates the angular difference between vectors, 
+          emphasizing direction rather than magnitude<a href="#ref1"><sup>[2]</sup></a>.
+        </figcaption>
+      </figure>
+
+      
+      <h4>Using Clustering for Discovery</h4>
+
+      <p>
+        Clustering is used here as an exploratory tool to uncover natural groupings among thermals based on their physical and flight-derived characteristics (e.g., average climb rate, altitude gain, duration, and entry altitude). Since no predefined labels exist, clustering supports data-driven discovery by revealing patterns that may correspond to distinct thermal regimes (e.g. weak low-altitude thermals versus strong high-altitude ones).
+      </p>
+      <p>
+        The process enables hypothesis generation rather than hypothesis testing: instead of assuming categories, the algorithm identifies them based on statistical similarity. The resulting clusters can then be interpreted in terms of real-world parameters, and meteorological or terrain factors. The cluster information is important to guide subsequent modeling efforts. Once the “good” thermals are clusterd together, we can find the weather parameters that best predict them.
+      </p>
+
+
+      
+      <h3 id="data">Data</h3>
+      <p>
+
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/data/sample_thermal_dataset.csv"
+           target="_blank" class="text-decoration-none text-primary">
+          Download raw thermal sample dataset (pre-processing)
+        </a>
+      </p>
+      
+      <p>
+
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/data/sample_clustering_dataset.csv"
+           target="_blank" class="text-decoration-none text-primary">
+          Download processed sample dataset
+        </a>
+      </p>
+
+      
+      <p>
+        From the <code>thermals_master.csv</code> only the 13 features related to thermal properties were selected (all numeric). 
+        As they showed high inter-correlation, the dataset was standardized using Z-score normalization, and key features were identified using variance ranking, PCA loadings, and Random Forest feature importance (not shown).
+      </p>
+      
+      <p>
+        The four key variables retained for clustering were 
+        <code>entry_alt</code> (entry altitude), 
+        <code>duration_s</code> (duration), 
+        <code>alt_gain</code> (altitude gain), and 
+        <code>avg_climb</code> (average climb rate).
+      </p>
+      
+      <p>
+        The variable <code>avg_turn</code> (average turn rate) shows high variance but primarily reflects pilot behavior, 
+        so it was excluded from thermal clustering and used later for interpreting cluster dynamics.
+      </p>
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/correlation_variance.png" 
+             alt="Correlation heatmap and feature variance for standardized thermal dataset" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          <em>Correlation and variance overview of standardized thermal features.</em>  
+          Left: the heatmap shows pairwise correlations between all thermal variables, 
+          where <span style="color:#b30000;">red</span> indicates strong positive correlation.  
+      
+          Selected key features (<em>avg_climb</em>, <em>alt_gain</em>, <em>duration_s</em>, <em>entry_alt</em>) 
+          are highlighted in blue. Right: relative feature variance, emphasizing variables that exhibit the widest distribution and thus contribute most to clustering within the thermal dataset.
+        </figcaption>
+      </figure>
+
+      <p>
+        Extreme values with a <em>z-score</em> above the threshold of 5 standard deviations were removed 
+        and imputed with the respective feature mean (58 rows affected, 0.7%). 
+        The threshold was chosen on the higher end, as rare but strong thermals do occur. 
+        The resulting data structure used for clustering is depicted below, comprising 
+        7,868 thermals after preprocessing.
+        <br>
+      </p>
+
+      
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/clustering_data_snippet.png" 
+             alt="Cleaned and standardized thermal dataset preview" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Finalized dataset sample and feature distributions after preprocessing 
+          (missing value imputation, outlier removal for |z| &gt; 5, and Z-score standardization). 
+          The standardized scale ensures the selected features contribute equally to distance-based clustering.
+        </figcaption>
+      </figure>
+
+
+
+
+
+
+      <h3 id="code">Code</h3>
+      <p>
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/code/4_Clustering_v1.ipynb">
+          Link to code
+        </a>
+      </p>
+
+      <h3 id="results">Results</h3>
+
+      <h4 id="results">Hierarchical Clustering</h4>
+      
+      <p>
+        Hierarchical clustering was performed using two approaches: 
+        (1) <strong>Ward linkage</strong> based on Euclidean distance, and 
+        (2) <strong>Average linkage</strong> based on Cosine distance.
+      </p>
+      
+      <p>
+        The Ward linkage method minimizes within-cluster variance, producing compact and well-separated groups. 
+        Its dendrogram revealed a few distinct merges near the top of the hierarchy, suggesting the presence of approximately 
+        four to five major clusters—consistent with the results obtained from K-Means clustering. 
+        This approach captures similarities in absolute magnitude, grouping thermals with comparable strength 
+        and altitude characteristics.
+      </p>
+
+
+      
+      <p>
+        Average linkage with Cosine distance focusses on directional similarity rather than magnitude. 
+        Thermals that exhibit similar patterns of behavior are clustered together 
+        (e.g., relative climb or duration profiles) even if their absolute values differ. 
+        The resulting dendrogram confirmed a coherent hierarchical structure, albeit with smoother transitions between groups. 
+        A cut at approximately <strong>0.9</strong> reveals four coherent clusters.
+      </p>
+
+
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/dendrogram.png" 
+             alt="Hierarchical clustering dendrograms using Ward (Euclidean) and Average (Cosine) linkage" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Hierarchical clustering dendrograms using two linkage methods: 
+          <em>Ward linkage</em> (top, Euclidean distance) and 
+          <em>Average linkage</em> (bottom, Cosine distance). 
+          The Ward method emphasizes compact clusters with minimal internal variance, 
+          revealing clear separation between approximately four to five major groups. 
+          In contrast, the cosine-based approach focuses on directional similarity, 
+          grouping thermals with similar behavioral patterns even if their absolute magnitudes differ. 
+          Both analyses consistently suggested a natural structure of around 
+          <strong>4–5 clusters</strong>, supporting the choice of <strong>K = 5</strong> 
+          for the subsequent K-Means analysis.
+        </figcaption>
+      </figure>
+
+
+      <h4 id="results">K-Means Clustering</h4>
+      <p class="text-justify" style="max-width: 800px; line-height: 1.7; font-size: 0.95rem;">
+        The optimal number of clusters (K) was determined using both the 
+        <em>Elbow Method</em> (inertia) and <em>Silhouette Score</em> analysis. 
+        The Elbow curve shows a clear reduction in within-cluster sum of squares (WCSS) up to 
+        K = 4 or K = 5, after which the rate of improvement noticeably flattens. 
+        Although the Silhouette scores peak at K = 2 
+        (indicating the statistically clearest separation), they remain relatively stable between 
+        K = 3–5, with a local maximum at K = 5. 
+        <br><br>
+        Combining these observations with the earlier hierarchical clustering results, 
+        K = 5 was selected as the most balanced and interpretable solution 
+        for subsequent K-Means clustering.
+      </p>
+
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/elbow_silhouette.png" 
+             alt="Elbow and Silhouette plots for K-Means cluster selection" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 70%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          <em>Elbow (left) and Silhouette analysis (right) for K-Means cluster selection.</em> 
+          Inertia decreases gradually without a clear elbow, the Silhouette curve peaks near K = 5, indicating the best trade-off between cohesion and separation.
+          This finding is consistent with the hierarchical clustering results.
+        </figcaption>
+      </figure>
+
+
+
+      
+
+
+      
+      
+      <figure class="d-flex flex-column align-items-center my-4">
+        <img src="images/kmeans.png" 
+             alt="K-Means clustering of thermal features" 
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 100%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted" 
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Pairplot showing the relationships among the four key thermal variables — average climb rate, altitude gain, duration, and entry altitude — colored by cluster (1–5). Each cluster represents a distinct thermal regime, ranging from weak, short-lived low-altitude thermals (Cluster 5) to strong, long-duration, high-altitude thermals (Cluster 4).
+        </figcaption>
+      </figure>
+
+
+
+
+
+
+
+      
+      <h3 id="conclusions">Conclusions</h3>
+    
+      <p>
+        The clustering revealed a clear thermal hierarchy: weak short-lived thermals near the surface evolve into 
+        strong, long-lived thermals that sustain significant altitude gain. 
+        Below is a summary of the median feature values per cluster.
+      </p>
+
+      <div class="table-responsive my-4">
+        <table class="table table-bordered table-striped align-middle text-start" style="font-size: 0.9rem;">
+          <thead class="table-dark text-center">
+            <tr>
+              <th>Cluster</th>
+              <th>Characteristics</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cluster 1</td>
+              <td>Weak climb (1.3 m/s), very small gain (~80 m), short (60 s), high entry altitude (~2400 m)</td>
+              <td>High-altitude weak lift — likely “dying” thermals or residual lift higher up. Large count suggests they are common weak traces.</td>
+            </tr>
+            <tr>
+              <td>Cluster 2</td>
+              <td>Strongest climb (2.6 m/s), moderate gain (~280 m), short-to-medium duration (107 s), mid-high entry (~2280 m), highest climb_std (0.9)</td>
+              <td>Energetic short bursts — sharp, punchy thermals that start mid-altitude, climb fast, but don’t last long (possibly cores or gust fronts).</td>
+            </tr>
+            <tr>
+              <td>Cluster 3</td>
+              <td>Moderate climb (1.5 m/s), moderate gain (~315 m), long duration (200 s), slightly lower entry (~1930 m)</td>
+              <td>Typical sustained thermals — steady, long-lasting lift; perhaps your “average working” thermals.</td>
+            </tr>
+            <tr>
+              <td>Cluster 4</td>
+              <td>Decent climb (1.9 m/s), large gain (~650 m), long duration (336 s), lower entry (~1830 m)</td>
+              <td>Strong sustained thermals — long-lived climbs starting low and reaching high; the best XC thermals.</td>
+            </tr>
+            <tr>
+              <td>Cluster 5</td>
+              <td>Weakest climb (1.1 m/s), tiny gain (~60 m), short (50 s), lowest entry altitude (~1700 m)</td>
+              <td>Near-ground or broken lift — weak/turbulent starts or partial climbs close to terrain.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    
+
+      
+
+      <p>
+        Clusters 4 and 3 represent <strong>sustained, efficient thermals</strong> with high climb rates and long durations, 
+        while Clusters 5 and 1 capture the <strong>formation and decay phases</strong>. 
+        Cluster 2 identifies <strong>short, energetic bursts</strong> of strong lift. 
+        These distinctions align with real-world paragliding experience: thermals form low, strengthen mid-flight, 
+        and weaken at altitude.
+      </p>
+
+
+      <p>
+        Future models will integrate <strong>weather reanalysis data</strong> (e.g., temperature gradients, CAPE, wind shear) 
+        to predict the likelihood of forming strong thermals (Clusters 3–4). 
+        Techniques such as <em>Random Forests</em> or <em>XGBoost</em> can then highlight which meteorological variables 
+        most influence the development of optimal lift conditions.
+      </p>
+
+
+
+
+
+
+      
+      <hr>
+      <h6 class="fw-semibold mt-4">References</h6>
+      <ol class="small text-muted" style="line-height: 1.8;">
+
+        <li id="ref1">
+          <a href="https://medium.com/@aymass1817/unsupervised-learning-k-means-clustering-for-everybody-82bb404174d0"
+             target="_blank" 
+             class="text-decoration-none text-primary">
+            “Unsupervised Learning: K-Means Clustering for Everybody.” <em>Medium</em>.
+          </a>
+          Accessed October 2025.
+        </li>
+        
+        <li id="ref2">
+          <a href="https://miro.medium.com/v2/resize:fit:1576/1*vAtQZbROuTdp36aQQ8cqBA.png"
+             target="_blank" class="text-decoration-none text-primary">
+             “Comparison of Euclidean, Manhattan, and Cosine Similarity Metrics.” <em>Medium</em>.
+          </a>
+          Accessed October 2025.
+        </li>
+
+      </ol>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

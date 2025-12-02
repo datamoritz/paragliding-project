@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paragliding ML Project</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="boosting.html">Boosting</a></li>
+
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="container text-center mt-5">
+    <h1 class="display-4 fw-bold">Paragliding Machine Learning Analysis</h1>
+    <p class="lead">Finding strong thermals by correlating GPS trajectories with weather data.</p>
+    
+    <!-- Responsive image -->
+  <img src="https://redtailparagliding.com/wp-content/uploads/2025/02/hikoP-1.jpg" 
+       alt="Paragliding" 
+       class="img-fluid rounded shadow mt-4"
+       style="max-width: 700px; height: auto;">
+  
+    <!-- Author Info -->
+    <p class="mt-5 text-muted" style="font-size: 0.9rem;">
+      Moritz Knödler | University of Colorado, Boulder | Fall 2025
+    </p>
+  </div>
+  
+  <script>
+  window.watsonAssistantChatOptions = {
+    integrationID: "f73bd629-36ad-45c8-a0f8-ad6b5105c1cb", // The ID of this integration.
+    region: "us-south", // The region your integration is hosted in.
+    serviceInstanceID: "4ec8c2cc-3caa-4135-be1a-6f70865df1e3", // The ID of your service instance.
+    onLoad: async (instance) => { await instance.render(); }
+  };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+  });
+</script>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

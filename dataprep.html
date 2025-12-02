@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Prep / EDA - Paragliding ML Project</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
+              <li><a class="dropdown-item" href="regression.html">Regression</a></li>
+              <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container mt-4" style="max-width: 900px;">
+  <h2 class="fw-bold mb-3">1. Paragliding Flight Data</h2>
+
+  <p>
+    Paragliding flight data was obtained from the 
+    <a href="https://www.paraglidingforum.com/leonardo/" target="_blank" rel="noopener">
+      Paragliding Forum Leonardo XC server
+    </a>, 
+    which provides one of the largest public repositories of GPS flight tracks worldwide. Records include a 
+    downloadable <code>.igc</code> file with the full GPS trajectory, as well as separate metadata such as glider type, 
+    takeoff location, flight date, distance, and duration.
+  </p>
+
+  <p>
+    Access was automated with a Python script that logged into the platform using session cookies. The script iterated 
+    through Austrian flights for the years 2022-2024, downloading both the GPS track and metadata from the flight 
+    tables. Thus the data were stored in two formats: (1) a folder of raw <code>.igc</code> files (one per flight) and 
+    (2) a single <code>raw_rows.json</code> file containing the raw HTML content for each flight. The <code>.igc</code> files 
+    were downloaded by iterating through the cleaned <code>metadata.csv</code> file, i.e. duplicate and faulty flights were ignored.
+  </p>
+
+  <h3 class="fw-bold mt-4 mb-3">1.1 Flight Metadata</h3>
+    
+  <p>
+    🔗 <a href="link_to_code" target="_blank">Link to code</a><br>
+    🔗 <a href="metadata.csv" target="_blank">Link to metadata.csv</a>
+  </p>
+
+  <p>
+    The JSON file was then further processed and parsed using <code>BeautifulSoup</code> to extract structured metadata fields 
+    such as flight ID, pilot, takeoff site, glider model, flight date, duration, distances, and XC score. This structured 
+    data was assembled into a <code>pandas</code> DataFrame for cleaning and analysis. During preprocessing, dates were 
+    converted into a consistent date format, durations were transformed into minutes, distances were cleaned and converted 
+    into numeric values, and XC scores were stored as floating-point numbers. The pilot column was dropped to ensure data 
+    privacy (for this analysis names are irrelevant, also if a pilot made one or numerous flights). Erroneous text encoding 
+    was repaired. Duplicate flight entries, based on metadata, were removed. Flights shorter than 3 minutes, less than 
+    3 km in total distance or less than 1 km in open distance were also removed (even though they may not be erroneous, 
+    their short contribution to the dataset as a whole is negligible). There were no missing values. The DataFrame was stored as a <code>.csv</code> file 
+    for later analysis. After loading the corresponding <code>.igc</code> files, the metadata was filtered 
+    to only keep flights with a matching GPS flight track (not all <code>.igc</code>  files were made available for download). Of 4745 flights, 965 remain. 
+  </p>
+
+    <figure class="text-center">
+      <img src="Flight data processing.png" 
+           alt="Flight data processing" 
+           class="img-fluid rounded shadow mb-2"
+           style="width: 100%; height: auto;">
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Data was fetched in HTML format using a custom built API. It was then processed and cleaned into a structured dataframe and saved as (<code>.csv</code>) for further processing. Short-duration flights and implausible records have been removed during preprocessing.
+      </figcaption>
+    </figure>
+    
+  <p>
+    Dispayed is a snapshot of exemplar raw flight metadata and its structured representation after transformation. Each record 
+    corresponds to an individual paragliding flight and contains attributes such as the date, takeoff location, duration, 
+    open distance (straight-line), total distance (flown path), and the cross-country (XC) score, along with glider 
+    specifications. The XC score is a standardized performance metric calculated from the optimized flown distance 
+    (e.g., free distance, triangles) following 
+    <a href="https://www.onlinecontest.org/olc-3.0/leagueRules.html" target="_blank" rel="noopener">
+      OLC rules
+    </a>, allowing fair comparison of flights across conditions and pilots.
+  </p>
+
+
+    <figure class="text-center">
+      <img src="Metadata distributions.png" 
+           alt="Metadata distributions" 
+           class="img-fluid rounded shadow mb-2"
+           style="max-width: 500px; width: 100%; height: auto;"> <!-- Manual width adjustment -->
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Log-transformed distributions and boxplots of cleaned flight metadata. The plots confirm overall data plausibility while highlighting expected skewness and a few potential outliers.
+      </figcaption>
+    </figure>
+    
+  The distributions of flight duration, open distance, total distance, and XC score exhibit the expected right-skewness of paragliding data, with most flights being relatively short and only a few achieving long durations and distances. After log-transformation, the variables approximate unimodal distributions, improving comparability and reducing the impact of extreme values. The boxplots reveal outliers for open distance and XC score, however these are also to be expected (exceptional long-distance or competition flights). 
+
+
+
+
+  <h3 class="fw-bold mt-4 mb-3">1.2 Flight GPS data</h3>
+
+  <p>
+    🔗 <a href="link_to_code" target="_blank">Link to code</a><br>
+    🔗 <a href="link_to_kmz_directory" target="_blank">Link to raw .kmz directory</a><br>
+    🔗 <a href="link_to_igc_directory" target="_blank">Link to extracted .igc directory</a>
+  </p>
+
+    <figure class="text-center">
+      <img src="IGC data snippet.png" 
+           alt="IGC data snippet.png" 
+           class="img-fluid rounded shadow mb-2"
+           style="width: 100%; height: auto;">
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Raw IGC data excerpt with time-stamped coordinates and altitude. Terrain elevation from SRTM was added to compute altitude above ground level (AGL).
+      </figcaption>
+    </figure>
+
+  <p>
+    GPS trajectory files were processed to first extract GPS data files (<code>.igc</code>) from the compressed 
+    <code>.kmz</code> archives. Longitude, latitude, and altitude values at 1 Hz resolution were extracted. 
+    To enrich the dataset with environmental context, terrain elevation was added from the 
+    <a href="https://www2.jpl.nasa.gov/srtm/" target="_blank" rel="noopener">Shuttle Radar Topography Mission (SRTM)</a>, 
+    allowing computation of altitude above ground level (AGL).
+  </p>
+
+  <p>
+    The data transformation is visualized below using a typical summer flight at Zell am See, Austria. The figure shows 
+    both a 2D trajectory map, with flight paths plotted over OpenStreetMap basemaps and annotated start/finish points, 
+    and a 3D trajectory map, which represents the full spatial trajectory including the altitude dimension.
+  </p>
+
+
+    <figure class="text-center">
+      <img src="3D flight plot.png" 
+           alt="3D flight plot" 
+           class="img-fluid rounded shadow mb-2"
+           style="max-width: 500px; width: 100%; height: auto;"> <!-- Manual width adjustment -->
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Exemplar typical flight trajectory of a mid-summer flight. Visualized in 2D with map background, and in 3D enriched with altitude data (AGL). 
+    </figure>
+
+    
+
+    Using the added terrain and altitude data, the figure below highlights the altitude above mean sea level (AMSL) as well as above ground (AGL) over time. The profiles demonstrate sustained thermalling phases with significant height gains, consistent terrain clearance, and a typical descent pattern toward landing.
+
+    
+    <figure class="text-center">
+      <img src="Altitude profile.png" 
+           alt="Altitude profile" 
+           class="img-fluid rounded shadow mb-2"
+           style="max-width: 500px; width: 100%; height: auto;"> <!-- Manual width adjustment -->
+      <figcaption class="figure-caption text-muted text-center" style="font-size: 0.85rem;">
+        Altitude profile of an exemplar summer flight, showing absolute altitude (ASL) with terrain reference and the derived altitude above ground level (AGL). The curves indicate realistic flight dynamics, with sustained thermalling and consistent separation from terrain.
+      </figcaption>
+    </figure>
+
+
+    
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- ======= Smooth Scroll Behavior ====== -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .nav-pills .nav-link {
+      color: #555;
+      border-radius: 20px;
+      margin: 3px;
+    }
+    .nav-pills .nav-link.active {
+      background-color: #0d6efd;
+    }
+  </style>
+  
+  <title>PCA - Paragliding ML Project</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    p { text-align: justify; }
+    h4 {
+      font-size: 1.05rem;       /* smaller than Bootstrap default (~1.5rem) */
+      font-weight: 600;         /* semi-bold */
+      margin-top: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    figcaption { font-size: 0.82rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+              <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item active" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
+              <li><a class="dropdown-item" href="regression.html">Regression</a></li>
+              <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container mt-5">
+    <div class="col-lg-8 mx-auto">
+
+      <h1 class="fw-bold mb-3">PCA (Principal Component Analysis)</h1>
+      
+      <!-- Left-aligned inline navigation -->
+      <div class="mb-2">
+        <a href="#overview" class="me-3 text-primary fw-semibold text-decoration-none">Overview</a>
+        <a href="#data" class="me-3 text-primary fw-semibold text-decoration-none">Data</a>
+        <a href="#code" class="me-3 text-primary fw-semibold text-decoration-none">Code</a>
+        <a href="#results" class="me-3 text-primary fw-semibold text-decoration-none">Results</a>
+        <a href="#conclusions" class="text-primary fw-semibold text-decoration-none">Conclusions</a>
+      </div>
+      
+      <hr>
+
+      <h3 id="overview">Overview</h3>
+      <p>
+      For every thermal collected, there is a large amount of weather variables (wind, temperature, cloud base, etc.). This can slow any machine learning algorithm down and is difficult to visualize. The goal of this section is to introduce a method to significantly reduce the dimensions of our thermals dataset.
+      </p><p>
+      Principle Component Analysis (PCA) is a powerful dimensionality reduction technique to reduce the number of features in a dataset while retaining most of the information. This is achieved by looking at their correlation, i.e. if they are highly similar. However, instead of just removing a column, PCA works in a more sophisticated which is described in the following.
+      </p>
+
+            <!-- Two images side by side -->
+      <div class="d-flex justify-content-center align-items-start mt-4 gap-3 flex-wrap">
+        <figure class="text-center" style="width: 48%;">
+          <img src="PCA_1.gif"
+               alt="PCA projection 2D"
+               class="img-fluid rounded shadow-sm"
+               style="height: 300px; width: 100%; object-fit: contain;">
+          <figcaption class="mt-2 text-muted small">
+            Projection of 2D data (x, y) onto first principal component (black line); red lines show orthogonal projections capturing maximum variance. 
+            <a href="#ref1" class="text-decoration-none text-primary">[1]</a>
+          </figcaption>
+        </figure>
+      
+        <figure class="text-center" style="width: 48%;">
+          <img src="PCA_2.png"
+               alt="PCA components in 2D"
+               class="img-fluid rounded shadow-sm"
+               style="height: 300px; width: 100%; object-fit: contain;">
+          <figcaption class="mt-2 text-muted small">
+            Principal components as eigenvectors in 2D on standardized, centered data: V1 captures maximum variance along the data spread; V2 is orthogonal and captures remaining variance. 
+            <a href="#ref2" class="text-decoration-none text-primary">[2]</a>
+          </figcaption>
+        </figure>
+      </div>
+      
+
+      <h4>Curse of Dimensionality</h4>
+      <p>
+        High-dimensional data presents several challenges known as the curse of dimensionality:
+        <ul>
+          <li>Sparsity: data points become spread out, making patterns harder to detect</li>
+          <li>Computational cost: algorithms become exponentially slower</li>
+          <li>Distance distortion: distances between points lose meaning</li>
+          <li>Overfitting risk: models may learn noise instead of structure</li>
+        </ul>
+        PCA mitigates these issues by compressing data into fewer, more informative dimensions—making it denser, faster to process, and easier to visualize.
+      </p>
+
+      <h4>Eigenvectors and Eigenvalues</h4>
+      <p>
+        PCA identifies combinations of features that explain the most variance. Each principal component is a linear combination of the original variables. <strong>Eigenvectors</strong>  represent directions of maximum variance (axes of new space).</li>
+          <strong>Eigenvalues</strong> indicate the magnitude of variance along each direction. Larger eigenvalues capture more structure in the dataset. PCA selects the top few eigenvectors (principal components) that retain most of the information.
+      </p>
+
+      <h4>Dimensionality Reduction</h4>
+      <p>
+      Dimensionality reduction decreases the number of input features while preserving as much relevant information as possible. 
+      It offers several advantages: it simplifies analysis because fewer variables make interpretation easier; it improves visualization by enabling 2D or 3D plotting; 
+      it reduces noise by filtering out uninformative variation; and it prevents overfitting by removing redundant features and improving generalization. 
+      However, principal components no longer correspond directly to the original variables, which reduces interpretability.
+      </p>
+
+
+
+      <h3 id="data">Data</h3>
+
+
+        <p>
+
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/data/sample_pre_pca_dataset.csv"
+           target="_blank" class="text-decoration-none text-primary">
+          Download pre-PCA sample dataset
+        </a>
+      </p>
+      
+      <p>
+
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/data/sample_pca_dataset.csv"
+           target="_blank" class="text-decoration-none text-primary">
+          Download PCA sample dataset
+        </a>
+      </p>
+      
+        PCA requires numerical, continuous data where each column represents a variable and each row represents an observation. 
+        Data must be standardized, since PCA is sensitive to differences in scale. 
+        Categorical or text variables must be numerically encoded (e.g. one-hot). 
+        PCA assumes roughly linear relationships between variables for meaningful variance capture.
+      </p>
+      <p>
+      The dataset combines multiple weather variables for each detected thermal, including temperature, 
+            dew point, wind speed and direction, cloud cover at different altitudes, shortwave radiation, 
+            and boundary layer height. These variables vary in scale and units, making standardization essential 
+            before applying PCA to identify dominant weather patterns.
+      </p>
+      
+      <!-- Weather Data Before PCA -->
+
+        
+      <figure class="d-flex flex-column align-items-center">
+          <img src="PCA_5.png" 
+               alt="Weather data before PCA transformation" 
+               class="img-fluid rounded shadow-sm"
+               style="max-width: 100%; height: auto;">
+      
+          <figcaption class="mt-3 text-muted" style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+            Original weather data per each of the 7883 thermals (data snapshot and statistical summary) before, and after standardization (bottom) including boxplots for each variable.
+          </figcaption>
+      </figure>
+
+
+
+
+
+
+
+      
+      <h3 id="code">Code</h3>
+      <p>Link to GitHub repository and code examples.</p>
+      
+      <p>
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/code/3_PCA_Weather data_v1.ipynb">
+          Link to code
+        </a>
+      </p>
+
+
+      
+
+      <h3 id="results">Results</h3>
+
+      <p>
+        After standardizing the weather-related variables, PCA was performed to compress the somewhat correlated weather variables and identify dominant atmospheric patterns.
+
+        The scree plot shows that the first five principal components explain approximately 75% of the total variance, so these components capture most of the relevant information in the dataset. The decrease in explained variance after the fifth component is only gradual, suggesting that further components add little additional explanatory power.
+      </p>
+    
+      <p>
+        The biplot visualizes how the original weather variables contribute to the first two principal components. PC1 represents a gradient between temperature, dew point, and shortwave radiation versus cloud cover, separating clear, thermally active conditions from more humid and cloudy ones. PC2 captures additional structure related to wind and boundary-layer height, providing a secondary axis of atmospheric differentiation.
+      </p>
+  
+
+      <!-- PCA Figures -->
+      <div class="d-flex flex-column align-items-center gap-4">
+      
+        <!-- Scree Plot -->
+        <figure class="text-center" style="width: 85%;">
+          <img src="PCA_3.png" alt="Scree plot showing explained variance per principal component" 
+               class="img-fluid rounded shadow-sm" style="max-height: 300px; object-fit: contain;">
+          <figcaption class="mt-2 text-muted small">
+            Scree plot displaying the variance explained by each principal component. The first three components together 
+            explain approximately 53% of the total variance, capturing the most relevant structure in the weather data.
+          </figcaption>
+        </figure>
+      
+        <!-- PCA Biplot -->
+        <figure class="text-center" style="width: 85%;">
+          <img src="PCA_4.png" alt="PCA biplot of weather variables" 
+               class="img-fluid rounded shadow-sm" style="max-height: 560px; object-fit: contain;">
+          <figcaption class="mt-2 text-muted small">
+            PCA biplot illustrating how weather variables (arrows) contribute to the first two principal components. 
+            Variables like <em>temperature</em> and <em>dewpoint</em> are aligned, indicating correlation, 
+            while <em>cloud cover</em> and <em>shortwave radiation</em> oppose them, reflecting contrasting conditions.
+          </figcaption>
+        </figure>
+      </div>
+
+
+    
+
+      
+      <h3 id="conclusions">Conclusions</h3>
+      <p>
+      The PCA results provide a meaningful and useful reduction of the weather dataset and reveal interpretable patterns in the atmospheric weather variables. 
+      Principal Component 1 is dominated by temperature, shortwave radiation, and boundary layer height — variables typically associated with strong thermals. This suggests PC1 may represent general ‘thermal-favorable conditions.’ However, this hypothesis remains preliminary and will be evaluated against flight performance metrics in later analysis.
+      PC2 captures a contrast between clear-sky and cloudier regimes. 
+      These components will later be correlated with real paragliding performance indicators to verify whether they indeed correspond to stronger thermals or longer flights.
+      </p>
+
+    
+      
+
+
+      <hr>
+      <h6 class="fw-semibold mt-4">References</h6>
+      <ol class="small text-muted" style="line-height: 1.8;">
+        <li id="ref1">
+          <a href="https://www.machinelearningplus.com/machine-learning/principal-components-analysis-pca-better-explained/"
+             target="_blank" class="text-decoration-none text-primary">
+            Machine Learning Plus. “Principal Component Analysis (PCA) – Better Explained.”
+          </a>
+          Accessed September 2025.
+        </li>
+        <li id="ref2">
+          <a href="https://statisticsbyjim.com/basics/principal-component-analysis/"
+             target="_blank" class="text-decoration-none text-primary">
+            Statistics by Jim. “Principal Component Analysis Explained.”
+          </a>
+          Accessed September 2025.
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

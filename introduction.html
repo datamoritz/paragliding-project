@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction - Paragliding ML Project</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="boosting.html">Boosting</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="col-lg-8 mx-auto"> <!-- narrower column, centered -->
+  
+      <h1 class="fw-bold mb-4">Introduction</h1>
+      <hr>
+  
+      <!-- Wide Image inside column -->
+
+      <figure class="text-center">
+      <img src="image.png" 
+           alt="Paragliding" 
+           class="img-fluid rounded shadow mb-2" 
+           style="width: 100%; max-height: 400px; object-fit: cover;">
+      <figcaption class="figure-caption text-muted" style="font-size: 0.85rem;">
+        Visualized GPS flight track with distinct thermal upturns over the Austrian Alps, August 2025
+      </figcaption>
+      </figure>
+    
+      <p>
+        Paragliding is a thrilling sport that combines adventure with a deep connection to nature. Thousands of pilots around the world do it to explore landscapes from above, enjoy a quick descend from a mountain and to experience both freedom and physical challenge. The most exciting aspect of paragliding is the possibility of staying aloft for hours by finding rising air currents called thermals. These thermals make long-distance flights and record-breaking journeys across mountains possible. However, thermals are invisible, which makes detecting them a constant challenge for pilots. For beginners, missing thermals can mean short and disappointing flights, while for advanced pilots it can mean the difference between an ordinary flight day and a personal advancement. Understanding when and where thermals form is therefore critical for both safety and performance. Beginners and pro athletes alike, they all depend on good information about thermal conditions to maximize enjoyment and also reduce risk.
+      </p>
+  
+      <p>
+        Traditionally, pilots have relied on personal experience, weather forecasts, and visual cues in the landscape to locate thermals. Decision where to catch a thermal must be made quick and deliberate as without rising air a glider is in constant sink. Popular apps and online tools such as
+        <a href="https://burnair.ch" target="_blank" rel="noopener noreferrer">burnair.ch</a>
+        or
+        <a href="https://www.paraglidingmap.com" target="_blank" rel="noopener noreferrer">paraglidingmap.com</a>
+        have made it easier to plan flights by showing forecasts of thermal activity. These tools, however, only depend on large-scale weather models and often fail to capture local effects that are harder to predict. Correct in theory, they omit actual flight patterns and thus can fail to make successful real-world recommendations.
+      </p>
+  
+      <p>
+        Recent innovations, such as
+        <a href="https://paraglidable.com" target="_blank" rel="noopener noreferrer">paraglidable.com</a>,
+        combine global weather models with GPS flight data to create deep learning based predictions of flying conditions. This shows the growing recognition that real-world flight logs are a valuable source of information about how the atmosphere behaves. Yet, this existing work treats the problem as a black box, providing predictions using hundreds of weather parameters without offering concrete, actionable insights about why and what conditions are favorable. There is a gap for projects that connect pilot experiences, GPS trajectories, and weather data in a transparent, interpretable way.
+      </p>
+  
+      <p>
+        This project builds on prior work, but aims to explore the quest for thermals with a clearer scientific, educational and regional focus. For this, Alpine regions in Austria are analyzed. They provide an excellent testbed, since they have a rich flying culture and therefore many flight logs available. Also, the weather has a high variability which makes it ideal to correlate and form predictions about thermal activity. Questions to be answered by this project include:
+      </p>
+  
+      <ol class="fs-6" style="line-height: 2.2;">
+        <li><strong>Where was historically thermal lift strongest (spatial clusters on map)?</strong></li>
+        <li><strong>At what height above ground was thermal lift strongest?</strong></li>
+        <li><strong>When was lift strongest (time-of-day, seasonality)?</strong></li>
+        <li><strong>Can clustering reveal thermal “types” (ridge, booming mid-day, convergence)?</strong></li>
+        <li><strong>How consistent/reliable are thermal hotspots over time?</strong></li>
+        <li><strong>What is the best takeoff time for strong, consistent thermals?</strong></li>
+        <li><strong>Do advanced gliders outperform in thermals vs. EN-A/B (climb, distance, duration)?</strong></li>
+        <li><strong>Which weather features predict good thermal activity (temp, wind, cloud base, lapse rate)?</strong></li>
+        <li><strong>Given today’s weather, can we predict best thermal site, expected climb rates, and long-flight likelihood?</strong></li>
+        <li><strong>How do wind profile and shear impact thermal strength and usability?</strong></li>
+      </ol>
+            
+      <p>
+      To answer these questions, this project combines two main data sources: historical <strong>paragliding flight logs</strong> and corresponding <strong>weather data</strong> from the 
+      <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener noreferrer">Open-Meteo archive</a>. 
+      The flight data provides real trajectories and climb rates that reveal where thermals were actually encountered. The weather data adds variables such as temperature, wind, and cloud cover to the exact locations and timepoints where these thermals occured. 
+      The extensive and detailed data preparation process included scraping from different APIs, cleaning, feature selection, and combining the different datasets into a unified analytical thermals framework ready for further analysis.
+      </p>
+      
+      <p>
+      Subsequent sections of this project explore the data through exploratory analysis (EDA) and dimensionality reduction using 
+      Principal Component Analysis (PCA) to better understand feature relationships in the weather data. 
+      Different machine learning methods such as clustering, Naïve Bayes, Decision Trees are applied to uncover patterns, classify thermal conditions, and evaluate predictive performance.
+      </p>
+
+      <p>
+    Building on these foundations, the project develops a <strong>five-class thermal quality scale</strong> derived from 
+     climb-rate patterns in the flight data. This scale serves as the target variable for all supervised models, 
+    enabling a direct link between observed thermal strength and the underlying weather conditions. By mapping each 
+    thermal encounter to its corresponding meteorological context, the dataset captures both strong lift indicators 
+    and subtle atmospheric differences. This enriched structure allows machine learning models to identify which 
+    weather features—such as dewpoint, boundary layer height, and solar radiation—contribute most consistently to 
+    reliable thermal formation.
+</p>
+
+      <!-- Thermals Figures -->
+      <div class="d-flex flex-column align-items-center mt-4 gap-4">
+      
+        <figure class="text-center" style="width: 70%;">
+          <img src="Thermals_1.png"
+               alt="Paragliders soaring in thermal lift"
+               class="img-fluid rounded shadow-sm"
+               style="height: 320px; object-fit: cover; width: 100%;">
+          <figcaption class="mt-2 text-muted small">
+            Dozens of paragliders circling together in a shared thermal lift during a competition flight. Mountains and hills act as natural triggers for thermals.
+            <sup><a href="#ref3">[1]</a></sup>
+          </figcaption>
+        </figure>
+      
+        <figure class="text-center" style="width: 70%;">
+          <img src="Thermals_2.jpg"
+               alt="Thermal centering diagram"
+               class="img-fluid rounded shadow-sm"
+               style="height: 320px; object-fit: cover; width: 100%;">
+          <figcaption class="mt-2 text-muted small">
+            Top-down schematic of thermal centering. The thermal band can be narrow, with the strongest climb near the core, so pilots circle to stay in lift.
+            <sup><a href="#ref4">[2]</a></sup>
+          </figcaption>
+        </figure>
+      
+      </div>
+      
+      <hr>
+      
+      <!-- References -->
+      <ol class="small" style="line-height: 1.8;">
+        <li id="ref3">
+          <a href="https://www.passionparagliding.com/how-to-thermal-better" target="_blank">
+            Passion Paragliding – How to Thermal Better
+          </a> (accessed October 2025)
+        </li>
+        <li id="ref4">
+          <a href="https://www.youtube.com/watch?v=B-Nzjjw5BTo" target="_blank">
+            Abgeflogen – Thermal Centering Tutorial (YouTube)
+          </a> (accessed October 2025)
+        </li>
+      </ol>
+      
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

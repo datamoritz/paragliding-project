@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naive Bayes - Paragliding ML Project</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
+              <li><a class="dropdown-item" href="regression.html">Regression</a></li>
+              <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  
+
+    <div class="container mt-5">
+    <div class="col-lg-8 mx-auto">
+    <h1 class="fw-bold">Naive Bayes</h1>
+      
+      <!-- Left-aligned inline navigation -->
+      <div class="mb-2">
+        <a href="#overview" class="me-3 text-primary fw-semibold text-decoration-none">Overview</a>
+        <a href="#data" class="me-3 text-primary fw-semibold text-decoration-none">Data</a>
+        <a href="#code" class="me-3 text-primary fw-semibold text-decoration-none">Code</a>
+        <a href="#results" class="me-3 text-primary fw-semibold text-decoration-none">Results</a>
+        <a href="#conclusions" class="text-primary fw-semibold text-decoration-none">Conclusions</a>
+      </div>
+      
+      <hr>
+
+    <h3>Overview</h3>
+
+<figure class="d-flex flex-column align-items-center my-4">
+
+  <img src="images/NB1.png"
+       alt="Illustration of Naïve Bayes classification concept"
+       class="img-fluid rounded shadow-sm"
+       style="max-width: 60%; height: auto;">
+
+  <figcaption class="mt-3 text-muted"
+              style="max-width: 500px; line-height: 1.6; font-size: 0.9rem;">
+    Illustration of the Naïve Bayes principle: features (shapes) influence 
+    the probability of belonging to different classes using Bayes’ theorem.  
+    Image inspired by an explanation from 
+    <a href="#ref1"><sup>[1]</sup></a>.
+  </figcaption>
+
+</figure>
+
+
+      
+    <p>
+        Naïve Bayes describes a set of machine learning algorithms that classify the category of a data point through its probability. 
+        It relies on Bayes’ theorem, which states that the probability of a class Y given features X is proportional to how likely the 
+        features are under that class, multiplied by how common that class is.
+    </p>
+
+    <p align="center">
+      \[
+      P(Y \mid X) = \frac{P(X \mid Y)\, P(Y)}{P(X)}
+      \]
+    </p>
+
+    <p>
+        Here P(Y) is the prior probability (how frequent each class appears in the dataset) and P(X|Y) is the likelihood 
+        (how likely the features are if the example belongs to class Y). P(X) is the evidence, which is often ignored because 
+        it is the same for all classes. A new example with features X_i is classified into the category with the highest posterior 
+        probability:
+    </p>
+
+    <p>
+    \[
+    \hat{Y} = \arg\max_{Y} \; P(Y) \prod_i P(X_i \mid Y)
+    \]
+    </p>
+
+    <h4>The Naïve Assumption</h4>
+
+    <p>
+        The algorithm assumes that all features are conditionally independent given the class:
+    </p>
+
+    <p>
+    \[
+    P(X_1, X_2, \ldots, X_n \mid Y)
+        = \prod_i P(X_i \mid Y)
+    \]
+    </p>
+
+    <p>
+        This is a very strong assumption that is rarely true in real life, but makes the compytation extremely efficient and fast. 
+        As such, Naives Bayes works well with large datasets and surprisingly well as long as the relationshops of features are weak. 
+        Common applications are spam filtering, document categorization or sentinemnt analysis. When using Python’s scikit-learn 
+        implementation (e.g., GaussianNB or MultinomialNB), all features must be numeric, and categorical inputs must first be encoded 
+        (R can perform Naïve Bayes on mixed data).
+    </p>
+
+    <p>There are three Naïve Bayes categories:</p>
+
+    <h5>Bernoulli Naïve Bayes</h5>
+    <p>
+        Bernoulli Naïve Bayes is used when features are binary, i.e. 0 or 1. It models each feature as a Bernoulli-distributed 
+        variable and is often used in document classification, where each word is either present or not in a text. It works well 
+        when the data is sparse and binary, but is not suitable for continuous features
+    </p>
+
+    <h5>Multinomial (Categorical) Naïve Bayes</h5>
+    <p>
+        Multinomial Naïve Bayes handles features that represent counts or frequencies, such as how often a word appears in a text. 
+        It assumes the features follow a multinomial distribution and is widely used in text classification. It performs well when 
+        features reflect event frequencies and when class-conditional word distributions differ significantly.
+    </p>
+
+    <h5>Gaussian Naïve Bayes</h5>
+    <p>
+        Gaussian Naïve Bayes is used when features are continuous and can be modeled as coming from a normal (Gaussian) distribution. 
+        Instead of counts or binaries, it fits a mean and variance for each feature per class and evaluates likelihood accordingly. 
+        It is commonly applied to sensor readings, physical measurements, and other real-valued data.
+    </p>
+    
+        
+        <h3>Data</h3>
+        <p>
+          🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/data/sample_thermal_dataset.csv"
+             target="_blank" class="text-decoration-none text-primary">
+            Download sample dataset
+          </a>
+        </p>
+    
+        <p>
+            Supervised machine learning requires labeled data. Each record must belong to a known category. 
+            In this project, the labels are the thermal cluster classes (1–5) derived from K-Means in the clustering tab. 
+            Next, the data must be split into two disjoint sets:
+        </p>
+    
+        <ul>
+            <li>Training Set: used to learn the model</li>
+            <li>Testing Set: used to evaluate performance on unseen data</li>
+        </ul>
+    
+        <p>
+            Keeping them separate (disjoint) prevents overfitting and allows to realistic test and evaluate the accurary 
+            of the model on unseen data. In this project stratification was used to preserve the relative class proportions. 
+            Below is a small sample of the dataset used (weather features, and the cluster label):
+        </p>
+
+      <figure class="d-flex flex-column align-items-center my-4">
+
+        <img src="images/NB2.png"
+             alt="Example of weather features and corresponding thermal cluster labels before model training"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 90%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Example of the prepared dataset used for Naïve Bayes: nine weather features 
+          (e.g., temperature, dewpoint, wind speed, cloud cover, shortwave radiation, 
+          boundary-layer height) combined with the target label 
+          <code>cluster</code> (1–5).  
+          The image illustrates the transformation from raw weather data into the 
+          final supervised learning format used for classification.
+        </figcaption>
+      
+      </figure>
+
+
+      
+
+      <h3 id="code">Code</h3>
+      <p>
+        🔗 <a href="https://github.com/datamoritz/paragliding-project/blob/main/code/4_Clustering_v1.ipynb">
+          Link to code
+        </a>
+      </p>
+
+    <h3>Results</h3>
+      
+    <figure class="d-flex flex-column align-items-center my-4">
+    
+      <img src="images/NB3.png"
+           alt="Naïve Bayes confusion matrix and per-class performance metrics"
+           class="img-fluid rounded shadow-sm"
+           style="max-width: 100%; height: auto;">
+    
+      <figcaption class="mt-3 text-muted"
+                  style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+        Naïve Bayes evaluation results.  
+        Left: Confusion matrix showing how often each thermal cluster (1–5) is 
+        correctly or incorrectly predicted.  
+        Right: Per-class precision, recall, and F1-scores illustrating how well 
+        the model identifies each thermal quality class.  
+        These results highlight that Classes 1 and 5 are recognized more reliably, 
+        while Classes 2–4 show significant overlap in feature space.
+      </figcaption>
+    
+    </figure>
+      
+    <p>
+        The model achieved an accuracy of ~39%, which is well above random guessing (20% for 5 classes). However it indicates limited predictive power. 
+        The confusion matrix visualizes how often each class is predicted correctly (diagonal) versus incorrectly (off-diagonal). 
+        Classes 1 and 5 are predicted reasonably well, however Classes 2–4 are often misclassified as 1 or 5. 
+        Class 3 in particular shows very little separation in the weather feature space. This pattern suggests that some clusters 
+        have overlapping or nearly identical weather profiles.
+    </p>
+
+    <p>
+        This is underlined by the Performance bar chart. Class 5 (strong lift conditions) has the best recall (~0.65), meaning the model can often recognize strong thermal days. 
+        Class 1 also performs moderately well. However, classes 2, 3, 4 have very low precision/recall, indicating the model cannot distinguish them based on weather alone. 
+        This suggests that weather features alone do not strongly separate the five thermal-quality clusters.
+    </p>
+
+    <p>
+        These class-conditional KDE plots visualize how each weather feature is distributed across classes. 
+        Many features (e.g., temperature, dewpoint, windspeed) have heavily overlapping distributions (i.e. weak separation) between classes. 
+        Furthermore, the Gaussian assumption (single bell shaped curve) is not accurate for many features, as there is strong skewness, 
+        multi-modality or extreme spikes (such as cloud cover near 0). This explains why for several features, a Gaussian fit is unrealistic is unrealistic 
+        and Naïve Bayes will struggle.
+    </p>
+
+      <figure class="d-flex flex-column align-items-center my-4">
+    
+        <img src="images/NB4.png"
+             alt="Class-conditional KDE distributions for all weather features"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 90%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 800px; line-height: 1.6; font-size: 0.9rem;">
+          Class-conditional KDE plots for all weather features used in the Naïve Bayes model.
+          Each curve represents one thermal cluster (1–5).  
+          The plots reveal strong overlap between classes across most features and clear deviations 
+          from Gaussian shapes (skewness, spikes at zero cloud cover, and multimodal wind directions), 
+          explaining why Gaussian Naïve Bayes struggles to distinguish Classes 2–4 reliably.
+        </figcaption>
+      
+      </figure>
+
+      <hr>
+      <h6 class="fw-semibold mt-4">References</h6>
+      <ol class="small text-muted" style="line-height: 1.8;">
+
+      <li id="ref1">
+        <a href="https://databasecamp.de/en/ml/naive-bayes-algorithm#:~:text=The%20Naive%20Bayes%20Algorithm%20is%20a%20classification,occurrence%20of%20another%20feature%20within%20the%20class."
+           target="_blank"
+           class="text-decoration-none text-primary">
+           “Naive Bayes Algorithm.” DatabaseCamp.de
+        </a>
+        — Accessed October 2025.
+      </li>
+        
+        <li id="ref2">
+          <a href="https://miro.medium.com/v2/resize:fit:1576/1*vAtQZbROuTdp36aQQ8cqBA.png"
+             target="_blank" class="text-decoration-none text-primary">
+             “Comparison of Euclidean, Manhattan, and Cosine Similarity Metrics.” <em>Medium</em>.
+          </a>
+          Accessed October 2025.
+        </li>
+
+      </ol>
+    </div>
+
