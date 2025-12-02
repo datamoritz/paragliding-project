@@ -269,6 +269,25 @@
       
       </figure>
 
+    <h3>Conclusion</h3>
+<p>
+      Naïve Bayes served as a first baseline model for evaluating how well the meteorological features can predict the thermal clusters (derived from K-Means clustering). The low overall 
+      accuracy (~39%) confirms that weather dependent patterns exist, particularly for very weak thermals (class 1) and very strong thermals (class 5). However the model failed to predict 
+      accuratelty for the intermediate thermal categories. This corresponds to what was observed in clustering and PCA, the current weather features are not sufficient in explaining 
+      mid-quality thermals.
+      </p>
+<p>
+      From a meteorological and paragliding viewpoint, these findings make sense: Weather decides if it will a very weak or strong paragliding day. However other factors decide whether 
+      for an average day the thermal quality will be good. These features, not part in this study, include pilot skill level, features in local terrain and local convection dynamics not 
+      triggered by weather features alone. 
+</p>
+
+<p>
+      Naives Bayes acts as a fast, interpretable benchmark, however other models are warranted for better accuracy such as Decision Trees and Boosting.
+</p>
+
+      
+
       <hr>
       <h6 class="fw-semibold mt-4">References</h6>
       <ol class="small text-muted" style="line-height: 1.8;">
