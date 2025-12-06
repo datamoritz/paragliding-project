@@ -27,32 +27,24 @@ map.on('load', () => {
     map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 }); // Exaggerate terrain for better look
 
     // C. Add a 3D EXTRUSION Layer to visualize the thermal data
+    // C. Add a CIRCLE Layer to visualize the thermal data
     map.addLayer({
-        'id': 'thermal-extrusions', // New layer ID
-        'type': 'fill-extrusion', // Use fill-extrusion for 3D shapes
+        'id': 'thermal-points-test', // New test layer ID
+        'type': 'circle', // <--- Reverting to a simple circle layer
         'source': 'thermals',
         'paint': {
-            
-            // 1. HEIGHT: Set the top of the extrusion to the Entry Altitude
-            'fill-extrusion-height': ['get', 'entry_alt'],
-            
-            // 2. BASE: Set the base of the extrusion to a fixed low altitude (e.g., 500m)
-            'fill-extrusion-base': 500,
-
-            // 3. COLOR (Same color interpolation logic as before)
-            'fill-extrusion-color': [
+            'circle-radius': 4,
+            'circle-color': [ // Keep the color scale
                 'interpolate',
                 ['linear'],
                 ['get', 'entry_alt'], 
                 
-                500, '#800026', // Lowest Altitude: Dark Red
+                500, '#800026', 
                 1000, '#e31a1c',
                 1500, '#fecc5c',
-                2000, '#ffffb2' // Highest Altitude: Light Yellow
+                2000, '#ffffb2' 
             ],
-            
-            // 4. OPACITY
-            'fill-extrusion-opacity': 0.7
+            'circle-opacity': 0.8
         }
     });
 
