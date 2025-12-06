@@ -1,7 +1,7 @@
 // mapbox.js
 
 // 1. Set Access Token and Initialize Map
-mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN'; // <<< REPLACE THIS WITH YOUR TOKEN
+mapboxgl.accessToken = 'pk.eyJ1IjoibW9rbjQ5ODkiLCJhIjoiY21pdHA5NXoyMHkwMTNlcTJyZ3M1ODRlbiJ9.Sldlyj-1jfE6Qws-n1aoVQ'; // <<< REPLACE THIS WITH YOUR TOKEN
 
 const map = new mapboxgl.Map({
     container: 'mapbox-map', // Target the correct container ID
