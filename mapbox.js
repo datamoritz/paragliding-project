@@ -58,9 +58,28 @@ map.on('load', () => {
 
     // 5. Add Interaction (Popups)
     // NOTE: Mapbox uses the 'center' coordinate for click detection on extrusions
-    map.on('click', 'thermal-extrusions', (e) => {
-        // ... (Popup logic remains the same, but target 'thermal-extrusions') ...
-    });
+    // 5. Add Interaction (Popups)
+        // NOTE: Mapbox uses the 'center' coordinate for click detection on extrusions
+        map.on('click', 'thermal-extrusions', (e) => {
+            
+            // 1. Check if a feature was actually clicked
+            if (e.features && e.features.length > 0) {
+                
+                // 2. Extract the properties (id, climb_rate, entry_alt) from the feature
+                const properties = e.features[0].properties;
+    
+                // 3. Create and display the popup
+                new mapboxgl.Popup()
+                    // Set the location of the popup to the click coordinates
+                    .setLngLat(e.lngLat) 
+                    .setHTML(
+                        `<b>Thermal ID:</b> ${properties.id}<br>` +
+                        `<b>Climb Rate:</b> ${properties.climb_rate.toFixed(2)} m/s<br>` +
+                        `<b>Entry Alt:</b> ${properties.entry_alt.toFixed(0)} m`
+                    )
+                    .addTo(map);
+            }
+        });
     
     // 6. Set Camera to Enable 3D View (Pitch and Zoom)
     map.setPitch(45); // Set the tilt angle to 45 degrees
