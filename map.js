@@ -1,7 +1,7 @@
 // -------------------------
 // MAP INITIALIZATION
 // -------------------------
-var map = L.map('map').setView([51.0, 11.0], 6);
+var map = L.map('map').setView([47.7, 14.2], 8);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -11,7 +11,7 @@ let layerGroup = L.layerGroup().addTo(map);
 
 // -------------------------
 // COLOR SCALES
-// -----------------------
+// -----------------------var map = L.map('map').setView([47.7, 14.2], 8);
 
 // Past thermals — color by avg climb rate
 function colorPast(climbRate) {
@@ -139,6 +139,13 @@ async function loadPredThermals() {
 // -------------------------
 // BUTTON TOGGLES
 // -------------------------
+// Set initial button state
+btnPast.classList.add("btn-primary");
+btnPast.classList.remove("btn-outline-primary");
+
+btnPred.classList.add("btn-outline-primary");
+btnPred.classList.remove("btn-primary");
+
 btnPast.onclick = () => {
     loadPastThermals();
     btnPast.classList.replace("btn-outline-primary", "btn-primary");
@@ -150,6 +157,7 @@ btnPred.onclick = () => {
     btnPred.classList.replace("btn-outline-primary", "btn-primary");
     btnPast.classList.replace("btn-primary", "btn-outline-primary");
 };
+
 
 
 // Default mode
