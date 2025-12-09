@@ -1,12 +1,7 @@
 // -------------------------
 // MAP INITIALIZATION
 // -------------------------
-var map = L.map('map');
-
-map.fitBounds([
-    [46.2, 9.8],   // Southwest
-    [49.1, 17.2]   // Northeast
-]);
+var map = L.map('map').setView([47.5, 13.5], 10);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -104,13 +99,14 @@ async function loadPredThermals() {
             // ✔ Extract probability correctly
             let prob = feature.properties[probKey];
             if (prob === undefined || prob === null) prob = 0;
+            if (prob < 0.1) return null; // skip creating marker
 
             return L.circleMarker(latlng, {
                 radius: 6,
                 fillColor: colorPred(prob),
-                color: "#000",
-                weight: 1,
-                opacity: 1,
+                color: "transparent",
+                weight: 0.3,
+                opacity: 0.9,
                 fillOpacity: 0.90
             });
         },
