@@ -28,14 +28,17 @@ print("Thermal locations loaded.")
 
 ## HELPER FUNCTIONS ##
 
-def safe_get(url, params, retries=5, delay=1):
-    for attempt in range(retries):
+def safe_get(url, params, max_retries=5):
+    for attempt in range(1, max_retries + 1):
         try:
-            return requests.get(url, params=params, timeout=20)
+            print(f"Request attempt {attempt}/{max_retries} → {url}")
+            r = requests.get(url, params=params, timeout=30)
+            r.raise_for_status()
+            return r
         except Exception as e:
-            print(f"Retry {attempt+1}: {e}")
-            time.sleep(delay)
-    raise RuntimeError("Failed after retries")
+            print(f"Retry {attempt}: {e}")
+            time.sleep(2 * attempt)   # exponential backoff
+    raise RuntimeError("API failed after retries")
     
 
 # Cluster thermal locations to reduce weather API calls
@@ -145,7 +148,7 @@ def fetch_cell_forecast(lat, lon):
 
         df_w = fetch_func(lat, lon)
         cluster_weather[cluster_id] = df_w
-        time.sleep(0.15)
+        time.sleep(0.5)
 
     return cluster_weather
 
