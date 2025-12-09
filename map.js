@@ -226,15 +226,28 @@ btnPast.onclick = () => {
     loadPastThermals();
     btnPast.classList.replace("btn-outline-primary", "btn-primary");
     btnPred.classList.replace("btn-primary", "btn-outline-primary");
+    showLegend("legendPast");
 };
 
 btnPred.onclick = () => {
     loadPredThermals();
     btnPred.classList.replace("btn-outline-primary", "btn-primary");
     btnPast.classList.replace("btn-primary", "btn-outline-primary");
+    showLegend("legendPred");
 };
 
+
+function showLegend(id) {
+    document.getElementById("legendPred").style.display = "none";
+    document.getElementById("legendPast").style.display = "none";
+    document.getElementById(id).style.display = "block";
+}
+
+function hideLegend(id) {
+    document.getElementById(id).style.display = "none";
+}
 
 
 // Default mode
 loadPastThermals();
+showLegend("legendPast");
