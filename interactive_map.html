@@ -25,7 +25,50 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"></nav>
+<!-- 🔥 FULL NAVBAR INSERTED -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Paragliding ML</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+        <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+        <li class="nav-item"><a class="nav-link" href="conclusions.html">Challenges</a></li>
+        <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+             role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             ML Models
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+            <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+            <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+            <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+            <li><a class="dropdown-item" href="boosting.html">Boosting</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="interactive_map.html">
+            Interactive Map
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- END NAVBAR -->
 
     <div class="container text-center mt-4">
         <h1 class="display-6">Interactive Thermal Flight Map</h1>
@@ -41,6 +84,8 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="map.js"></script>
 </body>
 </html>
