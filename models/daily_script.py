@@ -16,6 +16,7 @@ ROOT = BASE.parent
 MODELS = ROOT / "models"
 
 # Load models
+print("Models loading....")
 stage1 = joblib.load(MODELS / "stage1_rf.pkl")
 stage2 = joblib.load(MODELS / "stage2_rf.pkl")
 print("Models loaded.")
@@ -144,6 +145,7 @@ def fetch_cell_forecast(lat, lon):
 
         df_w = fetch_func(lat, lon)
         cluster_weather[cluster_id] = df_w
+        time.sleep(0.15)
 
     return cluster_weather
 
