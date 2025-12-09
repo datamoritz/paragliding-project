@@ -9,20 +9,17 @@ from datetime import datetime
 from sklearn.cluster import KMeans
 import pathlib
 
-# Paths
-ROOT = pathlib.Path(__file__).resolve().parent.parent   # repo root
+BASE = pathlib.Path(__file__).resolve().parent
+ROOT = BASE.parent
 MODELS = ROOT / "models"
-DATA = ROOT / "data"
-OUTPUT = MODELS / "output"   # or ROOT / "output" if you want it elsewhere
 
-# Load Models
+# Load models
 stage1 = joblib.load(MODELS / "stage1_rf.pkl")
 stage2 = joblib.load(MODELS / "stage2_rf.pkl")
-
 print("Models loaded.")
 
-# Load Thermal Locations
-df_thermals = pd.read_csv(DATA / "thermals_for_github.csv")
+# Load thermal CSV (correct folder)
+df_thermals = pd.read_csv(MODELS / "thermals_for_github.csv")
 print("Thermal locations loaded.")
 
 
