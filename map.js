@@ -24,16 +24,16 @@ function colorPast(climbRate) {
 
 // Predicted thermals — light blue → blue → black
 function colorPred(prob) {
-    if (prob < 0.10) return 'rgba(0,0,0,0)';     // invisible
-    if (prob < 0.20) return '#deebf7';           // very light blue
-    if (prob < 0.30) return '#c6dbef';           // light blue
-    if (prob < 0.40) return '#9ecae1';           // medium-light blue
-    if (prob < 0.50) return '#6baed6';           // medium blue
-    if (prob < 0.60) return '#4292c6';           // medium-dark blue
-    if (prob < 0.70) return '#2171b5';           // dark blue
-    if (prob < 0.80) return '#08519c';           // very dark blue
-    if (prob < 0.90) return '#08306b';           // navy blue
-    return '#000000';                            // near-certain → black
+    if (prob < 0.10) return 'rgba(0,0,0,0)';   // hidden
+    if (prob < 0.20) return '#fde0f6';         // very light pink
+    if (prob < 0.30) return '#f7b1ea';         // pastel pink
+    if (prob < 0.40) return '#e77edc';         // medium pink
+    if (prob < 0.50) return '#d24bcf';         // raspberry
+    if (prob < 0.60) return '#b51fbf';         // strong magenta
+    if (prob < 0.70) return '#9911a9';         // dark magenta
+    if (prob < 0.80) return '#6c0c7c';         // plum
+    if (prob < 0.90) return '#490657';         // deep purple
+    return '#2a0233';                          // near black-purple (highest confidence)
 }
 
 
