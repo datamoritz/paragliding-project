@@ -13,7 +13,6 @@ let layerGroup = L.layerGroup().addTo(map);
 // COLOR SCALES
 // -------------------------
 
-// Past thermals — your original scale
 function colorPast(climbRate) {
     return climbRate > 2.0 ? '#d73027' :
            climbRate > 1.5 ? '#fc8d59' :
@@ -22,12 +21,11 @@ function colorPast(climbRate) {
                              '#4575b4';
 }
 
-// Predicted thermals — light blue → blue → black
 function colorPred(prob) {
-    return prob > 0.8 ? '#000000' :
-           prob > 0.6 ? '#08306b' :
-           prob > 0.4 ? '#08519c' :
-           prob > 0.2 ? '#6baed6' :
+    return prob > 0.7 ? '#000000' :
+           prob > 0.5 ? '#08306b' :
+           prob > 0.3 ? '#08519c' :
+           prob > 0.1 ? '#6baed6' :
                         '#deebf7';
 }
 
@@ -36,7 +34,8 @@ function colorPred(prob) {
 // -------------------------
 
 async function loadPastThermals() {
-    const response = await fetch("past_thermals.geojson");
+    // ✅ FIXED PATH — change this to your real past thermals file
+    const response = await fetch("models/past_thermals.geojson");
     const data = await response.json();
 
     layerGroup.clearLayers();
@@ -71,7 +70,8 @@ async function loadPastThermals() {
 
 
 async function loadPredThermals() {
-    const response = await fetch("thermal_predictions.geojson");
+    // ✅ FIXED PATH — matches your GitHub repo
+    const response = await fetch("models/thermal_predictions.geojson");
     const data = await response.json();
 
     layerGroup.clearLayers();
@@ -88,7 +88,6 @@ async function loadPredThermals() {
             });
         },
         onEachFeature: function (feature, layer) {
-
             let p = feature.properties;
 
             let html = `<b>Predicted Thermal</b><br>
