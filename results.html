@@ -7,20 +7,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <style>
-    .figure-placeholder {
-      width: 100%;
-      height: 260px;
-      border: 2px dashed #777;
-      border-radius: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 25px 0;
-      font-style: italic;
-      color: #666;
-    }
-  </style>
+
 </head>
 
 <body>
@@ -68,45 +55,30 @@
 
       <h1 class="fw-bold">Results</h1>
 
-      <!-- Inline navigation -->
-      <div class="mb-2">
-        <a href="#overview" class="me-3 text-primary fw-semibold text-decoration-none">Overview</a>
-        <a href="#metrics" class="me-3 text-primary fw-semibold text-decoration-none">Key Metrics</a>
-        <a href="#figures" class="me-3 text-primary fw-semibold text-decoration-none">Figures</a>
-        <a href="#interpretation" class="me-3 text-primary fw-semibold text-decoration-none">Interpretation</a>
-        <a href="#downloads" class="text-primary fw-semibold text-decoration-none">Downloads</a>
-      </div>
+
 
    <style>
 .results-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 30px 0;
     font-family: Arial, sans-serif;
+    margin: 25px 0;
     font-size: 16px;
 }
 
 .results-table th {
-    background-color: #4F74A3;
+    background-color: #3b3f46;
     color: white;
-    padding: 14px;
+    padding: 12px 14px;
     text-align: left;
-    font-size: 18px;
+    border: 1px solid #d0d3d6;
 }
 
 .results-table td {
-    padding: 14px;
-    border-bottom: 1px solid #ddd;
-    background-color: #f2f4f7;
+    padding: 12px 14px;
+    border: 1px solid #d0d3d6;
+    background-color: #f7f7f7;
     vertical-align: top;
-}
-
-.results-table tr:nth-child(even) td {
-    background-color: #e6e9ef;
-}
-
-.results-table tr:hover td {
-    background-color: #d9dde4;
 }
 </style>
 
@@ -115,45 +87,44 @@
         <th>Method</th>
         <th>Purpose</th>
         <th>Key Metrics</th>
-        <th>Efficacy Summary</th>
+        <th>Interpretation / Efficacy</th>
     </tr>
 
     <tr>
         <td><b>Clustering</b></td>
         <td>Identify natural thermal groupings (exploration of classification targets)</td>
         <td>Clusters based on climb rate, duration; k = 5</td>
-        <td>Helpful for structure; clusters overlap heavily → not ideal for prediction</td>
+        <td>Helpful structural insight; clusters overlap significantly → weak predictive usefulness</td>
     </tr>
 
     <tr>
         <td><b>Naive Bayes Classifier</b></td>
-        <td>Baseline thermal-strength classification of thermal clusters</td>
+        <td>Baseline thermal-strength classification using cluster labels</td>
         <td>Accuracy: ~39%</td>
-        <td>Limited — strong feature overlap among clusters</td>
+        <td>Limited performance — overlapping features make class boundaries indistinct</td>
     </tr>
 
     <tr>
         <td><b>Random Forest — Stage 1</b></td>
-        <td>Predict whether weather conditions produce a thermal (y/n)</td>
+        <td>Predict whether current conditions produce a thermal (binary y/n)</td>
         <td>Accuracy: 90%<br>F1 ≈ 0.90</td>
-        <td>Strong — reliable thermal detection, but negative samples were synthesized</td>
+        <td>Strong detection capability, though negatives were partly synthesized</td>
     </tr>
 
     <tr>
         <td><b>Random Forest — Stage 2</b></td>
-        <td>Predict strong thermal probability (e.g., &gt; 1.5 m/s)</td>
+        <td>Predict strong thermal probability (e.g., &gt;1.5 m/s)</td>
         <td>Accuracy: ~64%<br>F1-Macro: 64%</td>
-        <td>High — smooth probability map, strong atmospheric predictive accuracy</td>
+        <td>High-quality probability outputs; smooth geographic predictions from weather patterns</td>
     </tr>
 
     <tr>
         <td><b>XGBoost</b></td>
-        <td>Compare against RF</td>
+        <td>Compare against Random Forest performance</td>
         <td>Accuracy: 63%<br>F1-Macro: 63%</td>
-        <td>Competitive — slightly more overfitting</td>
+        <td>Competitive, but mild overfitting and no clear gain over RF</td>
     </tr>
 </table>
-
      
 
     </div>
