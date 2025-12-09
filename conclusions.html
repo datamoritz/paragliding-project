@@ -4,15 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conclusions - Paragliding ML Project</title>
-  <!-- Bootstrap CSS -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .figure-placeholder {
+      width: 100%;
+      height: 280px;
+      border: 2px dashed #888;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 25px 0;
+      color: #666;
+      font-size: 1rem;
+      font-style: italic;
+    }
+  </style>
 </head>
+
 <body>
+
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">Paragliding ML</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -21,8 +39,8 @@
           <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
           <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">ML Models</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">ML Models</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
               <li><a class="dropdown-item" href="pca.html">PCA</a></li>
               <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
@@ -32,49 +50,188 @@
               <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+          <li class="nav-item"><a class="nav-link active" href="conclusions.html">Conclusions</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
+  <!-- Page Content -->
   <div class="container mt-5">
+
     <h1 class="fw-bold">Conclusions</h1>
-    This section provides a concise non-technical synthesis of this project's findings, aimed at pilots and planners.
+    <p class="mb-4">
+      This section provides a concise non-technical synthesis of the project’s findings, aimed at pilots and planners.
+    </p>
 
-      <h2 class="fw-bold mb-4">Relevant Findings</h2>
+    <h2 class="fw-bold mb-4">Relevant Findings</h2>
 
-      <ol class="fs-6" style="line-height: 2.2;">
-        <li><strong>Where was historically thermal lift strongest (spatial clusters on map)?</strong></li>
+    <ol class="fs-6" style="line-height: 2.0;">
 
-        This is on of the project's central outcomes and can be interactively explored in the interactive map. Histoorically thermal lift was strongest all across the Austrian mountain ridges, especially prominent in popular flight areas such as Bischling or Zell am See. 
+      <!-- 1 -->
+      <li><strong>Where was historically thermal lift strongest (spatial clusters on map)?</strong></li>
+      <p>
+        This is one of the project's central outcomes and can be interactively explored in the map. Historically,
+        thermal lift was strongest across the Austrian mountain ridges, especially prominent in well-known flying
+        areas such as Bischling and Zell am See.
+      </p>
 
-        <li><strong>At what height above ground was thermal lift strongest?</strong></li>
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Map of spatial thermal clusters</div>
 
+      <!-- 2 -->
+      <li><strong>At what height above ground was thermal lift strongest?</strong></li>
 
+      <p>
+        Strong thermals are not limited to high altitudes. Thermal strength appears remarkably stable across a wide
+        range of entry heights. Although most thermals are first encountered between 0–600 m AGL, strong lift
+        (2.6–3.0 m/s) occurs up to 1800 m AGL. This demonstrates that thermals extend vertically through the boundary
+        layer, and strong cores may be intercepted at many levels — an important insight for beginners who may not
+        climb high early in a flight.
+      </p>
 
+      <p>
+        Maximum climb does not depend strongly on entry height, indicating that usable thermals form from very low
+        levels (~200 m AGL) up to 1800+ m AGL.
+      </p>
 
-        
-        <li><strong>When was lift strongest (time-of-day, seasonality)?</strong></li>
-        <li><strong>Can clustering reveal thermal “types” (ridge, booming mid-day, convergence)?</strong></li>
-        <li><strong>How consistent/reliable are thermal hotspots over time?</strong></li>
-        <li><strong>What is the best takeoff time for strong, consistent thermals?</strong></li>
-        <li><strong>Do advanced gliders outperform in thermals vs. EN-A/B (climb, distance, duration)?</strong></li>
-        <li><strong>Which weather features predict good thermal activity (temp, wind, cloud base, lapse rate)?</strong></li>
-        <li><strong>Given today’s weather, can we predict best thermal site, expected climb rates, and long-flight likelihood?</strong></li>
-        <li><strong>How do wind profile and shear impact thermal strength and usability?</strong></li>
-      </ol>
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Bar chart of climb vs. entry height</div>
 
-    <h2 class="fw-bold mb-4">Future Work</h2>
+      <!-- 3 -->
+      <li><strong>When was lift strongest (time-of-day, seasonality)?</strong></li>
 
+      <p>
+        Average maximum climb peaks around 11 AM. Since the number of thermals is also highest between 10 AM and
+        12 PM, this may reflect both optimal heating conditions and the tendency of skilled pilots to launch during
+        this window.
+      </p>
 
+      <p>
+        Seasonality patterns match intuition: spring thermals are sharper and more aggressive due to colder ground;
+        summer thermals are abundant but often softer. Slightly lower summer climb rates may reflect that more
+        beginners fly during peak vacation season.
+      </p>
 
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Time-of-day max climb</div>
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Seasonality plot</div>
 
+      <!-- 4 -->
+      <li><strong>Can clustering reveal thermal “types”?</strong></li>
 
-    
+      <p>
+        Yes — five distinct thermal types were identified. Summary below; details are in <em>clustering.html</em>.
+      </p>
+
+      <!-- Table -->
+      <div class="table-responsive my-4">
+        <table class="table table-bordered table-striped align-middle text-start" style="font-size: 0.9rem;">
+          <thead class="table-dark text-center">
+            <tr>
+              <th>Cluster</th>
+              <th>Characteristics</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cluster 1</td>
+              <td>Weak climb (1.3 m/s), very small gain (~80 m), short (60 s), high entry (~2400 m)</td>
+              <td>High-altitude residual or dying thermals.</td>
+            </tr>
+            <tr>
+              <td>Cluster 2</td>
+              <td>Strongest climb (2.6 m/s), moderate gain (~280 m), short–medium (107 s)</td>
+              <td>Energetic short bursts — punchy mid-altitude cores.</td>
+            </tr>
+            <tr>
+              <td>Cluster 3</td>
+              <td>Moderate climb (1.5 m/s), steady gain (~315 m), long duration (200 s)</td>
+              <td>Typical sustained thermals.</td>
+            </tr>
+            <tr>
+              <td>Cluster 4</td>
+              <td>Decent climb (1.9 m/s), large gain (~650 m), long duration (336 s)</td>
+              <td>Strong sustained XC thermals.</td>
+            </tr>
+            <tr>
+              <td>Cluster 5</td>
+              <td>Weakest climb (1.1 m/s), tiny gain (~60 m), short (50 s), lowest entry (~1700 m)</td>
+              <td>Broken/partial near-ground lift.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Cluster visualization</div>
+
+      <!-- 5 -->
+      <li><strong>How consistent/reliable are thermal hotspots over time?</strong></li>
+      <p>This question remains out of scope for the current analysis.</p>
+
+      <!-- 6 -->
+      <li><strong>What is the best takeoff time for strong, consistent thermals?</strong></li>
+      <p>The takeoff time is not stored in IGC files. This question was out of scope.</p>
+
+      <!-- 7 -->
+      <li><strong>Do advanced gliders outperform beginner gliders (EN-A/B)?</strong></li>
+
+      <p>
+        Many beginners worry that EN-A wings cannot climb as efficiently. However, the data shows no strong
+        correlation between wing rating and thermal performance. Even beginner wings can climb efficiently and
+        enable long XC flights.
+      </p>
+
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Wing rating vs climb</div>
+
+      <!-- 8 -->
+      <li><strong>Which weather features predict good thermal activity?</strong></li>
+
+      <p>Two different models were optimized:</p>
+
+      <ul>
+        <li><strong>Thermal yes/no prediction:</strong> shortwave radiation, boundary layer height, low cloud cover, LCL height, windspeed (10m)</li>
+        <li><strong>Strong vs weak thermal prediction:</strong> dewpoint (2m), thermal potential ratio, shortwave radiation, LCL height, wind-stress proxy (wind² at 2m)</li>
+      </ul>
+
+      <p>A brief explanation of these features is provided in the Data page.</p>
+
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Feature importance plot</div>
+
+      <!-- 9 -->
+      <li><strong>Given today’s weather, can we predict best sites and strong-lift probability?</strong></li>
+
+      <p>
+        Yes — the interactive map uses today’s weather forecast to compute thermal probabilities across Austria’s
+        known hotspots. Predicting exact climb rates was not feasible with the current dataset but could be improved
+        in future work.
+      </p>
+
+      <div class="figure-placeholder">FIGURE PLACEHOLDER — Interactive map output example</div>
+
+      <!-- 10 -->
+      <li><strong>How do wind profile and shear impact thermal strength?</strong></li>
+
+      <p>
+        Wind profile was not the focus of this analysis. Only 10 m windspeed was included, and it does not appear as
+        a top predictor of strong thermal likelihood — suggesting that as long as winds are low, they do not
+        significantly degrade thermal strength.
+      </p>
+
+    </ol>
+
+    <!-- Future Work -->
+    <h2 class="fw-bold mt-5 mb-3">Future Work</h2>
+
+    <ul class="fs-6">
+      <li>Include wind profile and shear (ERA5 vertical layers).</li>
+      <li>Add multi-year stability analysis of thermal hotspots.</li>
+      <li>Improve climb-rate prediction using denser atmospheric datasets.</li>
+      <li>Integrate takeoff time, site orientation, and terrain shading models.</li>
+      <li>Expand dataset to include multiple countries and >1M thermals.</li>
+    </ul>
+
   </div>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
