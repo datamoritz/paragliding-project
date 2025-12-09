@@ -11,7 +11,7 @@ let layerGroup = L.layerGroup().addTo(map);
 
 // -------------------------
 // COLOR SCALES
-// -------------------------
+// -----------------------
 
 // Past thermals — color by avg climb rate
 function colorPast(climbRate) {
