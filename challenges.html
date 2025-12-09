@@ -59,18 +59,8 @@
 <div>
 
 <p>
-This section provides a deeper look into the scientific and technical challenges this project explored. Overall this project highlights an important truth in atmospheric ML:<br>
-Thermals emerge from nonlinear, multi-scale interactions that cannot be perfectly captured by coarse-grained meteorological features alone.<br>
-Thus the achievable predictive ceiling is fundamentally constrained, even more so when paragliding flight logs are used as sensors. Nevertheless:
+This section provides a deeper look into the scientific and technical challenges this project tackled
 </p>
-
-<ul>
-<li>The final two-stage Random Forest pipeline successfully captures broad atmospheric patterns connected to thermal formation.</li>
-<li>The model produces smooth, interpretable spatial probability maps.</li>
-</ul>
-
-<p>This hybrid approach (domain knowledge, clustering, two-stage supervised learning, visualization) is scientifically defensible and effective given available data.</p>
-
 <p><b>1. Label Ambiguity & Weak Ground Truth</b><br>
 Thermals are not directly observable in GPS logs. Instead, they must be inferred from climb rate, circular motion, and altitude gain. These are all indirect proxies for the true physical phenomenon, making the project from begin on a challenging undertaking. The labels contain measurement error: the “strength” of a thermal is not directly measured but inferred from pilot movement patterns, which vary. Climb rate depends on glider performance, wing loading, pilot skill, and local turbulence — not solely thermal strength. Thus the supervised labels used in Naive Bayes, RF Stage 1/2, and XGBoost contain irreducible label noise.
 </p>
