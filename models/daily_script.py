@@ -28,7 +28,7 @@ print("Thermal locations loaded.")
 
 ## HELPER FUNCTIONS ##
 
-def safe_get(url, params, max_retries=5):
+def safe_get(url, params, max_retries=6):
     for attempt in range(1, max_retries + 1):
         try:
             print(f"Request attempt {attempt}/{max_retries} → {url}")
