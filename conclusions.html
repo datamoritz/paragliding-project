@@ -73,7 +73,7 @@
 
       <p class="mb-4">
         This section provides a concise, non-technical synthesis of the project’s results, aimed at pilots
-        and planners.
+        and flight planners.
       </p>
 
       <!-- FINDINGS -->
@@ -89,7 +89,9 @@
           align with common XC routes and ridge structures.
         </p>
 
-        <div class="figure-placeholder">FIGURE PLACEHOLDER — Spatial thermal clusters map</div>
+
+
+
 
         <!-- 2 -->
         <li><strong>At what height above ground was thermal lift strongest?</strong></li>
@@ -105,7 +107,30 @@
           climb rates occur at all entry heights.
         </p>
 
-        <div class="figure-placeholder">FIGURE PLACEHOLDER — Climb rate vs entry height</div>
+
+        <figure class="d-flex flex-column align-items-center my-4">
+      
+        <img src="images/C1.png"
+             alt="Average maximum climb rate across thermal entry height bins"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 80%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 650px; line-height: 1.6; font-size: 0.9rem;">
+          Average maximum climb rate (<em>m/s</em>) across different thermal entry heights
+          above ground. Strong lift is not limited to high altitude — climb rates remain
+          remarkably consistent from 0–1800 m AGL, showing that strong cores can be
+          intercepted at many levels of the boundary layer.
+        </figcaption>
+      
+      </figure>
+
+
+        
+
+
+
+        
 
         <!-- 3 -->
         <li><strong>When was lift strongest (time-of-day, seasonality)?</strong></li>
@@ -114,6 +139,23 @@
           Thermal strength peaks around 11 AM on average, which may reflect both natural heating cycles and
           pilot behavior (skilled pilots launching during optimal conditions).
         </p>
+        
+        <figure class="d-flex flex-column align-items-center my-4">
+        
+          <img src="images/C2.png"
+               alt="Thermal strength by hour of day"
+               class="img-fluid rounded shadow-sm"
+               style="max-width: 80%; height: auto;">
+        
+          <figcaption class="mt-3 text-muted"
+                      style="max-width: 650px; line-height: 1.6; font-size: 0.9rem;">
+            Average maximum climb rate by hour of the day, annotated with the number of detected thermals
+            for each hour. Thermal strength peaks around <strong>11 AM</strong>, which aligns with the typical
+            daily heating cycle. Higher thermal counts between 10 AM and 12 PM suggest that both atmospheric
+            conditions and pilot behavior contribute to this pattern.
+          </figcaption>
+        
+        </figure>
 
         <p>
           Seasonal patterns are intuitive: spring yields sharper, more aggressive lift due to colder ground
@@ -121,8 +163,24 @@
           reflect the large number of beginners flying during holidays rather than weaker thermals.
         </p>
 
-        <div class="figure-placeholder">FIGURE PLACEHOLDER — Time-of-day plot</div>
-        <div class="figure-placeholder">FIGURE PLACEHOLDER — Seasonality plot</div>
+        <figure class="d-flex flex-column align-items-center my-4">
+
+        <img src="images/C3.png"
+             alt="Thermal strength by month"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 80%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 650px; line-height: 1.6; font-size: 0.9rem;">
+          Average maximum climb rate by month, annotated with monthly thermal counts.  
+          Spring months (April–May) show the <strong>strongest average lift</strong>, driven by colder ground and
+          steeper temperature gradients. Summer thermals remain abundant but typically softer, partly because
+          more recreational and beginner pilots fly during this period. Autumn shows a marked decline in lift.
+        </figcaption>
+      
+      </figure>
+
+
 
         <!-- 4 -->
         <li><strong>Can clustering reveal thermal types?</strong></li>
@@ -190,44 +248,74 @@
           dominate over wing rating in this dataset.
         </p>
 
-        <div class="figure-placeholder">FIGURE PLACEHOLDER — Wing rating vs performance</div>
+        <figure class="d-flex flex-column align-items-center my-4">
+
+        <img src="images/C4.png"
+             alt="Average climb rate by EN rating and thermal category"
+             class="img-fluid rounded shadow-sm"
+             style="max-width: 70%; height: auto;">
+      
+        <figcaption class="mt-3 text-muted"
+                    style="max-width: 650px; line-height: 1.6; font-size: 0.9rem;">
+          Average climb rate for EN-A, EN-B, and EN-C wings across low, mid, and high thermal-strength
+          categories. The data shows <strong>no clear performance advantage</strong> for higher-rated wings:
+          EN-A wings achieve similar climb rates to EN-B and EN-C within comparable thermal conditions.
+          This suggests that in this dataset, <strong>pilot skill and weather factors dominate</strong> thermal
+          performance more than wing certification level.
+        </figcaption>
+      
+      </figure>
+
+
+        <!-- 8 -->
+        <li id="weather"><strong>Which weather features predict strong thermals?</strong></li>
+
+        <p>
+          Two models were trained:
+        </p>
+
+        <ul>
+          <li><strong>Thermal yes/no predictor:</strong> shortwave radiation, boundary-layer height, low cloud cover, LCL height, windspeed (10 m)</li>
+          <li><strong>Strong vs weak thermal predictor:</strong> dewpoint (2 m), thermal potential ratio, shortwave radiation, LCL height, wind stress proxy (wind²)</li>
+        </ul>
+
+        <p>
+          Dewpoint and shortwave radiation appear as consistently dominant predictors. Lower dewpoint (drier air)
+          favors instability and stronger lift, while strong shortwave radiation increases surface heating and
+          drives convection.
+        </p>
+
+        <div class="figure-placeholder">FIGURE PLACEHOLDER — Feature importance chart</div>
+
+        <!-- 9 -->
+        <li id="prediction"><strong>Given today’s weather, can we predict strong thermals and likely hotspots?</strong></li>
+
+        <p>
+          Yes — the interactive map uses the day’s weather forecast to compute prediction probabilities across
+          known historic thermal sites. This provides an intuitive, visual assessment of where strong thermals
+          are most likely to develop.
+        </p>
+
+        <p>
+          Predicting exact climb rates was not feasible with the current dataset, as atmospheric inputs were not
+          sufficiently dense. A larger or higher-resolution weather dataset would allow this to be improved.
+        </p>
+
+        <div class="figure-placeholder">FIGURE PLACEHOLDER — Example prediction output</div>
+
+        <!-- 10 -->
+        <li id="future"><strong>Future Work</strong></li>
+
+        <ul>
+          <li>Incorporate wind shear and full vertical wind profile (ERA5 pressure levels).</li>
+          <li>Analyze multi-year hotspot stability and recurrence.</li>
+          <li>Improve climb-rate prediction using denser atmospheric datasets.</li>
+          <li>Integrate terrain shading, lapse rate, and takeoff orientation effects.</li>
+          <li>Scale the dataset to additional countries and 1M+ thermals.</li>
+        </ul>
 
       </ol>
 
-      <!-- WEATHER -->
-      <h2 id="weather" class="fw-bold mt-5 mb-3">Which Weather Features Predict Strong Thermals?</h2>
-
-      <p>
-        Two models were trained:
-      </p>
-
-      <ul>
-        <li><strong>Thermal yes/no predictor:</strong> shortwave radiation, boundary-layer height, low cloud cover, LCL height, windspeed (10 m)</li>
-        <li><strong>Strong vs weak thermal predictor:</strong> dewpoint (2 m), thermal potential ratio, shortwave radiation, LCL height, wind stress proxy (wind²)</li>
-      </ul>
-
-      <p>
-        Dewpoint and solar radiation consistently rank among the most influential features. Lower dewpoint (drier
-        air) encourages instability and stronger lift, while shortwave radiation drives surface heating that powers
-        convective growth.
-      </p>
-
-      <div class="figure-placeholder">FIGURE PLACEHOLDER — Feature importance chart</div>
-
-      <!-- PREDICTION -->
-      <h2 id="prediction" class="fw-bold mt-5 mb-3">Thermal Prediction for Today’s Weather</h2>
-
-      <p>
-        Yes — we can predict where thermals are likely to form today. The interactive map pulls the current
-        day’s forecast and highlights where strong lift is expected based on historic thermal hotspots.
-      </p>
-
-      <p>
-        Predicting <em>exact</em> climb rates was not feasible with this dataset due to sparse atmospheric
-        representation, but this can be improved with larger or higher-resolution weather sources.
-      </p>
-
-      <div class="figure-placeholder">FIGURE PLACEHOLDER — Example prediction output</div>
 
       <!-- FUTURE WORK -->
       <h2 id="future" class="fw-bold mt-5 mb-3">Future Work</h2>
