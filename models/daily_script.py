@@ -8,6 +8,8 @@ import joblib
 from datetime import datetime
 from sklearn.cluster import KMeans
 import pathlib
+import time
+
 
 BASE = pathlib.Path(__file__).resolve().parent
 ROOT = BASE.parent
@@ -24,6 +26,16 @@ print("Thermal locations loaded.")
 
 
 ## HELPER FUNCTIONS ##
+
+def safe_get(url, params, retries=5, delay=1):
+    for attempt in range(retries):
+        try:
+            return requests.get(url, params=params, timeout=20)
+        except Exception as e:
+            print(f"Retry {attempt+1}: {e}")
+            time.sleep(delay)
+    raise RuntimeError("Failed after retries")
+    
 
 # Cluster thermal locations to reduce weather API calls
 def cluster_thermal_locations(df_thermals, K=120, random_state=42):
@@ -95,7 +107,7 @@ def fetch_cell_forecast(lat, lon):
         "timezone": "Europe/Vienna"
     }
 
-    r = requests.get(url, params=params)
+    r = safe_get(url, params)
 
     # Safety: check if JSON valid
     try:
