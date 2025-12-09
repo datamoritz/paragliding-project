@@ -51,28 +51,30 @@ async function loadPastThermals() {
     L.geoJSON(data, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
-                radius: 4,
-                fillColor: colorPast(feature.properties.avg_climb_rate),
+                radius: 5,
+                fillColor: colorPast(feature.properties.avg_climb), // FIXED
                 color: "#000",
                 weight: 1,
                 opacity: 1,
-                fillOpacity: 0.8
+                fillOpacity: 0.85
             });
         },
         onEachFeature: function (feature, layer) {
             const p = feature.properties;
+
             layer.bindPopup(`
                 <b>Past Thermal</b><br>
-                Avg climb: ${p.avg_climb_rate.toFixed(2)} m/s<br>
-                Max climb: ${p.max_climb_rate.toFixed(2)} m/s<br>
-                Entry alt: ${p.entry_alt} m<br>
-                Exit alt: ${p.exit_alt} m<br>
-                Duration: ${p.duration_s}s
+                Avg Climb: ${p.avg_climb.toFixed(2)} m/s<br>   <!-- FIXED -->
+                Max Climb: ${p.max_climb.toFixed(2)} m/s<br>
+                Entry Alt: ${p.entry_alt} m<br>
+                Exit Alt: ${p.exit_alt} m<br>
+                Duration: ${p.duration_s} s
             `);
         }
     }).addTo(layerGroup);
 
-    modeLabel.innerHTML = 'Thermals colored by <b>Average Climb Rate</b> (m/s).';
+    modeLabel.innerHTML =
+        'Thermals colored by <b>Average Climb Rate</b> (m/s).';
 }
 
 
@@ -83,37 +85,54 @@ async function loadPredThermals() {
     const data = await loadData();
     layerGroup.clearLayers();
 
+    const currentHour = new Date().getHours();   // system hour (0–23)
+    const probKey = `strong_prob_h${String(currentHour).padStart(2, "0")}`;
+
     L.geoJSON(data, {
         pointToLayer: function (feature, latlng) {
+
+            // ✔ Extract probability correctly
+            let prob = feature.properties[probKey];
+            if (prob === undefined || prob === null) prob = 0;
+
             return L.circleMarker(latlng, {
-                radius: 5,
-                fillColor: colorPred(feature.properties.pred_prob),
+                radius: 6,
+                fillColor: colorPred(prob),
                 color: "#000",
                 weight: 1,
                 opacity: 1,
-                fillOpacity: 0.9
+                fillOpacity: 0.90
             });
         },
         onEachFeature: function (feature, layer) {
-            const p = feature.properties;
+
+            let p = feature.properties;
+            let prob = p[probKey] || 0;
 
             let html = `
                 <b>Predicted Thermal</b><br>
-                Probability: ${(p.pred_prob * 100).toFixed(1)}%<br><hr>
+                Probability: ${(prob * 100).toFixed(1)}%<br>
+                <hr>
                 <b>Weather Features</b><br>
             `;
 
-            for (const key in p) {
-                if (!["lat_center","lon_center","pred_prob","avg_climb_rate"].includes(key)) {
-                    html += `${key}: ${p[key]}<br>`;
-                }
+            // ✔ Hide probability fields (strong_prob_hXX)
+            for (let key in p) {
+                if (
+                    key.startsWith("strong_prob_h") ||
+                    key === "lat_center" ||
+                    key === "lon_center"
+                ) continue;
+
+                html += `${key}: ${p[key]}<br>`;
             }
 
             layer.bindPopup(html);
         }
     }).addTo(layerGroup);
 
-    modeLabel.innerHTML = 'Thermals colored by <b>Prediction Probability</b>.';
+    modeLabel.innerHTML =
+        'Thermals colored by <b>Prediction Probability</b>.';
 }
 
 
