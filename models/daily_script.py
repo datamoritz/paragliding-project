@@ -1,7 +1,6 @@
 # Script to run daily at midnight to predict thermal presence for the next day
 
 # Load Libraries
-from IPython.core.display_functions import display
 import requests
 import pandas as pd
 import numpy as np
@@ -391,8 +390,6 @@ stage1_cols = [c for c in df_clustered.columns if "stage1_prob" in c]
 stage2_cols = [c for c in df_clustered.columns if "stage2_prob" in c]
 
 df_clustered = df_clustered.drop(columns = stage1_cols + stage2_cols)
-
-display(df_clustered.head(5))
 
 
 # Step 4:Save final predictions
