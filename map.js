@@ -36,6 +36,76 @@ function colorPred(prob) {
     return '#000000';                            // near-certain → black
 }
 
+function addLegend() {
+    const legend = L.control({ position: "bottomright" });
+
+    legend.onAdd = function () {
+        const div = L.DomUtil.create("div", "legend");
+
+        div.innerHTML = `
+            <div class="legend-title">Prediction Probability</div>
+            <div class="legend-scale">
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:rgba(0,0,0,0); border:none;"></span>
+                    < 0.10 (hidden)
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#deebf7"></span>
+                    0.10 – 0.20
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#c6dbef"></span>
+                    0.20 – 0.30
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#9ecae1"></span>
+                    0.30 – 0.40
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#6baed6"></span>
+                    0.40 – 0.50
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#4292c6"></span>
+                    0.50 – 0.60
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#2171b5"></span>
+                    0.60 – 0.70
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#08519c"></span>
+                    0.70 – 0.80
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#08306b"></span>
+                    0.80 – 0.90
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-color" style="background:#000"></span>
+                    > 0.90
+                </div>
+
+            </div>
+        `;
+
+        return div;
+    };
+
+    legend.addTo(map);
+}
+
+addLegend();
 
 // -------------------------
 // LOAD THERMALS (SAME FILE)
@@ -102,12 +172,12 @@ async function loadPredThermals() {
             if (prob < 0.1) return null; // skip creating marker
 
             return L.circleMarker(latlng, {
-                radius: 6,
+                radius: 5,
                 fillColor: colorPred(prob),
-                color: "transparent",
-                weight: 0.3,
-                opacity: 0.9,
-                fillOpacity: 0.90
+                color: "#000",
+                weight: 0.6,
+                opacity: 0.8,
+                fillOpacity: 0.85
             });
         },
         onEachFeature: function (feature, layer) {
