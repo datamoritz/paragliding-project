@@ -10,9 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # --- IMPORTANT: install Git LFS BEFORE checkout ---
+      - name: Install Git LFS
+        run: git lfs install
+
+      - name: Checkout repository (with LFS enabled)
         uses: actions/checkout@v3
         with:
+          lfs: true
           persist-credentials: true
 
       - name: Set up Python
