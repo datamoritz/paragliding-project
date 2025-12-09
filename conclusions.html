@@ -303,8 +303,30 @@ shows that thermal lift historically concentrates along the Austrian mountain
 
 
         <!-- 10 -->
-        <li id="future"><strong>Future Work</strong></li>
+        <li id="future"><strong>How do wind profile and shear impact thermal strength and usability?</strong></li>
+         <p>
+        This question was not the main focus of this analysis. Only the feature windspeed at 10m was included. However, this is entirely absent from the features that predict strong thermal likelihood, indicating that as long as winds are low, they do not influence thermals much. 
+        </p>
 
+          <figure class="d-flex flex-column align-items-center my-4">
+    
+      <img src="images/C5.png"
+           alt="Distribution of wind speed at 10 meters"
+           class="img-fluid rounded shadow-sm"
+           style="max-width: 90%; height: auto;">
+    
+      <figcaption class="mt-3 text-muted"
+                  style="max-width: 650px; line-height: 1.6; font-size: 0.9rem;">
+        Distribution of wind speed at 10&nbsp;m across all detected thermals. Most values fall between
+        3–8&nbsp;m/s, with relatively few observations above 10&nbsp;m/s.  
+        In this analysis, windspeed at 10&nbsp;m played only a minor role in predicting strong thermal
+        likelihood — it was <strong>not selected as an important feature</strong> by the model.  
+        This suggests that as long as winds remain generally low to moderate, they do not substantially
+        reduce thermal strength.
+      </figcaption>
+    
+    </figure>
+        
         <ul>
           <li>Incorporate wind shear and full vertical wind profile (ERA5 pressure levels).</li>
           <li>Analyze multi-year hotspot stability and recurrence.</li>
@@ -318,6 +340,11 @@ shows that thermal lift historically concentrates along the Austrian mountain
 
       <!-- FUTURE WORK -->
       <h2 id="future" class="fw-bold mt-5 mb-3">Future Work</h2>
+
+
+
+
+      
 
       <ul>
         <li>Model wind shear and vertical wind profile using ERA5 pressure levels.</li>
