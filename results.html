@@ -77,49 +77,84 @@
         <a href="#downloads" class="text-primary fw-semibold text-decoration-none">Downloads</a>
       </div>
 
-      <hr>
+   <style>
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
 
-      <!-- Overview -->
-      <h2 id="overview" class="fw-bold mt-4 mb-3">Overview</h2>
-      <p>
-        This page will summarize the performance, evaluation metrics, and visual outputs from the 
-        machine learning models used in the Paragliding ML Project.
-      </p>
+.results-table th {
+    background-color: #4F74A3;
+    color: white;
+    padding: 14px;
+    text-align: left;
+    font-size: 18px;
+}
 
-      <!-- Key Metrics -->
-      <h2 id="metrics" class="fw-bold mt-5 mb-3">Key Metrics</h2>
-      <p>
-        Insert your accuracy, F1-scores, confusion matrices, feature importance values, or other metrics here.
-      </p>
+.results-table td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f2f4f7;
+    vertical-align: top;
+}
 
-      <div class="figure-placeholder">METRICS / TABLE PLACEHOLDER</div>
+.results-table tr:nth-child(even) td {
+    background-color: #e6e9ef;
+}
 
-      <!-- Figures -->
-      <h2 id="figures" class="fw-bold mt-5 mb-3">Figures</h2>
-      <p>
-        Use this section to present plots, charts, or maps generated from the model results.
-      </p>
+.results-table tr:hover td {
+    background-color: #d9dde4;
+}
+</style>
 
-      <div class="figure-placeholder">FIGURE PLACEHOLDER</div>
-      <div class="figure-placeholder">FIGURE PLACEHOLDER</div>
+<table class="results-table">
+    <tr>
+        <th>Method</th>
+        <th>Purpose</th>
+        <th>Key Metrics</th>
+        <th>Efficacy Summary</th>
+    </tr>
 
-      <!-- Interpretation -->
-      <h2 id="interpretation" class="fw-bold mt-5 mb-3">Interpretation</h2>
-      <p>
-        Provide a narrative explaining what the results mean, how they compare across models, and 
-        any insights that emerged.
-      </p>
+    <tr>
+        <td><b>Clustering</b></td>
+        <td>Identify natural thermal groupings (exploration of classification targets)</td>
+        <td>Clusters based on climb rate, duration; k = 5</td>
+        <td>Helpful for structure; clusters overlap heavily → not ideal for prediction</td>
+    </tr>
 
-      <!-- Downloads -->
-      <h2 id="downloads" class="fw-bold mt-5 mb-3">Downloads</h2>
-      <p>
-        Add links to model output files, full-resolution plots, or notebooks.
-      </p>
+    <tr>
+        <td><b>Naive Bayes Classifier</b></td>
+        <td>Baseline thermal-strength classification of thermal clusters</td>
+        <td>Accuracy: ~39%</td>
+        <td>Limited — strong feature overlap among clusters</td>
+    </tr>
 
-      <ul>
-        <li><a href="#" class="text-primary text-decoration-none">Download results CSV (placeholder)</a></li>
-        <li><a href="#" class="text-primary text-decoration-none">Download model notebook (placeholder)</a></li>
-      </ul>
+    <tr>
+        <td><b>Random Forest — Stage 1</b></td>
+        <td>Predict whether weather conditions produce a thermal (y/n)</td>
+        <td>Accuracy: 90%<br>F1 ≈ 0.90</td>
+        <td>Strong — reliable thermal detection, but negative samples were synthesized</td>
+    </tr>
+
+    <tr>
+        <td><b>Random Forest — Stage 2</b></td>
+        <td>Predict strong thermal probability (e.g., &gt; 1.5 m/s)</td>
+        <td>Accuracy: ~64%<br>F1-Macro: 64%</td>
+        <td>High — smooth probability map, strong atmospheric predictive accuracy</td>
+    </tr>
+
+    <tr>
+        <td><b>XGBoost</b></td>
+        <td>Compare against RF</td>
+        <td>Accuracy: 63%<br>F1-Macro: 63%</td>
+        <td>Competitive — slightly more overfitting</td>
+    </tr>
+</table>
+
+     
 
     </div>
   </div>
