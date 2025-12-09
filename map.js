@@ -1,35 +1,129 @@
-var map = L.map('map').setView([47.0, 13.0], 8); // Example coordinates/zoom
+// -------------------------
+// MAP INITIALIZATION
+// -------------------------
+var map = L.map('map').setView([47.0, 13.0], 8);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-function getColor(climbRate) {
-    return climbRate > 2.0  ? '#d73027' :
-           climbRate > 1.5  ? '#fc8d59' :
-           climbRate > 1.0  ? '#fee090' :
-           climbRate > 0.5  ? '#e0f3f8' :
-                              '#4575b4'; // Low climb rate (blue)
+let layerGroup = L.layerGroup().addTo(map);
+
+// -------------------------
+// COLOR SCALES
+// -------------------------
+
+// Past thermals — your original scale
+function colorPast(climbRate) {
+    return climbRate > 2.0 ? '#d73027' :
+           climbRate > 1.5 ? '#fc8d59' :
+           climbRate > 1.0 ? '#fee090' :
+           climbRate > 0.5 ? '#e0f3f8' :
+                             '#4575b4';
 }
 
-fetch('thermals_data.geojson')
-    .then(response => response.json())
-    .then(data => {
-        L.geoJson(data, {
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, {
-                    radius: 4,
-                    fillColor: getColor(feature.properties.climb_rate), // Apply color
-                    color: "#000",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                });
-            },
-            onEachFeature: function (feature, layer) {
-                // Add popup when user clicks the dot
-                layer.bindPopup("<b>Thermal ID:</b> " + feature.properties.id + 
-                                "<br><b>Climb Rate:</b> " + feature.properties.climb_rate.toFixed(2) + " m/s" +
-                                "<br><b>Entry Alt:</b> " + feature.properties.entry_alt.toFixed(0) + " m");
+// Predicted thermals — light blue → blue → black
+function colorPred(prob) {
+    return prob > 0.8 ? '#000000' :
+           prob > 0.6 ? '#08306b' :
+           prob > 0.4 ? '#08519c' :
+           prob > 0.2 ? '#6baed6' :
+                        '#deebf7';
+}
+
+// -------------------------
+// LOADERS
+// -------------------------
+
+async function loadPastThermals() {
+    const response = await fetch("past_thermals.geojson");
+    const data = await response.json();
+
+    layerGroup.clearLayers();
+
+    L.geoJSON(data, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 5,
+                fillColor: colorPast(feature.properties.avg_climb_rate),
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.85
+            });
+        },
+        onEachFeature: function (feature, layer) {
+            const p = feature.properties;
+            layer.bindPopup(`
+                <b>Past Thermal</b><br>
+                Avg Climb: ${p.avg_climb_rate.toFixed(2)} m/s<br>
+                Max Climb: ${p.max_climb_rate.toFixed(2)} m/s<br>
+                Entry Alt: ${p.entry_alt} m<br>
+                Exit Alt: ${p.exit_alt} m<br>
+                Duration: ${p.duration_s} s
+            `);
+        }
+    }).addTo(layerGroup);
+
+    document.getElementById("modeLabel").innerHTML =
+        'Thermals colored by <b>Average Climb Rate</b> (m/s).';
+}
+
+
+async function loadPredThermals() {
+    const response = await fetch("thermal_predictions.geojson");
+    const data = await response.json();
+
+    layerGroup.clearLayers();
+
+    L.geoJSON(data, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 6,
+                fillColor: colorPred(feature.properties.pred_prob),
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.9
+            });
+        },
+        onEachFeature: function (feature, layer) {
+
+            let p = feature.properties;
+
+            let html = `<b>Predicted Thermal</b><br>
+            Probability: ${(p.pred_prob * 100).toFixed(1)}%<br><hr>
+            <b>Weather Features</b><br>`;
+
+            for (let key in p) {
+                if (!["lat", "lon", "pred_prob"].includes(key)) {
+                    html += `${key}: ${p[key]}<br>`;
+                }
             }
-        }).addTo(map);
-    });
+
+            layer.bindPopup(html);
+        }
+    }).addTo(layerGroup);
+
+    document.getElementById("modeLabel").innerHTML =
+        'Thermals colored by <b>Predicted Thermal Probability</b>.';
+}
+
+// -------------------------
+// BUTTON TOGGLES
+// -------------------------
+
+document.getElementById("btnPast").onclick = () => {
+    loadPastThermals();
+    btnPast.classList.replace("btn-outline-primary", "btn-primary");
+    btnPred.classList.replace("btn-primary", "btn-outline-primary");
+};
+
+document.getElementById("btnPred").onclick = () => {
+    loadPredThermals();
+    btnPred.classList.replace("btn-outline-primary", "btn-primary");
+    btnPast.classList.replace("btn-primary", "btn-outline-primary");
+};
+
+// Default mode
+loadPastThermals();
