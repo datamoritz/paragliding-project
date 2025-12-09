@@ -24,11 +24,16 @@ function colorPast(climbRate) {
 
 // Predicted thermals — light blue → blue → black
 function colorPred(prob) {
-    return prob > 0.8 ? '#000000' :
-           prob > 0.6 ? '#08306b' :
-           prob > 0.4 ? '#08519c' :
-           prob > 0.2 ? '#6baed6' :
-                        '#deebf7';
+    if (prob < 0.10) return 'rgba(0,0,0,0)';     // invisible
+    if (prob < 0.20) return '#deebf7';           // very light blue
+    if (prob < 0.30) return '#c6dbef';           // light blue
+    if (prob < 0.40) return '#9ecae1';           // medium-light blue
+    if (prob < 0.50) return '#6baed6';           // medium blue
+    if (prob < 0.60) return '#4292c6';           // medium-dark blue
+    if (prob < 0.70) return '#2171b5';           // dark blue
+    if (prob < 0.80) return '#08519c';           // very dark blue
+    if (prob < 0.90) return '#08306b';           // navy blue
+    return '#000000';                            // near-certain → black
 }
 
 
