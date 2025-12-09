@@ -463,7 +463,4 @@ def df_to_geojson(df, lat_col="lat_center", lon_col="lon_center", out_path="ther
     print(f"GeoJSON saved → {out_path}")
 
 # Save as GeoJSON
-df_to_geojson(
-    df_clustered,
-    out_path=OUTPUT / "thermal_predictions.geojson"
-)
+df_to_geojson(df_clustered, out_path="models/thermal_predictions.geojson")
