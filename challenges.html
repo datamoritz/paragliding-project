@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Paragliding ML Project</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Paragliding ML</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item"><a class="nav-link" href="introduction.html">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="dataprep.html">Data Prep / EDA</a></li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">ML Models</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="clustering.html">Clustering</a></li>
+              <li><a class="dropdown-item" href="pca.html">PCA</a></li>
+              <li><a class="dropdown-item" href="naivebayes.html">Naive Bayes</a></li>
+              <li><a class="dropdown-item" href="decisiontrees.html">Decision Trees</a></li>
+              <li><a class="dropdown-item" href="svm.html">SVMs</a></li>
+              <li><a class="dropdown-item" href="regression.html">Regression</a></li>
+              <li><a class="dropdown-item" href="nn.html">Neural Networks</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" href="conclusions.html">Conclusions</a></li>
+          <li class="nav-item"><a class="nav-link active" href="results.html">Results</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container mt-5">
+    <div class="col-lg-8 mx-auto">
+
+      <h1 class="fw-bold">Challenges</h1>
+
+      <hr>
+
+<div>
+
+<p>
+This section provides a deeper look into the scientific and technical challenges this project explored. Overall this project highlights an important truth in atmospheric ML:<br>
+Thermals emerge from nonlinear, multi-scale interactions that cannot be perfectly captured by coarse-grained meteorological features alone.<br>
+Thus the achievable predictive ceiling is fundamentally constrained, even more so when paragliding flight logs are used as sensors. Nevertheless:
+</p>
+
+<ul>
+<li>The final two-stage Random Forest pipeline successfully captures broad atmospheric patterns connected to thermal formation.</li>
+<li>The model produces smooth, interpretable spatial probability maps.</li>
+</ul>
+
+<p>This hybrid approach (domain knowledge, clustering, two-stage supervised learning, visualization) is scientifically defensible and effective given available data.</p>
+
+<p><b>1. Label Ambiguity & Weak Ground Truth</b><br>
+Thermals are not directly observable in GPS logs. Instead, they must be inferred from climb rate, circular motion, and altitude gain. These are all indirect proxies for the true physical phenomenon, making the project from begin on a challenging undertaking. The labels contain measurement error: the “strength” of a thermal is not directly measured but inferred from pilot movement patterns, which vary. Climb rate depends on glider performance, wing loading, pilot skill, and local turbulence — not solely thermal strength. Thus the supervised labels used in Naive Bayes, RF Stage 1/2, and XGBoost contain irreducible label noise.
+</p>
+
+<p><b>2. Strong Feature Overlap & Atmospheric Continuity</b><br>
+Atmospheric variables (<code>CAPE</code>, <code>boundary-layer height</code>, <code>dew point</code>, <code>buoyancy flux</code>, etc.) vary smoothly in space and time. Thermal strength, however, is highly localized. A single mesoscale weather grid cell (≈ 10–30 km) often contains multiple microthermal events, all sharing identical feature vectors. This creates many-to-one mappings: different outcomes lead to identical features. Therefore, separability in feature space is limited, and even high-performing models (RF/XGB) plateau around ~63–64% F1.
+</p>
+
+<p><b>3. Missing Negative Samples & Synthetic Data Generation</b><br>
+GPS logs contain only positive samples (thermals that pilots actually entered). Non-thermal conditions had to be synthetically generated for Stage 1, due to time and data constraints (the ideal approach would have been to sample from the weather feature vectors at the known thermal locations when no thermal occurred). Synthetic negative sampling can obviously distort the natural distribution of “no thermal” conditions. Classifiers may learn artificial separations not reflecting the real world.
+</p>
+
+<p><b>4. Spatial Autocorrelation & Data Leakage</b><br>
+Thermals cluster geographically. Weather features from nearby points are highly correlated. Naive train/test splits can easily leak information across spatial boundaries, which was repeatedly a challenge in this project. The model may “memorize geography” rather than atmospheric relationships, which in the end led to the emlimination from all location based features from the training dataset. True generalization requires spatial cross-validation, which is complex and was out of scope.
+</p>
+
+<p><b>5. Unsupervised Learning Limitations (K-Means Clustering)</b><br>
+K-Means successfully produced interpretable groups but clusters overlapped significantly in climb-rate/duration space. This led to atmospheric predictors not aligning with cluster boundaries. This is partly expected because thermal phenomena form a continuum, not discrete categories. Initially planned as classification targets, the project shifted away from predicting thermal categories.
+</p>
+
+<p><b>6. High-Dimensional, Correlated Atmospheric Features</b><br>
+Weather features show multicollinearity (e.g., <code>CAPE</code>, <code>BLDH</code>, <code>buoyancy flux</code> are related). Naive Bayes assumes conditional independence, which resulted in an expectedly low performance ~39%. Tree models handled correlations significantly better, but also here careful feature selection improved model accuracy. For this both a forward and backward feature eleminiation process was investigated.
+</p>
+
+</div>
+
+
+
+
+      
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
