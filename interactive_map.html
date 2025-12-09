@@ -130,22 +130,27 @@
         </div>
 
 
+        <!-- MAGENTA LEGEND (Prediction Probability) -->
         <div id="legendPred" class="legend">
-    <div class="legend-close" onclick="hideLegend('legendPred')">✕</div>
-    <div class="legend-title">Prediction Probability</div>
-    <div class="legend-scale">
-        <div class="legend-item"><span class="legend-color" style="background:#000000"></span>0.90–1.00</div>
-        <div class="legend-item"><span class="legend-color" style="background:#08306b"></span>0.80–0.90</div>
-        <div class="legend-item"><span class="legend-color" style="background:#08519c"></span>0.70–0.80</div>
-        <div class="legend-item"><span class="legend-color" style="background:#2171b5"></span>0.60–0.70</div>
-        <div class="legend-item"><span class="legend-color" style="background:#4292c6"></span>0.50–0.60</div>
-        <div class="legend-item"><span class="legend-color" style="background:#6baed6"></span>0.40–0.50</div>
-        <div class="legend-item"><span class="legend-color" style="background:#9ecae1"></span>0.30–0.40</div>
-        <div class="legend-item"><span class="legend-color" style="background:#c6dbef"></span>0.20–0.30</div>
-        <div class="legend-item"><span class="legend-color" style="background:#deebf7"></span>0.10–0.20</div>
-        <div class="legend-item">(< 0.10 not shown)</div>
-    </div>
-</div>
+            <div class="legend-title">
+                Prediction Probability
+                <span class="legend-close" onclick="document.getElementById('legendPred').style.display='none'">✕</span>
+            </div>
+            <div class="legend-scale">
+        
+                <div class="legend-item"><span class="legend-color" style="background:#2a0233"></span> > 0.90</div>
+                <div class="legend-item"><span class="legend-color" style="background:#490657"></span> 0.80 – 0.90</div>
+                <div class="legend-item"><span class="legend-color" style="background:#6c0c7c"></span> 0.70 – 0.80</div>
+                <div class="legend-item"><span class="legend-color" style="background:#9911a9"></span> 0.60 – 0.70</div>
+                <div class="legend-item"><span class="legend-color" style="background:#b51fbf"></span> 0.50 – 0.60</div>
+                <div class="legend-item"><span class="legend-color" style="background:#d24bcf"></span> 0.40 – 0.50</div>
+                <div class="legend-item"><span class="legend-color" style="background:#e77edc"></span> 0.30 – 0.40</div>
+                <div class="legend-item"><span class="legend-color" style="background:#f7b1ea"></span> 0.20 – 0.30</div>
+                <div class="legend-item"><span class="legend-color" style="background:#fde0f6"></span> 0.10 – 0.20</div>
+        
+                <div class="legend-item"><span class="legend-color" style="background:rgba(0,0,0,0);border:1px solid #ccc;"></span> &lt; 0.10 (hidden)</div>
+            </div>
+        </div>
 
 <div id="legendPast" class="legend">
     <div class="legend-close" onclick="hideLegend('legendPast')">✕</div>
