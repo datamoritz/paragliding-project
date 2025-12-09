@@ -115,6 +115,36 @@
             <button id="btnPred" class="btn btn-primary">Predicted Thermals</button>
         </div>
 
+
+        <div id="legendPred" class="legend">
+    <div class="legend-close" onclick="hideLegend('legendPred')">✕</div>
+    <div class="legend-title">Prediction Probability</div>
+    <div class="legend-scale">
+        <div class="legend-item"><span class="legend-color" style="background:#000000"></span>0.90–1.00</div>
+        <div class="legend-item"><span class="legend-color" style="background:#08306b"></span>0.80–0.90</div>
+        <div class="legend-item"><span class="legend-color" style="background:#08519c"></span>0.70–0.80</div>
+        <div class="legend-item"><span class="legend-color" style="background:#2171b5"></span>0.60–0.70</div>
+        <div class="legend-item"><span class="legend-color" style="background:#4292c6"></span>0.50–0.60</div>
+        <div class="legend-item"><span class="legend-color" style="background:#6baed6"></span>0.40–0.50</div>
+        <div class="legend-item"><span class="legend-color" style="background:#9ecae1"></span>0.30–0.40</div>
+        <div class="legend-item"><span class="legend-color" style="background:#c6dbef"></span>0.20–0.30</div>
+        <div class="legend-item"><span class="legend-color" style="background:#deebf7"></span>0.10–0.20</div>
+        <div class="legend-item">(< 0.10 not shown)</div>
+    </div>
+</div>
+
+<div id="legendPast" class="legend">
+    <div class="legend-close" onclick="hideLegend('legendPast')">✕</div>
+    <div class="legend-title">Average Climb Rate (m/s)</div>
+    <div class="legend-scale">
+        <div class="legend-item"><span class="legend-color" style="background:#d73027"></span>> 2.0</div>
+        <div class="legend-item"><span class="legend-color" style="background:#fc8d59"></span>1.5–2.0</div>
+        <div class="legend-item"><span class="legend-color" style="background:#fee090"></span>1.0–1.5</div>
+        <div class="legend-item"><span class="legend-color" style="background:#e0f3f8"></span>0.5–1.0</div>
+        <div class="legend-item"><span class="legend-color" style="background:#4575b4"></span>< 0.5</div>
+    </div>
+</div>
+        
         <div id="map" class="shadow"></div>
     </div>
 
