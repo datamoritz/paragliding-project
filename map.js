@@ -1,7 +1,12 @@
 // -------------------------
 // MAP INITIALIZATION
 // -------------------------
-var map = L.map('map').setView([47.7, 14.2], 8);
+var map = L.map('map');
+
+map.fitBounds([
+    [46.2, 9.8],   // Southwest
+    [49.1, 17.2]   // Northeast
+]);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
