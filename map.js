@@ -1,7 +1,7 @@
 // -------------------------
 // MAP INITIALIZATION
 // -------------------------
-var map = L.map('map').setView([47.0, 13.0], 8);
+var map = L.map('map').setView([51.0, 11.0], 6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -108,25 +108,25 @@ async function loadPredThermals() {
 
             let p = feature.properties;
             let prob = p[probKey] || 0;
-
+        
             let html = `
                 <b>Predicted Thermal</b><br>
                 Probability: ${(prob * 100).toFixed(1)}%<br>
                 <hr>
-                <b>Weather Features</b><br>
+                <b>Weather / Feature Inputs</b><br>
             `;
-
-            // ✔ Hide probability fields (strong_prob_hXX)
+        
             for (let key in p) {
-                if (
-                    key.startsWith("strong_prob_h") ||
-                    key === "lat_center" ||
-                    key === "lon_center"
-                ) continue;
-
+        
+                // ❌ Hide ALL probability fields  
+                if (key.toLowerCase().includes("prob")) continue;
+        
+                // ❌ Hide lat/lon center values
+                if (key === "lat_center" || key === "lon_center") continue;
+        
                 html += `${key}: ${p[key]}<br>`;
             }
-
+        
             layer.bindPopup(html);
         }
     }).addTo(layerGroup);
